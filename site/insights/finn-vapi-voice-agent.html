@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>We Built an AI Cold Caller Using Claude Code and Vapi — GTB Software</title>
+  <meta name="description" content="Finn dials small business owners, opens with a curiosity hook, and books callbacks autonomously. Here's the architecture, the engineering lessons, and what we'd do differently." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES
+    ============================================= */
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #111111;
+      --bg-raised: #0f0f0f;
+      --border: #1f1f1f;
+      --border-mid: #2a2a2a;
+      --text: #fafafa;
+      --text-muted: #737373;
+      --text-dim: #4a4a4a;
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.1);
+      --accent-border: rgba(16, 185, 129, 0.2);
+      --font-display: 'Satoshi', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: ui-monospace, Menlo, Monaco, 'Courier New', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .accent {
+      color: var(--accent);
+      text-shadow: 0 0 24px rgba(16, 185, 129, 0.45), 0 0 48px rgba(16, 185, 129, 0.2);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    #nav.scrolled {
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-color: var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .nav-logo img {
+      height: 28px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-cta:hover {
+      background: linear-gradient(135deg, #0d9668 0%, #047857 100%);
+      box-shadow: 0 0 22px rgba(16, 185, 129, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-nav.open { opacity: 1; pointer-events: all; }
+
+    .mobile-nav a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .mobile-nav a:hover { color: var(--text); }
+    .mobile-nav .nav-cta { font-size: 1rem; padding: 0.875rem 2rem; }
+
+    /* =============================================
+       POST HEADER
+    ============================================= */
+    .post-header {
+      padding: 9rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-header-inner {
+      max-width: 760px;
+    }
+
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .post-back:hover {
+      color: var(--accent);
+      gap: 0.5rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 0.25rem 0.625rem;
+      border-radius: 100px;
+    }
+
+    .post-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .post-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    /* =============================================
+       POST BODY
+    ============================================= */
+    .post-body {
+      padding: 5rem 0 7rem;
+    }
+
+    .post-content {
+      max-width: 760px;
+    }
+
+    .post-content p {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .post-content h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--text);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin: 3rem 0 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .post-content h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin: 2rem 0 0.875rem;
+    }
+
+    .post-content ul,
+    .post-content ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content li {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-content li strong {
+      color: var(--text);
+    }
+
+    .post-content pre {
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 10px;
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 1.75rem 0;
+    }
+
+    .post-content code {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: #a3e4c8;
+      line-height: 1.7;
+    }
+
+    .post-content p code,
+    .post-content li code {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.15em 0.4em;
+      font-size: 0.875em;
+      color: var(--accent);
+    }
+
+    .post-content blockquote {
+      border-left: 3px solid var(--accent);
+      margin: 2rem 0;
+      padding: 1rem 1.5rem;
+      background: var(--accent-dim);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .post-content blockquote p {
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 0;
+    }
+
+    .post-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 3rem 0;
+    }
+
+    /* CTA at end of post */
+    .post-cta {
+      margin-top: 4rem;
+      padding: 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 16px;
+    }
+
+    .post-cta p {
+      color: var(--text-muted) !important;
+      margin-bottom: 1.25rem !important;
+    }
+
+    .post-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, gap 0.2s;
+    }
+
+    .post-cta a:hover {
+      border-color: var(--accent);
+      gap: 0.75rem;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .footer-nav a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-nav a:hover { color: var(--text); }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      align-items: flex-end;
+    }
+
+    .footer-contact a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: var(--text); }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy { font-size: 0.78rem; color: var(--text-dim); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav { display: flex; }
+      .footer-main { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-contact { align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1.25rem; }
+      .post-content pre { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Navigation">
+    <a href="/">Services</a>
+    <a href="/#process">How It Works</a>
+    <a href="/#about">About</a>
+    <a href="/insights" class="active">Insights</a>
+    <a href="/#cta" class="nav-cta">Let's talk</a>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="GTB Software home">
+        <img src="../assets/GTB Logo Transparent.png" alt="GTB Software" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <span class="nav-logo-text">GTB Software</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#process">How It Works</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/insights" class="active">Insights</a></li>
+      </ul>
+
+      <a href="/#cta" class="nav-cta">Let's talk</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Post Header -->
+  <header class="post-header">
+    <div class="container">
+      <div class="post-header-inner reveal">
+        <a href="/insights" class="post-back">← Insights</a>
+        <div class="post-tags">
+          <span class="post-tag">Voice Agents</span>
+          <span class="post-tag">Vapi</span>
+          <span class="post-tag">AI Agents</span>
+        </div>
+        <h1 class="post-title">We Built an AI Cold Caller Using Claude Code and Vapi. Here's What Actually Happened.</h1>
+        <p class="post-meta">April 2026 &nbsp;·&nbsp; 8 min read &nbsp;·&nbsp; Grab The Bull Software</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Body -->
+  <article class="post-body">
+    <div class="container">
+      <div class="post-content">
+
+        <p>There's a specific kind of irony in being an AI automation agency that does its own business development by hand. You spend your days building systems that eliminate manual work for clients, then close your laptop and spend an hour writing cold emails that get ignored.</p>
+
+        <p>We got tired of it. So we built Finn.</p>
+
+        <p>Finn is an AI cold caller. He dials small business owners, opens with a curiosity hook, figures out whether they've thought about AI, and books a callback for our founder Bailey if there's genuine interest. No script-reading, no hand-holding — a fully autonomous voice agent making real outbound calls to real people.</p>
+
+        <p>This is the story of how we built it, what broke, what worked, and what we'd do differently.</p>
+
+        <h2>The Architecture: Separate What Thinks from What Acts</h2>
+
+        <p>Before we get into Vapi specifics, the most important decision we made had nothing to do with Vapi. It was the architecture.</p>
+
+        <p>We call it the <strong>WAT framework</strong> — Workflows, Agents, Tools. The principle behind it comes from a hard truth about AI systems: if each step in a chain is 90% accurate, five chained steps land you at 59% success. The math compounds against you fast. The fix isn't better AI — it's less AI. Let AI handle reasoning. Let deterministic code handle execution.</p>
+
+        <p><strong>Layer 1: Workflows</strong> are Markdown SOPs stored in <code>workflows/</code>. Each one defines the objective, required inputs, which tools to call, expected outputs, and how to handle edge cases. Written like you'd brief a new hire. Updated after every campaign.</p>
+
+        <p><strong>Layer 2: Agents</strong> are the decision-makers. This is where Vapi and the LLM live. The agent reads context, makes judgment calls, routes conversations, and fires tool calls at the right moments. It doesn't do API calls. It doesn't write to spreadsheets. It decides.</p>
+
+        <p><strong>Layer 3: Tools</strong> are Python scripts in <code>tools/</code>. They do the actual work — API calls, sheet writes, database writes, webhook handling. Consistent, testable, and fast. When a call ends, a Python function writes the outcome to Google Sheets. Finn never touches a spreadsheet directly.</p>
+
+        <p>The resulting flow looks like this:</p>
+
+        <pre><code>run_campaign.py → Vapi (Finn on the phone) → webhook_server.py → mark_outcome.py → Google Sheets</code></pre>
+
+        <p>Everything in that chain except the Vapi assistant is deterministic. Finn decides. Python executes.</p>
+
+        <h2>How Claude Code + Vapi Work Together</h2>
+
+        <p><strong>Vapi</strong> handles all the telephony infrastructure — call placement, audio streaming, and transcription. Under the hood it uses Twilio for calling and Deepgram for speech-to-text. It hosts the assistant and streams real-time events (tool calls, transcription, end-of-call reports) to a webhook URL you control.</p>
+
+        <p><strong>The prompt</strong> is the agent's brain. For Finn, that's <code>agents/ai_curiosity_finn/prompt.md</code> — a source-controlled, versioned Markdown file that gets deployed to Vapi via a setup script. Change the prompt, run one command, and the live assistant is updated within seconds. It's treated exactly like code: reviewed before merging, updated only when data supports it, never changed on a whim.</p>
+
+        <p><strong>Claude Code</strong> was used throughout the build as the development environment — writing the Python tooling, debugging webhook flows, designing the outcome classification logic, and iterating on the prompt structure. It's not running in production; it's how the system gets built and improved.</p>
+
+        <p>The key configuration decisions in <code>agent.json</code>:</p>
+
+        <pre><code>{
+  "model": { "provider": "openai", "model": "gpt-4.1", "temperature": 0.3 },
+  "voice": { "provider": "openai", "voiceId": "echo" },
+  "transcriber": { "provider": "deepgram", "model": "nova-2-phonecall" },
+  "firstMessageMode": "assistant-waits-for-user",
+  "maxDurationSeconds": 300,
+  "silenceTimeoutSeconds": 10
+}</code></pre>
+
+        <ul>
+          <li><strong>Temperature 0.3:</strong> Low randomness. Finn needs to be consistent, not creative.</li>
+          <li><strong>nova-2-phonecall:</strong> Deepgram's model specifically tuned for phone audio — compressed, noisy, sometimes clipped. This matters.</li>
+          <li><strong>OpenAI "echo" voice:</strong> Conversational, not robotic. Enough warmth to not kill the call in the first five seconds.</li>
+          <li><strong>firstMessageMode: assistant-waits-for-user:</strong> More on this below. We never changed it.</li>
+        </ul>
+
+        <p>The local startup flow is a single script:</p>
+
+        <pre><code>./start.sh
+# → kills any existing webhook server and cloudflared processes
+# → starts FastAPI webhook server on port 8000
+# → starts cloudflared tunnel to get a public HTTPS URL
+# → writes the tunnel URL to .env as WEBHOOK_URL
+# → deploys Finn to Vapi via vapi_setup.py</code></pre>
+
+        <p>One command. Production-ready in under 30 seconds.</p>
+
+        <h2>The Two Sales Motions — and Why We Pivoted</h2>
+
+        <p>We shipped two completely different approaches on the same infrastructure.</p>
+
+        <p><strong>Motion 1 — Speed-to-Lead (frozen):</strong> Finn opened with "The reason I'm calling like this is we build systems that respond to new leads instantly — and this call is basically what that looks like in practice." The call <em>was</em> the demo. It's a clever wedge, but it assumes the prospect already understands what speed-to-lead automation is and why it matters. Most small business owners don't. Calls stalled at the concept.</p>
+
+        <p><strong>Motion 2 — AI Curiosity (active):</strong> "Hey — do you want the good news or the bad news?" No pitch. No demo. Just a question. The reveal: bad news is it's a cold call, good news is we're genuinely curious whether AI could help their business. Then a single diagnostic question: "Have you guys looked into using AI in your business yet, or not really?"</p>
+
+        <p>Three response paths branch from there:</p>
+        <ul>
+          <li><strong>Path A</strong> (yes / we use ChatGPT / been thinking about it) — dig into use cases, ask about their workflow</li>
+          <li><strong>Path B</strong> (hard no / not our thing) — one brief curiosity statement, then a business question; no third push</li>
+          <li><strong>Path C</strong> (a little / sort of) — treat like Path A</li>
+        </ul>
+
+        <p>The pivot took about two hours. Swap <code>prompt.md</code>, re-run <code>vapi_setup.py</code>, update <code>registry.json</code> to flip the active flag. Same webhook server, same sheet integration, same outcome logic. The infrastructure didn't care which motion we were running.</p>
+
+        <p>That separation — between the conversation logic and the execution infrastructure — is what made the pivot cheap.</p>
+
+        <h2>Eight Engineering Lessons Nobody Writes About</h2>
+
+        <h3>1. <code>firstMessageMode</code> matters more than you think</h3>
+
+        <p><code>assistant-waits-for-user</code> means Finn says nothing until the person on the other end speaks first. This is correct. If Finn speaks first and hits an IVR greeting or a gatekeeper mid-sentence, the call sounds broken immediately. Always wait. Let the human open.</p>
+
+        <h3>2. IVR detection is not optional</h3>
+
+        <p>We didn't account for it in v1. Finn would reach an automated phone menu and try to have a conversation with it. The fix is a single prompt rule:</p>
+
+        <blockquote>
+          <p>"If you hear an automated phone menu — any message that says 'press 1 for', 'para español', 'if you know your party's extension' — call <code>endCall</code> immediately. Do not say anything."</p>
+        </blockquote>
+
+        <p>Simple. Works. Add it on day one.</p>
+
+        <h3>3. Phone number collection needs ritual</h3>
+
+        <p>Deepgram transcriptions occasionally drop digits, especially when a prospect rattles off a number quickly. Our fix: collect the number in groups with deliberate pauses, then mandatory read-back before logging it.</p>
+
+        <blockquote>
+          <p>"Let me just read that back — six oh six... four five four... five one four oh. Does that sound right?"</p>
+        </blockquote>
+
+        <p>That process dropped capture errors from around 5% to under 1%. It also sounds natural — it's what a human would do on the phone.</p>
+
+        <h3>4. Name memory is non-negotiable</h3>
+
+        <p>The fastest way to destroy a call is for Finn to ask for someone's name after they already gave it. We've all experienced this with automated systems. It signals immediately that nothing is actually being listened to.</p>
+
+        <p>The fix is an explicit, emphatic prompt rule — "if they gave you their name at any point in this call, do not ask again, under any circumstances" — reinforced with a CORRECT/WRONG example block showing the exact scenario. Belt and suspenders. It works.</p>
+
+        <h3>5. Sort leads before dialing</h3>
+
+        <p>No-website businesses — owner-operated — owner answers the phone. Fewer reviews means smaller operation means less likely to have a gatekeeper or IVR. Sorting by those two signals before dialing meaningfully improves the rate at which Finn reaches an actual decision-maker. No machine learning, no external data enrichment. Just a smarter sort order.</p>
+
+        <h3>6. Pre-mark rows as "Dialing" before the call fires</h3>
+
+        <p>If the webhook fails partway through a call, the call still happened. If the row isn't marked, the next campaign run re-dials the same person. Pre-marking the sheet row as "Dialing" immediately before firing each call prevents double-contacts. The row number is the primary key — idempotent writes, no surprises.</p>
+
+        <h3>7. Signal-based classification beats ML for now</h3>
+
+        <p>After every call, Finn's transcript gets classified into an outcome: warm lead, engaged, not interested, voicemail, wrong number, gatekeeper. Rather than training a classifier, we scan transcripts for pattern lists with hierarchical precedence.</p>
+
+        <pre><code>WARM_LEAD_SIGNALS = [
+    "you're all set",
+    "bailey will give you a call",
+    "that sounds interesting",
+    "looking forward to it",
+]
+
+ENGAGED_SIGNALS = [
+    "the biggest thing",
+    "honestly",
+    "we spend a lot of time",
+    "scheduling",
+    "follow up",
+    "quoting",
+    "callbacks",
+]</code></pre>
+
+        <p>If the transcript contains a warm lead signal, it's a warm lead — regardless of what else is in there. If no warm lead signal but an engaged signal, it's engaged. And so on down the hierarchy.</p>
+
+        <p>This trades some accuracy for complete interpretability. When the classification is wrong, you can read the Notes column and immediately see which signal fired. Easy to debug, easy to improve.</p>
+
+        <h3>8. Prompts are source code — treat them that way</h3>
+
+        <p>The prompt is checked into git. It has a changelog. It gets updated based on campaign data, not instinct. Our rule: don't touch the prompt unless you have 50+ calls and the AI curiosity rate is above 12%. Below that threshold, you don't have enough signal to know what's actually working.</p>
+
+        <p>When changes are warranted, <code>fetch_campaign_data.py</code> merges call transcripts with campaign logs and surfaces a unified diff suggestion. That suggestion goes through the same review process as any other code change.</p>
+
+        <h2>What We'd Do Differently</h2>
+
+        <p><strong>A/B hook rotation from day one.</strong> We launched with a single hook for the AI Curiosity motion. That means we can't test variants without rebuilding campaign history. The infrastructure already supports multiple hooks — we just didn't use it early enough.</p>
+
+        <p><strong>Twilio Lookup pre-flight from the start.</strong> For $0.005 per number, Twilio's Lookup v2 API tells you whether a phone number is a mobile, landline, VoIP, or virtual aggregator number before you dial it. Virtual/aggregator numbers (Google Voice, TextNow, etc.) almost never reach a real decision-maker. Screening them out saves Vapi per-minute costs and keeps call quality high.</p>
+
+        <p><strong>Direct calendar booking instead of email notification.</strong> Right now, when Finn books a callback, the webhook fires an email with the prospect's name and preferred time. That works, but it requires a manual step to find a slot and send a follow-up. A proper integration that drops a calendar invite with a Meet link would close that loop in a single step.</p>
+
+        <h2>The Bigger Point</h2>
+
+        <p>Building Finn taught us more about what voice agents <em>actually</em> need than any tutorial could. The technical pieces — Vapi, Deepgram, webhooks, tool calls — are all well-documented. What isn't documented is the operational layer: how you handle IVRs, why name memory matters, how to sort a lead list, why your prompt is a production artifact that deserves version control.</p>
+
+        <p>That layer is where most voice agent projects fail. Not because the AI isn't smart enough — because the surrounding system isn't solid enough to let it work.</p>
+
+        <p>We're still running campaigns with Finn. The system improves with every batch of calls. And the irony hasn't been lost on us: the best demo of what we build for clients is the thing we built for ourselves.</p>
+
+        <div class="post-divider"></div>
+
+        <div class="post-cta">
+          <p>If you're thinking about building something like this — or you want someone to build it for you — that's what we do.</p>
+          <a href="/#cta">Get in touch →</a>
+        </div>
+
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <p class="footer-tagline">
+            Efficiency is nice.<br />
+            <span class="accent">Cash is king.</span>
+          </p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/#services">Services</a>
+          <a href="/#process">How It Works</a>
+          <a href="/#about">About</a>
+          <a href="/insights">Insights</a>
+          <a href="/#cta">Let's talk</a>
+        </nav>
+
+        <div class="footer-contact">
+          <a href="mailto:bailey@gtbsoftware.com">bailey@gtbsoftware.com</a>
+          <a href="https://linkedin.com/company/grab-the-bull-software" target="_blank" rel="noopener">LinkedIn →</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Grab the Bull Software. All rights reserved.</p>
+        <p class="footer-copy">gtbsoftware.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen.toString());
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  </script>
+
+</body>
+</html>
