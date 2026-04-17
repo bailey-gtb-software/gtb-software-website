@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>We Automated YouTube Shorts in a Weekend. Here's the Full System. — GTB Software</title>
+  <meta name="description" content="POV-style YouTube Shorts, scripted and published automatically using Claude Code and Blotato. Here's the pipeline, the gotchas, and what we'd change." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES
+    ============================================= */
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #111111;
+      --bg-raised: #0f0f0f;
+      --border: #1f1f1f;
+      --border-mid: #2a2a2a;
+      --text: #fafafa;
+      --text-muted: #737373;
+      --text-dim: #4a4a4a;
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.1);
+      --accent-border: rgba(16, 185, 129, 0.2);
+      --font-display: 'Satoshi', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: ui-monospace, Menlo, Monaco, 'Courier New', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .accent {
+      color: var(--accent);
+      text-shadow: 0 0 24px rgba(16, 185, 129, 0.45), 0 0 48px rgba(16, 185, 129, 0.2);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    #nav.scrolled {
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-color: var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .nav-logo img {
+      height: 28px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-cta:hover {
+      background: linear-gradient(135deg, #0d9668 0%, #047857 100%);
+      box-shadow: 0 0 22px rgba(16, 185, 129, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-nav.open { opacity: 1; pointer-events: all; }
+
+    .mobile-nav a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .mobile-nav a:hover { color: var(--text); }
+    .mobile-nav .nav-cta { font-size: 1rem; padding: 0.875rem 2rem; }
+
+    /* =============================================
+       POST HEADER
+    ============================================= */
+    .post-header {
+      padding: 9rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-header-inner {
+      max-width: 760px;
+    }
+
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .post-back:hover {
+      color: var(--accent);
+      gap: 0.5rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 0.25rem 0.625rem;
+      border-radius: 100px;
+    }
+
+    .post-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .post-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    /* =============================================
+       POST BODY
+    ============================================= */
+    .post-body {
+      padding: 5rem 0 7rem;
+    }
+
+    .post-content {
+      max-width: 760px;
+    }
+
+    .post-content p {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .post-content h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--text);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin: 3rem 0 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .post-content h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin: 2rem 0 0.875rem;
+    }
+
+    .post-content ul,
+    .post-content ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content li {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-content li strong {
+      color: var(--text);
+    }
+
+    .post-content pre {
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 10px;
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 1.75rem 0;
+    }
+
+    .post-content code {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: #a3e4c8;
+      line-height: 1.7;
+    }
+
+    .post-content p code,
+    .post-content li code {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.15em 0.4em;
+      font-size: 0.875em;
+      color: var(--accent);
+    }
+
+    .post-content blockquote {
+      border-left: 3px solid var(--accent);
+      margin: 2rem 0;
+      padding: 1rem 1.5rem;
+      background: var(--accent-dim);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .post-content blockquote p {
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 0;
+    }
+
+    .post-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 3rem 0;
+    }
+
+    /* CTA at end of post */
+    .post-cta {
+      margin-top: 4rem;
+      padding: 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 16px;
+    }
+
+    .post-cta p {
+      color: var(--text-muted) !important;
+      margin-bottom: 1.25rem !important;
+    }
+
+    .post-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, gap 0.2s;
+    }
+
+    .post-cta a:hover {
+      border-color: var(--accent);
+      gap: 0.75rem;
+    }
+
+    /* Tools in this build */
+    .post-tools {
+      margin: 3rem 0;
+      padding: 2rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .post-tools-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+    }
+
+    .post-tools-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .post-tools-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
+    .post-tools-item a {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.9375rem;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .post-tools-item a:hover {
+      border-color: var(--accent);
+    }
+
+    .post-tools-item span {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .footer-nav a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-nav a:hover { color: var(--text); }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      align-items: flex-end;
+    }
+
+    .footer-contact a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: var(--text); }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy { font-size: 0.78rem; color: var(--text-dim); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav { display: flex; }
+      .footer-main { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-contact { align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1.25rem; }
+      .post-content pre { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Navigation">
+    <a href="/">Services</a>
+    <a href="/#process">How It Works</a>
+    <a href="/#about">About</a>
+    <a href="/insights" class="active">Insights</a>
+    <a href="/#cta" class="nav-cta">Let's talk</a>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="GTB Software home">
+        <img src="../assets/GTB Logo Transparent.png" alt="GTB Software" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <span class="nav-logo-text">GTB Software</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#process">How It Works</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/insights" class="active">Insights</a></li>
+      </ul>
+
+      <a href="/#cta" class="nav-cta">Let's talk</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Post Header -->
+  <header class="post-header">
+    <div class="container">
+      <div class="post-header-inner reveal">
+        <a href="/insights" class="post-back">← Insights</a>
+        <div class="post-tags">
+          <span class="post-tag">YouTube Shorts</span>
+          <span class="post-tag">Blotato</span>
+          <span class="post-tag">Claude Code</span>
+          <span class="post-tag">Content Automation</span>
+        </div>
+        <h1 class="post-title">We Automated YouTube Shorts in a Weekend. Here's the Full System.</h1>
+        <p class="post-meta">April 2026 &nbsp;·&nbsp; 6 min read &nbsp;·&nbsp; Grab The Bull Software</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Body -->
+  <article class="post-body">
+    <div class="container">
+      <div class="post-content">
+
+        <p>Consistent short-form video is one of the best trust signals a business can build right now. The problem is the production cost. Script. Find footage. Edit. Mix audio. Export. Upload. Write the caption. Repeat — forever, every week, if you want the algorithm to care.</p>
+
+        <p>There's a better model. We built it, it runs itself, and this post covers exactly how to replicate it. The core of the system is <a href="https://blotato.com/?ref=bailey" target="_blank" rel="noopener">Blotato</a> — a video rendering and social publishing platform with an API that lets you automate the entire production pipeline. Pair it with Claude Code for orchestration and the Pexels API for free stock footage, and you can go from idea to published YouTube Short without touching a timeline editor.</p>
+
+        <p>We've published 24 episodes this way. Here's the full system.</p>
+
+        <h2>The Format: POV Lifestyle Shorts</h2>
+
+        <p>Before the tech, the creative brief. The format that works for us is POV-style aspirational content — no pain states, no before/after contrast. Just the dream moment, already happening, with the business outcome landing quietly in the voiceover.</p>
+
+        <p>Each Short follows a 4-beat arc:</p>
+
+        <ol>
+          <li>You're in the dream moment — beach, surf, gym, golf course, wherever</li>
+          <li>Meanwhile, your business is running — framed in ambient lifestyle footage</li>
+          <li>The specific outcome lands — a booking, a payment, a lead response</li>
+          <li>Close with: "Comment automate below if you want your time back."</li>
+        </ol>
+
+        <p>The voiceover carries 100% of the business narrative. The visuals just need to feel like the life. You can adapt this arc to any niche — the format is the frame, not the content.</p>
+
+        <h2>How to Build the Pipeline: 7 Steps from Script to YouTube</h2>
+
+        <p>Here's exactly how to set this up. The orchestration layer is a Claude Code skill, but the logic maps directly to any automation tool.</p>
+
+        <h3>Step 1 — Manage your episode backlog</h3>
+
+        <p>Keep your episode hooks and scene scripts in a JSON file. Each entry has a status (ready, published, scheduled), a hook line, a dream scene, and a scenes array. When you're ready to produce, load the backlog, pick an episode, and generate the scene scripts if they're not already written. Scripts should be reviewed before any footage is searched — the voiceover has to land on paper before it lands on video.</p>
+
+        <h3>Step 2 — Search Pexels for footage</h3>
+
+        <p>The <a href="https://www.pexels.com/api/" target="_blank" rel="noopener">Pexels API</a> is free and returns portrait-oriented stock clips. Search for each scene using lifestyle-specific terms ("beach golden hour slow motion", "gym morning light", "golf course aerial sunset") and cap results at 1080p — more on why below. For single-scene episodes where one long clip covers the entire voiceover, filter by minimum duration so the clip doesn't end before the script does:</p>
+
+        <pre><code># Duration estimate for single-scene episodes
+words = len(script.split())
+min_seconds = (words / 180 * 60) + 5  # TTS runs ~180 wpm; +5s buffer</code></pre>
+
+        <h3>Step 3 — Mute the source video</h3>
+
+        <p>Before anything goes to <a href="https://blotato.com/?ref=bailey" target="_blank" rel="noopener">Blotato</a>, strip the audio from the stock clip. If you skip this, Blotato keeps the ambient audio underneath the voiceover — wind, waves, crowd noise. The fix is one ffmpeg command piped directly from curl so the source file never saves to disk:</p>
+
+        <pre><code>curl -s "&lt;pexels_url&gt;" | ffmpeg -y -i pipe:0 -an -c:v copy /tmp/pexels_muted.mp4</code></pre>
+
+        <h3>Step 4 — Render via Blotato</h3>
+
+        <p>Upload the muted clip to <a href="https://blotato.com/?ref=bailey" target="_blank" rel="noopener">Blotato</a> via a presigned URL, then kick off the render. Blotato handles everything from here — AI voiceover (multiple voice options including Australian accents), captions with custom highlight colours, transitions, and timing. The key config settings to lock in:</p>
+
+        <ul>
+          <li><code>aspectRatio: "9:16"</code> — vertical for Shorts/Reels</li>
+          <li><code>trimToVoiceover: true</code> — clips trim to the exact voiceover length</li>
+          <li><code>animateAiImages: false</code> — if using real footage, this must be off (more below)</li>
+          <li><code>captionPosition: "bottom"</code> and <code>highlightColor: "#10b981"</code> — brand colours</li>
+        </ul>
+
+        <p>Wait 3 minutes before your first status poll, then every 60 seconds after that. Typical render time with real footage is 3–5 minutes.</p>
+
+        <h3>Step 5 — Mix background music via ffmpeg</h3>
+
+        <p>Blotato's template doesn't support background music natively, so you add it post-render. Download the rendered video and mix in a background track with ffmpeg. Music at 0.7 volume, starting 2 seconds into the track. Use <code>normalize=0</code> on the amix filter so the voiceover stays at full volume:</p>
+
+        <pre><code>ffmpeg -y \
+  -i /tmp/ep_raw.mp4 \
+  -ss 2 -i background.mp3 \
+  -filter_complex "[1:a]volume=0.7[music];[0:a][music]amix=inputs=2:duration=first:normalize=0[aout]" \
+  -map 0:v -map "[aout]" \
+  -c:v copy -c:a aac -shortest \
+  /tmp/ep_mixed.mp4</code></pre>
+
+        <h3>Step 6 — Publish to YouTube (and TikTok)</h3>
+
+        <p>Upload the mixed video back to <a href="https://blotato.com/?ref=bailey" target="_blank" rel="noopener">Blotato</a> via another presigned URL, then use <code>blotato_create_post</code> to fire it to YouTube with the title, caption, hashtags, and music attribution. Blotato also supports TikTok, Instagram Reels, and LinkedIn video from the same API call — same asset, multiple platforms, no extra work.</p>
+
+        <h3>Step 7 — Log the episode</h3>
+
+        <p>Update your episode record with the published status, Blotato visual ID, and the YouTube URL. This gives you a history to pull from — you can see what's been published, what's scheduled, and which automation types you've already covered.</p>
+
+        <blockquote>
+          <p>The whole thing — footage search, muting, render, music mix, publish — runs from a single prompt. No timeline editor. No manual uploads. No caption writing. <a href="https://blotato.com/?ref=bailey" target="_blank" rel="noopener">Blotato</a> is what makes the render and publish step possible without building your own video infrastructure.</p>
+        </blockquote>
+
+        <h2>Five Things That'll Catch You Out</h2>
+
+        <h3>1. UHD clips break Blotato renders</h3>
+
+        <p>The Pexels API returns whatever resolution it has — and for many clips, that includes 4K UHD variants at 2160p or higher. Feeding those to Blotato causes the render to fail silently. Filter your footage search to cap results at 1080p wide and pick the best portrait clip under that ceiling.</p>
+
+        <blockquote>
+          <p>If your renders are randomly failing with no clear error, check the source resolution first. This was the cause every single time.</p>
+        </blockquote>
+
+        <h3>2. Muting the source isn't optional</h3>
+
+        <p>The audio layer in Blotato's template sits on top of the source — it doesn't replace it. If the stock clip has audio, it comes through underneath the voiceover. Muting before upload takes 3 extra seconds and saves the render.</p>
+
+        <h3>3. Single-scene clips must cover the full voiceover</h3>
+
+        <p>In multi-scene episodes, <code>trimToVoiceover: true</code> handles timing automatically — each clip trims to its scene's voiceover length. In single-scene mode, the clip must be long enough to cover the entire TTS output. If it's shorter, the video ends before the script finishes. Always estimate the voiceover duration before searching and filter clips by minimum duration.</p>
+
+        <h3>4. <code>animateAiImages</code> must be false for real footage</h3>
+
+        <p>Leaving <code>animateAiImages: true</code> when you're using real Pexels clips causes script generation to stall indefinitely — no render, no error, just a job that never moves. Set it to <code>false</code> whenever you're using real footage instead of AI-generated images.</p>
+
+        <h3>5. Use Python requests for large uploads on Mac</h3>
+
+        <p>Mac ships with LibreSSL instead of OpenSSL. For large video files, <code>curl PUT</code> to presigned S3 URLs fails partway through with a TLS error that's hard to trace. Switch to Python's <code>requests</code> library — this is a Mac-specific issue and Linux doesn't have it.</p>
+
+        <pre><code>python3 -c "
+import requests
+with open('/tmp/pexels_muted.mp4', 'rb') as f:
+    r = requests.put('&lt;presignedUrl&gt;', data=f, headers={'Content-Type': 'video/mp4'})
+print(r.status_code)
+"</code></pre>
+
+        <h2>What We'd Do Differently</h2>
+
+        <p><strong>Schedule from day one.</strong> We published the first 10 episodes the same day. That's 10 videos in one drop with no distribution spread. <a href="https://blotato.com/?ref=bailey" target="_blank" rel="noopener">Blotato</a> has a scheduling API — stagger your releases 24–48 hours apart and the same batch of content runs for two weeks instead of one day.</p>
+
+        <p><strong>Cross-post from the start.</strong> We added TikTok on episode 11. The first 10 only went to YouTube. Blotato supports YouTube, TikTok, Instagram, and LinkedIn from the same API call — there's no reason to leave reach on the table from day one.</p>
+
+        <p><strong>Track engagement per automation type.</strong> Each episode covers a different outcome: booking, quoting, invoicing, lead response, follow-up. Rotating types keeps the content varied, but you should measure which ones drive the most engagement and let that data feed back into your backlog prioritisation.</p>
+
+        <div class="post-tools">
+          <p class="post-tools-label">Tools in this build</p>
+          <div class="post-tools-list">
+            <div class="post-tools-item">
+              <a href="https://blotato.com/?ref=bailey" target="_blank" rel="noopener">Blotato</a>
+              <span>Video rendering, AI voiceover, captions, and YouTube/TikTok publishing — all via MCP. The layer that turns a script and a video clip into a published Short.</span>
+            </div>
+            <div class="post-tools-item">
+              <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a>
+              <span>Free stock footage via API. Portrait-oriented lifestyle clips. No affiliate program — just genuinely the best free source for cinematic stock video.</span>
+            </div>
+            <div class="post-tools-item">
+              <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+              <span>The orchestration layer. The pov-shorts skill lives here — episode management, footage search, render coordination, and publishing logic, all in one place.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-divider"></div>
+
+        <div class="post-cta">
+          <p>If you're spending time on content that could be running itself — or you want to build a system like this for your business — that's exactly what we do.</p>
+          <a href="/#cta">Get in touch →</a>
+        </div>
+
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <p class="footer-tagline">
+            Efficiency is nice.<br />
+            <span class="accent">Cash is king.</span>
+          </p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/#services">Services</a>
+          <a href="/#process">How It Works</a>
+          <a href="/#about">About</a>
+          <a href="/insights">Insights</a>
+          <a href="/#cta">Let's talk</a>
+        </nav>
+
+        <div class="footer-contact">
+          <a href="mailto:bailey@gtbsoftware.com">bailey@gtbsoftware.com</a>
+          <a href="https://linkedin.com/company/grab-the-bull-software" target="_blank" rel="noopener">LinkedIn →</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Grab the Bull Software. All rights reserved.</p>
+        <p class="footer-copy">gtbsoftware.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen.toString());
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  </script>
+
+</body>
+</html>
