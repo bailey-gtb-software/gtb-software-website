@@ -13,6 +13,126 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
 
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "GTB Software",
+    "url": "https://gtbsoftware.com",
+    "logo": "https://gtbsoftware.com/assets/GTB Logo Transparent.png",
+    "description": "Operational diagnostics for growing businesses. We find what's holding your growth back and build what removes it.",
+    "email": "bailey@gtbsoftware.com",
+    "areaServed": "US",
+    "sameAs": [
+      "https://www.linkedin.com/company/gtb-software",
+      "https://www.linkedin.com/in/baileyhornemba/",
+      "https://www.linkedin.com/in/gavinhorne/"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "bailey@gtbsoftware.com",
+      "contactType": "sales",
+      "availableLanguage": "English"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "GTB Software Services",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Operational Process Audit",
+            "description": "We map how work actually gets done, find the constraints limiting revenue, and tie every finding to a quantifiable dollar outcome."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Workflow Automation",
+            "description": "Connect the systems you already have. Remove the manual handoffs between them."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Custom Software",
+            "description": "Purpose-built software designed for how your business actually operates."
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "AI Agents",
+            "description": "Autonomous agents that do operational work at a scale your team can't match manually."
+          }
+        }
+      ]
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is an operational process audit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It's a structured diagnostic of how work actually moves through your business — not how you think it does. We map your real workflows, identify the specific constraints limiting revenue or capacity, and tie every finding to a dollar outcome. No recommendations without a return attached."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does an engagement take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The audit itself typically takes one to two weeks, depending on business complexity. Build timelines vary by scope — simple workflow automations can be live in days, custom software takes longer. Everything is scoped after the audit, not before."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What industries do you work with?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Any service business where operational friction is limiting growth. Our primary focus is owner-operated service businesses (HVAC, plumbing, electrical, field service, professional services) and growing B2B companies with 20–150 employees hitting scaling friction. If the problem is real and the ROI case is clear, we can help."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is GTB Software different from a consultant or agency?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Consultants diagnose and recommend. Agencies build what you tell them. We do both — but only after the diagnostic has identified the actual constraint. We don't show up with a predetermined solution. We don't build what won't move the needle. Every recommendation is tied to revenue or capacity."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you work with businesses that already have automation tools?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Most businesses we work with already have a SaaS stack — the problem is the gaps between tools, not the tools themselves. Duplicate data entry, manual handoffs, workflows that start in one system and die in another. That's where we operate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you measure ROI from your recommendations?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Before we recommend anything, we quantify the cost of the current problem: hours lost per week, revenue delayed, leads not followed up on. Every recommendation maps to one of those numbers. After implementation, we track against the baseline. If we can't show you the return, we won't recommend it."
+        }
+      }
+    ]
+  }
+  </script>
+
   <style>
     /* =============================================
        CSS CUSTOM PROPERTIES
@@ -1093,6 +1213,240 @@
     }
 
     /* =============================================
+       CASE STUDIES
+    ============================================= */
+    #case-studies {
+      padding: 6rem 0;
+    }
+
+    .case-studies-header {
+      margin-bottom: 3.5rem;
+    }
+
+    .case-study-featured {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .case-study-featured:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+      box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.08), 0 8px 32px rgba(16, 185, 129, 0.06);
+    }
+
+    .case-study-featured::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        600px circle at var(--glow-x, 30%) var(--glow-y, 50%),
+        rgba(16, 185, 129, 0.05),
+        transparent 70%
+      );
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .case-study-featured:hover::before {
+      opacity: 1;
+    }
+
+    .case-study-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .case-study-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .case-study-body {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .case-study-block-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .case-study-block-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .case-study-block-body {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .case-study-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .case-study-stack {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .case-study-stack-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+    }
+
+    .case-studies-more {
+      margin-top: 1.5rem;
+      padding: 1.5rem 2rem;
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .case-studies-more p {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+
+    /* =============================================
+       FAQ
+    ============================================= */
+    #faq {
+      padding: 6rem 0;
+    }
+
+    .faq-header {
+      margin-bottom: 3.5rem;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: var(--bg-card);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.5rem 2rem;
+      text-align: left;
+      transition: background 0.2s;
+    }
+
+    .faq-question:hover {
+      background: var(--bg-raised);
+    }
+
+    .faq-question-text {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid var(--border-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 1rem;
+      line-height: 1;
+      transition: transform 0.25s ease, background 0.2s, border-color 0.2s;
+      font-family: var(--font-mono);
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--accent-dim);
+      border-color: var(--accent-border);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      background: var(--bg-card);
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+
+    .faq-answer-inner {
+      padding: 0 2rem 1.75rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    /* =============================================
        BOOK THE AUDIT — CTA
     ============================================= */
     #cta {
@@ -1439,7 +1793,7 @@
 
     <!-- Content block -->
     <div class="hero-content reveal">
-      <span class="hero-eyebrow">Operational Diagnostics for Growing Businesses</span>
+      <span class="hero-eyebrow">GTB Software — Operational Diagnostics for Growing Businesses</span>
 
       <h1 class="hero-headline">
         We find what's holding your growth back<br />and <span class="accent">build</span> what removes it.
@@ -1655,6 +2009,63 @@
   <div class="section-divider"></div>
 
   <!-- ============================================
+       CASE STUDIES
+  ============================================= -->
+  <section id="case-studies">
+    <div class="container">
+
+      <div class="case-studies-header reveal">
+        <span class="eyebrow">Case Studies</span>
+        <h2 class="section-headline">What we've actually built.</h2>
+        <p class="section-subhead">Real problems. Real systems. Outcomes you can point to.</p>
+      </div>
+
+      <div class="reveal reveal-delay-1">
+        <a class="case-study-featured" href="https://geoready.app" target="_blank" rel="noopener" style="display:block; text-decoration:none; color:inherit;">
+          <span class="case-study-label">Case Study — AI Search Visibility</span>
+
+          <div class="case-study-body">
+
+            <div>
+              <span class="case-study-block-label">The Problem</span>
+              <p class="case-study-block-body">Business owners had no way to know if AI search engines could find them online — and when they scored low, they had no idea where to start. The gap between "we have a website" and "AI can cite us" was invisible.</p>
+            </div>
+
+            <div>
+              <span class="case-study-block-label">What We Built</span>
+              <h3 class="case-study-block-title">GEO Ready</h3>
+              <p class="case-study-block-body">An AI search readiness audit tool that scans any website and scores it across five categories: structured data, content quality, brand mentions, technical SEO, and AI access. Returns a prioritised action list with impact ratings.</p>
+            </div>
+
+            <div>
+              <span class="case-study-block-label">The Result</span>
+              <p class="case-study-block-body">Audit completes in seconds. Free tier available at geoready.app. Used to audit this site — identified four critical gaps, implemented all fixes in a single Claude Code session. Score improved from 54 to measurably higher across every category.</p>
+            </div>
+
+          </div>
+
+          <div class="case-study-footer">
+            <div class="case-study-stack">
+              <span class="case-study-stack-tag">Custom Audit Engine</span>
+              <span class="case-study-stack-tag">Structured Data Analysis</span>
+              <span class="case-study-stack-tag">AI Content Scoring</span>
+              <span class="case-study-stack-tag">Claude Code</span>
+            </div>
+            <span class="link-arrow" style="font-size:0.875rem;">Visit geoready.app →</span>
+          </div>
+        </a>
+
+        <div class="case-studies-more">
+          <p>More case studies coming — client work in progress.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
        ABOUT — THE TEAM
   ============================================= -->
   <section id="about" class="section">
@@ -1713,16 +2124,16 @@
 
       <div class="insights-grid reveal reveal-delay-1">
 
-        <a class="insight-card" href="/insights/finn-vapi-voice-agent.html">
+        <a class="insight-card" href="/insights/geo-ready-ai-visibility.html">
           <div class="insight-tags">
-            <span class="insight-tag">Voice Agents</span>
-            <span class="insight-tag">Vapi</span>
-            <span class="insight-tag">AI Agents</span>
+            <span class="insight-tag">GEO</span>
+            <span class="insight-tag">AI Search</span>
+            <span class="insight-tag">Claude Code</span>
           </div>
-          <h3 class="insight-title">We Built an AI Voice Agent Using Claude Code and Vapi. Here's What Actually Happened.</h3>
-          <p class="insight-excerpt">Finn dials small business owners, opens with a curiosity hook, and books callbacks autonomously. Here's the architecture, the eight engineering lessons we didn't see coming, and what we'd do differently.</p>
+          <h3 class="insight-title">We Ran Our Own Website Through Our AI Audit Tool. Here's What It Found — and How We Fixed It.</h3>
+          <p class="insight-excerpt">We built GEO Ready to audit AI search visibility. Then we ran gtbsoftware.com through it and scored 54/100. Here's every fix we made — and how we did it in a single Claude Code session.</p>
           <div class="insight-footer">
-            <span class="insight-date">April 2026 &nbsp;·&nbsp; 8 min read</span>
+            <span class="insight-date">April 2026 &nbsp;·&nbsp; 7 min read</span>
           </div>
         </a>
 
@@ -1732,6 +2143,97 @@
         <a href="/insights" class="link-arrow">View all insights →</a>
       </div>
 
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       FAQ
+  ============================================= -->
+  <section id="faq">
+    <div class="container">
+
+      <div class="faq-header reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="section-headline">Questions we hear often.</h2>
+      </div>
+
+      <div class="faq-list reveal reveal-delay-1">
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">What is an operational process audit?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">
+              It's a structured diagnostic of how work actually moves through your business — not how you think it does. We map your real workflows, identify the specific constraints limiting revenue or capacity, and tie every finding to a dollar outcome. No recommendations without a return attached.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">How long does an engagement take?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">
+              The audit itself typically takes one to two weeks, depending on business complexity. Build timelines vary by scope — simple workflow automations can be live in days, custom software takes longer. Everything is scoped after the audit, not before.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">What industries do you work with?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">
+              Any service business where operational friction is limiting growth. Our primary focus is owner-operated service businesses (HVAC, plumbing, electrical, field service, professional services) and growing B2B companies with 20–150 employees hitting scaling friction. If the problem is real and the ROI case is clear, we can help.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">How is GTB Software different from a consultant or agency?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">
+              Consultants diagnose and recommend. Agencies build what you tell them. We do both — but only after the diagnostic has identified the actual constraint. We don't show up with a predetermined solution. We don't build what won't move the needle. Every recommendation is tied to revenue or capacity.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">Do you work with businesses that already have automation tools?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">
+              Yes. Most businesses we work with already have a SaaS stack — the problem is the gaps between tools, not the tools themselves. Duplicate data entry, manual handoffs, workflows that start in one system and die in another. That's where we operate.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span class="faq-question-text">How do you measure ROI from your recommendations?</span>
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-answer" role="region">
+            <div class="faq-answer-inner">
+              Before we recommend anything, we quantify the cost of the current problem: hours lost per week, revenue delayed, leads not followed up on. Every recommendation maps to one of those numbers. After implementation, we track against the baseline. If we can't show you the return, we won't recommend it.
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 
@@ -1936,8 +2438,24 @@
       requestAnimationFrame(update);
     }
 
+    // ─── FAQ accordion ───────────────────────────────
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const btn = item.querySelector('.faq-question');
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(other => {
+          other.classList.remove('open');
+          other.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
     // ─── Card glow (mouse-tracking spotlight) ────────
-    document.querySelectorAll('.service-card, .team-card, .insight-card').forEach(card => {
+    document.querySelectorAll('.service-card, .team-card, .insight-card, .case-study-featured').forEach(card => {
       card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
         card.style.setProperty('--glow-x', `${e.clientX - rect.left}px`);

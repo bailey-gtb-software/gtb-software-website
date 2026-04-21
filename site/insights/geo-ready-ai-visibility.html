@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>We Ran Our Own Website Through Our AI Audit Tool. Here's What It Found — GTB Software</title>
+  <meta name="description" content="We built GEO Ready to audit AI search visibility. Then we ran gtbsoftware.com through it and scored 54/100. Here's every fix we made — and how we did it in a single Claude Code session." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES
+    ============================================= */
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #111111;
+      --bg-raised: #0f0f0f;
+      --border: #1f1f1f;
+      --border-mid: #2a2a2a;
+      --text: #fafafa;
+      --text-muted: #737373;
+      --text-dim: #4a4a4a;
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.1);
+      --accent-border: rgba(16, 185, 129, 0.2);
+      --font-display: 'Satoshi', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: ui-monospace, Menlo, Monaco, 'Courier New', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .accent {
+      color: var(--accent);
+      text-shadow: 0 0 24px rgba(16, 185, 129, 0.45), 0 0 48px rgba(16, 185, 129, 0.2);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    #nav.scrolled {
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-color: var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .nav-logo img {
+      height: 28px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .nav-cta {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--accent);
+      padding: 0.5rem 1.25rem;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: #0d9668; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: rgba(10, 10, 10, 0.97);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .mobile-nav.open { display: flex; }
+
+    .mobile-nav a {
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .mobile-nav a:hover,
+    .mobile-nav a.active { color: var(--text); }
+
+    .mobile-nav .nav-cta {
+      font-size: 1rem;
+      padding: 0.75rem 2rem;
+    }
+
+    /* =============================================
+       POST HEADER
+    ============================================= */
+    .post-header {
+      padding: 9rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-header-inner {
+      max-width: 760px;
+    }
+
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+
+    .post-back:hover { color: var(--text-muted); }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 0.25rem 0.625rem;
+      border-radius: 100px;
+    }
+
+    .post-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.875rem, 4vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    .post-meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+
+    /* =============================================
+       POST BODY
+    ============================================= */
+    .post-body {
+      padding: 4rem 0 6rem;
+    }
+
+    .post-content {
+      max-width: 760px;
+    }
+
+    .post-content p {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin: 3rem 0 1.25rem;
+      line-height: 1.25;
+    }
+
+    .post-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin: 2rem 0 0.875rem;
+    }
+
+    .post-content strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .post-content code {
+      font-family: var(--font-mono);
+      font-size: 0.875em;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.1em 0.4em;
+      color: var(--accent);
+    }
+
+    .post-content pre {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+    }
+
+    .post-content pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .post-content ul,
+    .post-content ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-muted);
+    }
+
+    .post-content li {
+      font-size: 1.0625rem;
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-content a {
+      color: var(--accent);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+
+    .post-content a:hover {
+      border-color: var(--accent);
+    }
+
+    .post-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 3rem 0;
+    }
+
+    .post-score-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    @media (max-width: 640px) {
+      .post-score-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .post-score-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+    }
+
+    .post-score-card.critical { border-color: rgba(239, 68, 68, 0.3); }
+    .post-score-card.high { border-color: rgba(245, 158, 11, 0.3); }
+    .post-score-card.good { border-color: rgba(16, 185, 129, 0.3); }
+
+    .post-score-value {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 800;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .post-score-card.critical .post-score-value { color: #ef4444; }
+    .post-score-card.high .post-score-value { color: #f59e0b; }
+    .post-score-card.good .post-score-value { color: var(--accent); }
+
+    .post-score-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .post-callout {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .post-callout p {
+      margin-bottom: 0 !important;
+      font-size: 0.95rem !important;
+    }
+
+    .post-cta {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 1rem;
+    }
+
+    .post-cta p {
+      color: var(--text-muted);
+      margin-bottom: 1rem !important;
+    }
+
+    .post-cta a {
+      color: var(--accent) !important;
+      border-bottom: none !important;
+      font-weight: 500;
+    }
+
+    .post-tools {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+
+    .post-tools-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+    }
+
+    .post-tools-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .post-tools-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
+    .post-tools-item a {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.9375rem;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .post-tools-item a:hover {
+      border-color: var(--accent);
+    }
+
+    .post-tools-item span {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .footer-nav a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-nav a:hover { color: var(--text); }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      align-items: flex-end;
+    }
+
+    .footer-contact a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: var(--text); }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy { font-size: 0.78rem; color: var(--text-dim); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav { display: flex; }
+      .footer-main { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-contact { align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1.25rem; }
+      .post-content pre { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Navigation">
+    <a href="/">Services</a>
+    <a href="/#process">How It Works</a>
+    <a href="/#about">About</a>
+    <a href="/insights" class="active">Insights</a>
+    <a href="/#cta" class="nav-cta">Let's talk</a>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="GTB Software home">
+        <img src="../assets/GTB Logo Transparent.png" alt="GTB Software" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <span class="nav-logo-text">GTB Software</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#process">How It Works</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/insights" class="active">Insights</a></li>
+      </ul>
+
+      <a href="/#cta" class="nav-cta">Let's talk</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Post Header -->
+  <header class="post-header">
+    <div class="container">
+      <div class="post-header-inner reveal">
+        <a href="/insights" class="post-back">← Insights</a>
+        <div class="post-tags">
+          <span class="post-tag">GEO</span>
+          <span class="post-tag">AI Search</span>
+          <span class="post-tag">Claude Code</span>
+        </div>
+        <h1 class="post-title">We Ran Our Own Website Through Our AI Audit Tool. Here's What It Found — and How We Fixed It.</h1>
+        <p class="post-meta">April 2026 &nbsp;·&nbsp; 7 min read &nbsp;·&nbsp; Grab The Bull Software</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Body -->
+  <article class="post-body">
+    <div class="container">
+      <div class="post-content">
+
+        <p>There's a certain kind of accountability that comes with building a tool for other people and then refusing to use it on yourself. We built <a href="https://geoready.app" target="_blank" rel="noopener">GEO Ready</a> to help businesses understand how visible they are to AI search engines. ChatGPT, Claude, Perplexity — the tools people increasingly use instead of Google when they want a recommendation.</p>
+
+        <p>We hadn't run our own site through it.</p>
+
+        <p>So we did. We scored 54 out of 100. And then we fixed it — in a single Claude Code session — and documented every change so you can do the same thing on your own site.</p>
+
+        <h2>What GEO Actually Is</h2>
+
+        <p>GEO stands for Generative Engine Optimisation. It's the practice of making your website readable and credible to AI systems, not just traditional search crawlers. When someone asks ChatGPT "who does operational diagnostics for small businesses," whether your company comes up depends entirely on how well your site is structured for AI consumption.</p>
+
+        <p>Traditional SEO optimises for keyword ranking. GEO optimises for citation — making your site the kind of source an AI confidently points to when answering a relevant question.</p>
+
+        <p>GEO Ready scores five categories:</p>
+
+        <ul>
+          <li><strong>Structured Data</strong> — Does your site have machine-readable schema markup?</li>
+          <li><strong>Content Quality</strong> — Is your content substantive enough for AI to extract and cite?</li>
+          <li><strong>Brand Mentions</strong> — Is your brand referenced elsewhere on the web?</li>
+          <li><strong>Technical SEO</strong> — Basic foundations: meta tags, sitemap, crawlability.</li>
+          <li><strong>AI Access</strong> — Can AI crawlers actually read your site?</li>
+        </ul>
+
+        <h2>Our Score: 54/100</h2>
+
+        <p>Here's how gtbsoftware.com broke down on the day we ran the audit:</p>
+
+        <div class="post-score-grid">
+          <div class="post-score-card critical">
+            <span class="post-score-value">10</span>
+            <span class="post-score-label">Structured Data</span>
+          </div>
+          <div class="post-score-card high">
+            <span class="post-score-value">50</span>
+            <span class="post-score-label">Content Quality</span>
+          </div>
+          <div class="post-score-card high">
+            <span class="post-score-value">55</span>
+            <span class="post-score-label">Brand Mentions</span>
+          </div>
+          <div class="post-score-card high">
+            <span class="post-score-value">60</span>
+            <span class="post-score-label">Technical SEO</span>
+          </div>
+          <div class="post-score-card good">
+            <span class="post-score-value">95</span>
+            <span class="post-score-label">AI Access</span>
+          </div>
+        </div>
+
+        <p>AI Access was strong — the site is clean, fast, and crawlable. But Structured Data at 10/100 is practically a zero. No schema markup at all. Content Quality at 50 flagged the lack of an FAQ section and thin depth on service pages. Technical SEO noted a missing sitemap. And the H1 heading, while present, wasn't doing the entity-clarity work that AI systems look for.</p>
+
+        <div class="post-callout">
+          <p>The executive summary from GEO Ready: <em>"Your site is readable by AI, which is the best starting point. The big blockers are simple: there's no H1 headline and no structured data. Fix those first. Add a short FAQ and a few case studies next."</em></p>
+        </div>
+
+        <p>Clear enough. Let's get into the fixes.</p>
+
+        <h2>Fix 1 — Structured Data (CRITICAL)</h2>
+
+        <p>Structured data is Schema.org markup that tells AI and search engines exactly what your business is, what it does, who runs it, and how to contact it. Without it, an AI inferring your business from your copy alone has to work a lot harder — and is more likely to get it wrong or skip you entirely.</p>
+
+        <p>We added two JSON-LD blocks to the <code>&lt;head&gt;</code> of our homepage. JSON-LD is the cleanest format — a single script tag, no need to touch your HTML structure.</p>
+
+        <p>The first is an <code>Organization</code> schema that tells AI systems: here's the business name, URL, logo, contact, and social profiles.</p>
+
+        <pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "GTB Software",
+  "url": "https://gtbsoftware.com",
+  "logo": "https://gtbsoftware.com/assets/GTB Logo Transparent.png",
+  "description": "Operational diagnostics for growing businesses.",
+  "email": "bailey@gtbsoftware.com",
+  "sameAs": [
+    "https://www.linkedin.com/company/gtb-software"
+  ]
+}
+&lt;/script&gt;</code></pre>
+
+        <p>The second adds a service catalog using <code>hasOfferCatalog</code>, listing each of our four services with a short description. This helps AI understand what we actually do — and surfaces us when someone asks about services like workflow automation or operational audits.</p>
+
+        <p>We also added a <code>FAQPage</code> schema (more on the FAQ section below) with the full question-and-answer markup. FAQ schema is one of the highest-impact additions you can make — it gives AI a direct feed of Q&amp;A content it can cite verbatim.</p>
+
+        <h2>Fix 2 — H1 Entity Clarity</h2>
+
+        <p>Our H1 read: <em>"We find what's holding your growth back and build what removes it."</em> That's good marketing copy. But from an AI's perspective, it doesn't clearly establish <em>who</em> we are — just what we do.</p>
+
+        <p>The eyebrow text above it said "Operational Diagnostics for Growing Businesses." The title tag said "GTB Software: Operational Diagnostics for Growing Businesses." But the H1 itself — the element AI systems weight most heavily for entity identification — had no company name in it.</p>
+
+        <p>The fix was small: we updated the eyebrow span to include the brand name explicitly.</p>
+
+        <pre><code>&lt;!-- Before --&gt;
+&lt;span class="hero-eyebrow"&gt;Operational Diagnostics for Growing Businesses&lt;/span&gt;
+
+&lt;!-- After --&gt;
+&lt;span class="hero-eyebrow"&gt;GTB Software — Operational Diagnostics for Growing Businesses&lt;/span&gt;</code></pre>
+
+        <p>Combined with the H1 below it, the hero section now opens with entity name, category, and benefit — all above the fold, all readable without JavaScript execution.</p>
+
+        <h2>Fix 3 — FAQ Section</h2>
+
+        <p>AI systems love FAQ content. When a user asks a question, an AI that can cite a verbatim answer from your site is far more likely to do so than one that has to infer an answer from your prose.</p>
+
+        <p>We added a six-question FAQ section to the homepage, between the Insights section and the contact form. The questions cover the things we're actually asked:</p>
+
+        <ul>
+          <li>What is an operational process audit?</li>
+          <li>How long does an engagement take?</li>
+          <li>What industries do you work with?</li>
+          <li>How is GTB different from a consultant or agency?</li>
+          <li>Do you work with businesses that already have automation tools?</li>
+          <li>How do you measure ROI from your recommendations?</li>
+        </ul>
+
+        <p>Each answer is 2–3 sentences: specific enough to be useful, short enough for AI to extract and cite cleanly. The HTML uses a simple accordion pattern with proper ARIA attributes. The FAQ schema in the <code>&lt;head&gt;</code> mirrors every question and answer exactly — so both the visible content and the machine-readable markup are in sync.</p>
+
+        <h2>Fix 4 — Sitemap</h2>
+
+        <p>We didn't have a sitemap.xml. That's a basic Technical SEO miss. A sitemap tells search and AI crawlers exactly what URLs exist on your site and when they were last updated. Without it, a crawler landing on your homepage has to discover every page by following links — and will miss anything not linked prominently.</p>
+
+        <p>We created <code>sitemap.xml</code> in the root of the site with every current URL: homepage, insights index, and all four articles. We'll keep it updated as new content is added.</p>
+
+        <h2>How We Did It: One Claude Code Session</h2>
+
+        <p>The audit output from GEO Ready is clear enough that it doesn't take much to turn it into an implementation task. We copied the report, opened Claude Code, gave it the current <code>index.html</code>, and worked through each fix in sequence.</p>
+
+        <p>The workflow:</p>
+
+        <ol>
+          <li>Read the existing HTML to understand the structure before touching anything</li>
+          <li>Insert the JSON-LD blocks in the <code>&lt;head&gt;</code> — schema first, FAQ schema second</li>
+          <li>Update the eyebrow text — one line change</li>
+          <li>Add the FAQ section HTML and accordion CSS between the existing sections</li>
+          <li>Write the FAQ JavaScript for the toggle interaction</li>
+          <li>Create <code>sitemap.xml</code></li>
+          <li>Add a case studies section while we were at it</li>
+        </ol>
+
+        <p>Total session time: under two hours. None of it was hard — it was just a matter of having the audit output to tell us exactly what to fix and in what order.</p>
+
+        <p>The GEO Ready report gives you a prioritised list with impact ratings. Critical items first, then high, then medium. That ordering matters — the structured data fix alone accounts for a large portion of the score gap, so starting there means you get the biggest return before you touch anything else.</p>
+
+        <h2>The Bigger Point</h2>
+
+        <p>If you're a business that depends on word-of-mouth, referrals, or sales conversations to get found — you're probably fine for now. But the way people look for service providers is shifting. When someone asks an AI for a recommendation, or uses Perplexity to research options, or searches with a query that triggers an AI Overview — the businesses that get cited are the ones whose sites are structured to be cited.</p>
+
+        <p>54/100 is not terrible for a site built recently. But it's also not where we want to be when an ideal client asks an AI who does operational diagnostics for growing businesses. The fixes we made this session don't guarantee a citation. They remove the reasons not to cite us.</p>
+
+        <p>If you want to see where your own site stands, run it through GEO Ready. It's free, takes about ten seconds, and gives you a prioritised action list you can hand to Claude Code and work through the same way we did.</p>
+
+        <div class="post-tools">
+          <p class="post-tools-label">Tools in this build</p>
+          <div class="post-tools-list">
+            <div class="post-tools-item">
+              <a href="https://geoready.app" target="_blank" rel="noopener">GEO Ready</a>
+              <span>The audit tool we built. Scans any website and scores it across five GEO categories. Free tier gives you the top issues and recommendations.</span>
+            </div>
+            <div class="post-tools-item">
+              <a href="https://claude.ai/code" target="_blank" rel="noopener">Claude Code</a>
+              <span>Used to implement all the changes: JSON-LD schemas, FAQ section HTML/CSS/JS, sitemap, and case studies section. Read the audit output, worked through each fix in sequence.</span>
+            </div>
+            <div class="post-tools-item">
+              <a href="https://schema.org" target="_blank" rel="noopener">Schema.org</a>
+              <span>The standard vocabulary for structured data. Organization, Service, and FAQPage types used in this build.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-divider"></div>
+
+        <div class="post-cta">
+          <p>If you want help auditing and improving your own site's AI visibility — or you want GTB to do it as part of a broader operational diagnostic — that's something we can scope.</p>
+          <a href="/#cta">Get in touch →</a>
+        </div>
+
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <p class="footer-tagline">
+            Efficiency is nice.<br />
+            <span class="accent">Cash is king.</span>
+          </p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/#services">Services</a>
+          <a href="/#process">How It Works</a>
+          <a href="/#about">About</a>
+          <a href="/insights">Insights</a>
+          <a href="/#cta">Let's talk</a>
+        </nav>
+
+        <div class="footer-contact">
+          <a href="mailto:bailey@gtbsoftware.com">bailey@gtbsoftware.com</a>
+          <a href="https://linkedin.com/company/grab-the-bull-software" target="_blank" rel="noopener">LinkedIn →</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Grab the Bull Software. All rights reserved.</p>
+        <p class="footer-copy">gtbsoftware.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen.toString());
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>
