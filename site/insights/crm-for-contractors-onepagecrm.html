@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Most CRMs Fail Contractors (And What We Recommend Instead) — GTB Software</title>
+  <meta name="description" content="Most HVAC, plumbing, and electrical companies either have a CRM nobody uses or no CRM at all. Here's why it happens and what actually works." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "Why Most CRMs Fail Contractors (And What We Recommend Instead)",
+    "description": "Most HVAC, plumbing, and electrical companies either have a CRM nobody uses or no CRM at all. Here's why it happens and what actually works.",
+    "datePublished": "2026-04-22",
+    "author": {
+      "@type": "Organization",
+      "name": "GTB Software",
+      "url": "https://gtbsoftware.com"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "GTB Software",
+      "url": "https://gtbsoftware.com"
+    }
+  }
+  </script>
+
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES
+    ============================================= */
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #111111;
+      --bg-raised: #0f0f0f;
+      --border: #1f1f1f;
+      --border-mid: #2a2a2a;
+      --text: #fafafa;
+      --text-muted: #737373;
+      --text-dim: #4a4a4a;
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.1);
+      --accent-border: rgba(16, 185, 129, 0.2);
+      --font-display: 'Satoshi', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: ui-monospace, Menlo, Monaco, 'Courier New', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .accent {
+      color: var(--accent);
+      text-shadow: 0 0 24px rgba(16, 185, 129, 0.45), 0 0 48px rgba(16, 185, 129, 0.2);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    #nav.scrolled {
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-color: var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .nav-logo img {
+      height: 28px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-cta:hover {
+      background: linear-gradient(135deg, #0d9668 0%, #047857 100%);
+      box-shadow: 0 0 22px rgba(16, 185, 129, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-nav.open { opacity: 1; pointer-events: all; }
+
+    .mobile-nav a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .mobile-nav a:hover { color: var(--text); }
+    .mobile-nav .nav-cta { font-size: 1rem; padding: 0.875rem 2rem; }
+
+    /* =============================================
+       POST HEADER
+    ============================================= */
+    .post-header {
+      padding: 9rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-header-inner {
+      max-width: 760px;
+    }
+
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .post-back:hover {
+      color: var(--accent);
+      gap: 0.5rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 0.25rem 0.625rem;
+      border-radius: 100px;
+    }
+
+    .post-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .post-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    /* =============================================
+       POST BODY
+    ============================================= */
+    .post-body {
+      padding: 5rem 0 7rem;
+    }
+
+    .post-content {
+      max-width: 760px;
+    }
+
+    .post-content p {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .post-content h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--text);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin: 3rem 0 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .post-content h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin: 2rem 0 0.875rem;
+    }
+
+    .post-content ul,
+    .post-content ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content li {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-content li strong {
+      color: var(--text);
+    }
+
+    .post-content blockquote {
+      border-left: 3px solid var(--accent);
+      margin: 2rem 0;
+      padding: 1rem 1.5rem;
+      background: var(--accent-dim);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .post-content blockquote p {
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 0;
+    }
+
+    .post-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 3rem 0;
+    }
+
+    /* CTA at end of post */
+    .post-cta {
+      margin-top: 4rem;
+      padding: 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 16px;
+    }
+
+    .post-cta p {
+      color: var(--text-muted) !important;
+      margin-bottom: 1.25rem !important;
+    }
+
+    .post-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, gap 0.2s;
+    }
+
+    .post-cta a:hover {
+      border-color: var(--accent);
+      gap: 0.75rem;
+    }
+
+    /* Tools in this build */
+    .post-tools {
+      margin: 3rem 0;
+      padding: 2rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .post-tools-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+    }
+
+    .post-tools-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .post-tools-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
+    .post-tools-item a {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.9375rem;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .post-tools-item a:hover {
+      border-color: var(--accent);
+    }
+
+    .post-tools-item span {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .footer-nav a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-nav a:hover { color: var(--text); }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      align-items: flex-end;
+    }
+
+    .footer-contact a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: var(--text); }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy { font-size: 0.78rem; color: var(--text-dim); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav { display: flex; }
+      .footer-main { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-contact { align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Navigation">
+    <a href="/">Services</a>
+    <a href="/#process">How It Works</a>
+    <a href="/#about">About</a>
+    <a href="/insights" class="active">Insights</a>
+    <a href="/#cta" class="nav-cta">Let's talk</a>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="GTB Software home">
+        <img src="../assets/GTB Logo Transparent.png" alt="GTB Software" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <span class="nav-logo-text">GTB Software</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#process">How It Works</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/insights" class="active">Insights</a></li>
+      </ul>
+
+      <a href="/#cta" class="nav-cta">Let's talk</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Post Header -->
+  <header class="post-header">
+    <div class="container">
+      <div class="post-header-inner reveal">
+        <a href="/insights" class="post-back">← Insights</a>
+        <div class="post-tags">
+          <span class="post-tag">Operations</span>
+          <span class="post-tag">CRM</span>
+          <span class="post-tag">Service Business</span>
+        </div>
+        <h1 class="post-title">Why Most CRMs Fail Contractors (And What We Recommend Instead)</h1>
+        <p class="post-meta">April 2026 &nbsp;·&nbsp; 5 min read &nbsp;·&nbsp; Grab The Bull Software</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Body -->
+  <article class="post-body">
+    <div class="container">
+      <div class="post-content">
+
+        <p>Most service businesses don't have a demand problem. They have a follow-up problem.</p>
+
+        <p>The HVAC company that got a call from a homeowner, wrote the number on a sticky note, and never called back. The plumber who gave a verbal quote, figured the customer would call if they were interested, and watched that job go to a competitor. The electrician sitting on six warm leads he hasn't touched in two weeks because he's been on the tools all day and hasn't had a chance to get to his inbox.</p>
+
+        <p>The revenue is there. It's leaking out the bottom of the bucket.</p>
+
+        <h2>The CRM Graveyard</h2>
+
+        <p>Before starting GTB Software, I spent years going on-site with businesses as part of a private equity firm's portfolio operations — helping companies improve how they actually ran day to day. We'd walk into growing service businesses that had real operational problems, and the pattern was always the same.</p>
+
+        <p>Every company had one of two things: a CRM nobody opened, or a spreadsheet from 2018 with 400 rows and no owner.</p>
+
+        <p>The CRM was almost always HubSpot. Sometimes Salesforce. Once, memorably, Zoho. It had been set up by someone enthusiastic, given a proper onboarding, and then promptly abandoned the moment the owner had to use it from a job site on their phone at 6pm.</p>
+
+        <p>The problem wasn't discipline. It wasn't culture. It wasn't that the team didn't care about follow-up. The tool was designed for a sales team with dedicated time in front of a computer, not an owner running four jobs a day who has maybe three minutes between calls to log a note.</p>
+
+        <blockquote>
+          <p>A CRM that doesn't get used doesn't exist. It's just expensive guilt.</p>
+        </blockquote>
+
+        <p>And so leads fell through the cracks. Not because anyone wanted them to — because the gap between "what the tool requires" and "what the owner actually has capacity to do" was too wide to bridge.</p>
+
+        <h2>What Contractors Actually Need from a CRM</h2>
+
+        <p>When you strip away everything a contractor doesn't need — deal stages, lead scoring, marketing automation, contact enrichment, pipeline analytics — what's left is three questions:</p>
+
+        <ul>
+          <li>Who did I talk to?</li>
+          <li>What did we discuss?</li>
+          <li>When do I follow up?</li>
+        </ul>
+
+        <p>That's it. That's the whole job. Most contractors don't need a CRM. They need a structured to-do list with context attached.</p>
+
+        <p>The moment you start designing for that constraint — rather than for a full-time sales team — the right tool looks completely different.</p>
+
+        <h2>The OnePageCRM Philosophy</h2>
+
+        <p>OnePageCRM was built on a single insight: most CRM software tries to replicate everything a big sales organization does, scaled down. That's the wrong direction. The right direction is to start from what a one-person operation actually needs and build up from there.</p>
+
+        <p>The core is a contact-level action stream. Every person in the system has exactly one next action attached to them — a call to make, a quote to send, a check-in to schedule. That action has a date. When the date hits, it surfaces at the top of your list. You work your way through the list. You add the next action. You move on.</p>
+
+        <p>No configuration required. No pipeline stages to define. No custom fields to set up before you can start using it. You open it, add a contact, set a next action, and you're done. The whole setup takes about ten minutes.</p>
+
+        <p>The mobile experience reflects the same philosophy. It's designed to be used between jobs, not at a desk. Add a note from the job site. Set a follow-up for tomorrow. Close the app. That's the whole interaction.</p>
+
+        <h2>What It Actually Gets You</h2>
+
+        <p>The operational impact is simple: <strong>no lead disappears.</strong></p>
+
+        <p>Every person you talk to has a next action. If they're not ready now, you set a follow-up for 30 days. When that date arrives, they're back at the top of your list. You didn't have to remember them. You didn't have to search through a spreadsheet. You just see the name, see the note from last time, and make the call.</p>
+
+        <p>For service businesses where a single job is worth hundreds or thousands of dollars, one follow-up that would otherwise have been dropped more than pays for the tool. The math is not complicated.</p>
+
+        <p>It also shifts the owner's mental load. Instead of holding a dozen open loops in their head — who needs a callback, who got a quote, who said "call me next month" — all of that lives in the system. The head clears. The follow-ups happen consistently. And consistent follow-up is where most service business revenue either gets captured or lost.</p>
+
+        <h2>The Bigger Point</h2>
+
+        <p>The right tool is the one that actually gets used.</p>
+
+        <p>A $10/month CRM that the owner opens every day will always outperform a $500/month platform that sits untouched. This is not a controversial statement. It's the thing every ops person learns after watching the third company in a row abandon their enterprise software within six months of implementation.</p>
+
+        <p>When we audit a service business and the owner tells us they "have a CRM," the first question isn't what it does. It's when they last opened it. The answer tells you everything about whether it's actually solving the problem.</p>
+
+        <p>Most of the time, it isn't. The leads are still falling through the cracks. The follow-ups are still happening inconsistently. And the bottleneck — the one quietly capping revenue growth — is still there, just with a monthly subscription fee attached to it.</p>
+
+        <p>The diagnostic question we ask every service business is: <em>"If your inbound doubled tomorrow, what would break first?"</em> For most, the answer isn't their technician capacity or their scheduling. It's their ability to track and follow up on every conversation. That's the constraint. That's what needs to be fixed first.</p>
+
+        <div class="post-tools">
+          <p class="post-tools-label">Tools in this build</p>
+          <div class="post-tools-list">
+            <div class="post-tools-item">
+              <a href="https://www.onepagecrm.com/?via=5996b5" target="_blank" rel="noopener">OnePageCRM</a>
+              <span>The CRM we recommend for owner-operated service businesses. Built around a single next-action per contact — no configuration overhead, no features you don't need. Works on mobile between jobs.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-divider"></div>
+
+        <div class="post-cta">
+          <p>If this sounds like your business — leads slipping through, follow-up inconsistent, a CRM nobody touches — that's exactly what we diagnose. We identify the specific constraint, quantify what it's costing you, and build what removes it.</p>
+          <a href="/#cta">Get in touch →</a>
+        </div>
+
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <p class="footer-tagline">
+            Efficiency is nice.<br />
+            <span class="accent">Cash is king.</span>
+          </p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/#services">Services</a>
+          <a href="/#process">How It Works</a>
+          <a href="/#about">About</a>
+          <a href="/insights">Insights</a>
+          <a href="/#cta">Let's talk</a>
+        </nav>
+
+        <div class="footer-contact">
+          <a href="mailto:bailey@gtbsoftware.com">bailey@gtbsoftware.com</a>
+          <a href="https://linkedin.com/company/grab-the-bull-software" target="_blank" rel="noopener">LinkedIn →</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Grab the Bull Software. All rights reserved.</p>
+        <p class="footer-copy">gtbsoftware.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen.toString());
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  </script>
+
+</body>
+</html>
