@@ -714,7 +714,7 @@
       grid-template-columns: repeat(5, 1fr);
       gap: 1rem;
       margin-top: 3rem;
-      align-items: start;
+      align-items: stretch;
     }
 
     .pricing-card {
@@ -723,11 +723,14 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
     .pricing-card.featured {
       border-color: var(--accent-border);
       background: linear-gradient(160deg, var(--bg-card) 0%, rgba(16,185,129,0.05) 100%);
+      padding-top: 2.75rem;
     }
 
     .pricing-card.featured::before {
@@ -779,6 +782,7 @@
       margin: 0.875rem 0;
       padding-top: 0.875rem;
       border-top: 1px solid var(--border);
+      flex: 1;
     }
 
     .pricing-features {
