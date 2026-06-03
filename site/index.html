@@ -339,6 +339,65 @@
       box-shadow: 0 0 22px rgba(16, 185, 129, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
+    /* Services dropdown */
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown > a {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-caret {
+      font-size: 0.65rem;
+      opacity: 0.5;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .nav-dropdown:hover .nav-caret {
+      opacity: 0.9;
+      transform: rotate(180deg);
+    }
+
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding-top: 10px;
+      min-width: 240px;
+      z-index: 200;
+    }
+
+    .nav-dropdown-menu-inner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 10px;
+      padding: 0.5rem;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03);
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu {
+      display: block;
+    }
+
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 0.5rem 0.875rem;
+      font-size: 0.825rem;
+      color: var(--text-muted);
+      border-radius: 6px;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .nav-dropdown-menu a:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
     /* Hamburger */
     .hamburger {
       display: none;
@@ -827,6 +886,45 @@
       font-size: 0.9rem;
       color: var(--text-muted);
       line-height: 1.7;
+    }
+
+    .services-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .ragic-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .ragic-step {
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .ragic-step-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .ragic-step-title {
+      font-weight: 600;
+      font-size: 0.925rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .ragic-step-body {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
     /* =============================================
@@ -1711,7 +1809,9 @@
         grid-template-columns: 1fr;
       }
 
-      .services-grid {
+      .services-grid,
+      .services-grid-3,
+      .ragic-steps {
         grid-template-columns: 1fr;
       }
 
@@ -1752,6 +1852,12 @@
   ============================================= -->
   <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Navigation">
     <a href="#services" onclick="closeMobileNav()">Services</a>
+    <a href="#audit" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— Process Audit</a>
+    <a href="#ai-agents" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— AI Agents</a>
+    <a href="#workflow" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— Workflow Automation</a>
+    <a href="#custom-software" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— Custom Software</a>
+    <a href="#ragic" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— Ragic Solutions</a>
+    <a href="#ai-adoption" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— AI Adoption</a>
     <a href="#process" onclick="closeMobileNav()">How It Works</a>
     <a href="#about" onclick="closeMobileNav()">About</a>
     <a href="/insights" onclick="closeMobileNav()">Insights</a>
@@ -1769,7 +1875,19 @@
       </a>
 
       <ul class="nav-links" role="list">
-        <li><a href="#services">Services</a></li>
+        <li class="nav-dropdown">
+          <a href="#services">Services <span class="nav-caret">▾</span></a>
+          <div class="nav-dropdown-menu" role="menu">
+            <div class="nav-dropdown-menu-inner">
+              <a href="#audit" role="menuitem">Operational Process Audit</a>
+              <a href="#ai-agents" role="menuitem">AI Agents</a>
+              <a href="#workflow" role="menuitem">Workflow Automation</a>
+              <a href="#custom-software" role="menuitem">Custom Software &amp; Apps</a>
+              <a href="#ragic" role="menuitem">Ragic Solutions</a>
+              <a href="#ai-adoption" role="menuitem">AI Adoption Consulting</a>
+            </div>
+          </div>
+        </li>
         <li><a href="#process">How It Works</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="/insights">Insights</a></li>
@@ -1894,7 +2012,7 @@
 
       <div class="services-header reveal">
         <span class="eyebrow">Services</span>
-        <h2 class="section-headline">Every engagement starts with the audit.</h2>
+        <h2 class="section-headline">Six ways we remove what's holding your growth back.</h2>
         <p class="section-subhead">Scope follows the diagnosis. Not the other way around.</p>
       </div>
 
@@ -1902,34 +2020,393 @@
 
         <div class="service-card">
           <span class="service-badge">Start here</span>
-          <h3 class="service-card-title">Operational Process Audit</h3>
+          <h3 class="service-card-title"><a href="#audit" style="color:inherit;">Operational Process Audit</a></h3>
           <p class="service-card-body">
-            Entry point for every engagement. We map how work actually gets done, not how you think it does. Find the constraints limiting revenue, and tie every finding to a quantifiable dollar outcome. No recommendations without a return attached.
+            Entry point for every engagement. We map how work actually gets done, find the constraints limiting revenue, and tie every finding to a quantifiable dollar outcome. No recommendations without a return attached.
           </p>
         </div>
 
         <div class="service-card">
-          <h3 class="service-card-title">Workflow Automation</h3>
+          <h3 class="service-card-title"><a href="#ai-agents" style="color:inherit;">AI Agents</a></h3>
+          <p class="service-card-body">
+            Autonomous agents that handle repeatable, high-volume work end to end — calls, follow-ups, intake, qualification — without adding staff. Only deployed when capacity is the constraint and the ROI is clear.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title"><a href="#workflow" style="color:inherit;">Workflow Automation</a></h3>
           <p class="service-card-body">
             Connect the systems you already have. Remove the manual handoffs between them. Stop paying people to copy-paste data between tools that should talk to each other.
           </p>
         </div>
 
         <div class="service-card">
-          <h3 class="service-card-title">Custom Software</h3>
+          <h3 class="service-card-title"><a href="#custom-software" style="color:inherit;">Custom Software &amp; Apps</a></h3>
           <p class="service-card-body">
             When no existing tool solves the problem, we build what does. Purpose-built, not patched together. Designed for how your business actually operates.
           </p>
         </div>
 
         <div class="service-card">
-          <h3 class="service-card-title">AI Agents</h3>
+          <span class="service-badge">Partner</span>
+          <h3 class="service-card-title"><a href="#ragic" style="color:inherit;">Ragic Solutions</a></h3>
           <p class="service-card-body">
-            Autonomous agents that do operational work at a scale your team can't match manually: lead qualification, onboarding, processing tasks. Only deployed when capacity is the constraint and the ROI is clear.
+            Replace your spreadsheets without the enterprise price tag. We build custom databases, CRMs, and ops systems on Ragic — and sell it as a certified partner starting at $5/user/month.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title"><a href="#ai-adoption" style="color:inherit;">AI Adoption Consulting</a></h3>
+          <p class="service-card-body">
+            Most businesses know AI can help. Most don't know where to start. We cut through the noise, identify where AI actually moves the needle, and build the shortest path to a real result.
           </p>
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       SERVICE DETAIL — OPERATIONAL PROCESS AUDIT
+  ============================================= -->
+  <section id="audit" class="section">
+    <div class="container">
+
+      <div class="services-header reveal">
+        <span class="eyebrow">[ Operational Process Audit ]</span>
+        <h2 class="section-headline">We don't show up with a solution.<br />We show up with questions.</h2>
+        <p class="section-body" style="max-width:640px; margin-top:1rem;">
+          Every engagement starts here. We map how work actually gets done, find where revenue slows or volume breaks, and build the case for what to fix — tied to a dollar outcome. If we can't show you the return, we don't recommend it.
+        </p>
+      </div>
+
+      <div class="services-grid-3 reveal reveal-delay-1">
+
+        <div class="service-card">
+          <h3 class="service-card-title">Process Mapping</h3>
+          <p class="service-card-body">
+            We document the actual workflow — not the org chart version. Every handoff, every tool, every step where work slows or disappears.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Constraint Identification</h3>
+          <p class="service-card-body">
+            Find the one thing limiting revenue or capacity the most. Not everything needs fixing — we isolate the constraint that, when removed, unlocks the most growth.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">ROI-Tied Recommendations</h3>
+          <p class="service-card-body">
+            Every fix has a dollar value attached before we build anything. You know what you're getting and why it's worth it before a single line of work begins.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="reveal reveal-delay-2" style="margin-top:2.5rem; padding:1.5rem 2rem; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap;">
+        <p style="font-size:0.9rem; color:var(--text-muted);">Free 30-min diagnostic &nbsp;·&nbsp; No commitment &nbsp;·&nbsp; Every recommendation tied to a dollar return</p>
+        <a href="#cta" class="btn-primary" style="white-space:nowrap;">Book a diagnostic</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       SERVICE DETAIL — AI AGENTS
+  ============================================= -->
+  <section id="ai-agents" class="section">
+    <div class="container">
+
+      <div class="services-header reveal">
+        <span class="eyebrow">[ AI Agents ]</span>
+        <h2 class="section-headline">Work your team doesn't have headcount for.</h2>
+        <p class="section-body" style="max-width:640px; margin-top:1rem;">
+          AI agents handle repeatable, high-volume work end to end — calls, follow-ups, intake, qualification — without adding staff. We scope, build, and deploy them against a specific constraint, not as a general experiment.
+        </p>
+      </div>
+
+      <div class="services-grid-3 reveal reveal-delay-1">
+
+        <div class="service-card">
+          <h3 class="service-card-title">Voice Agents</h3>
+          <p class="service-card-body">
+            Inbound and outbound calls handled automatically. We built and run Finn — our own voice AI BDR — before offering this to clients. It calls, qualifies, and books meetings without a human in the loop.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Intake &amp; Qualification</h3>
+          <p class="service-card-body">
+            Capture, score, and route leads the moment they arrive. No manual review required. The right leads get to the right person instantly.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Follow-up &amp; Nurture</h3>
+          <p class="service-card-body">
+            Automated touchpoints that keep warm leads from going cold. 80% of sales need five or more follow-ups — most businesses stop at one or two. Agents don't forget.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="reveal reveal-delay-2" style="margin-top:2.5rem; padding:1.25rem 2rem; background:var(--bg-raised); border:1px solid var(--border); border-radius:10px;">
+        <p style="font-size:0.85rem; color:var(--text-muted); font-family:var(--font-mono); letter-spacing:0.03em;">
+          We built and run Finn — our own voice AI BDR — before offering this to clients.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       SERVICE DETAIL — WORKFLOW AUTOMATION
+  ============================================= -->
+  <section id="workflow" class="section">
+    <div class="container">
+
+      <div class="services-header reveal">
+        <span class="eyebrow">[ Workflow Automation ]</span>
+        <h2 class="section-headline">Stop doing manually what should happen automatically.</h2>
+        <p class="section-body" style="max-width:640px; margin-top:1rem;">
+          Manual handoffs, duplicate data entry, chasing approvals — these are capacity problems disguised as process problems. We connect your systems so work moves without someone pushing it.
+        </p>
+      </div>
+
+      <div class="services-grid-3 reveal reveal-delay-1">
+
+        <div class="service-card">
+          <h3 class="service-card-title">System Integrations</h3>
+          <p class="service-card-body">
+            Connect your CRM, invoicing, scheduling, and ops tools so data flows automatically. Stop paying someone to copy information from one screen to another.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Approval Workflows</h3>
+          <p class="service-card-body">
+            Quote approvals, job sign-offs, and invoicing triggers that run without a human in the loop. Work moves forward the moment it's ready — not when someone remembers to check.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Reporting &amp; Alerts</h3>
+          <p class="service-card-body">
+            Dashboards and notifications that surface what matters, when it matters. Know when something needs your attention instead of going looking for it.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       SERVICE DETAIL — CUSTOM SOFTWARE & APPS
+  ============================================= -->
+  <section id="custom-software" class="section">
+    <div class="container">
+
+      <div class="services-header reveal">
+        <span class="eyebrow">[ Custom Software &amp; Apps ]</span>
+        <h2 class="section-headline">When off-the-shelf doesn't fit the way your business works.</h2>
+        <p class="section-body" style="max-width:640px; margin-top:1rem;">
+          Some problems don't have a SaaS solution. We build custom tools — web apps, internal dashboards, client portals — scoped to the exact constraint, not a feature wishlist.
+        </p>
+      </div>
+
+      <div class="services-grid-3 reveal reveal-delay-1">
+
+        <div class="service-card">
+          <h3 class="service-card-title">Internal Tools</h3>
+          <p class="service-card-body">
+            Dashboards, job management systems, and ops tools built for your team. Purpose-built for how your business actually runs — not a generic template.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Client-Facing Apps</h3>
+          <p class="service-card-body">
+            Portals, booking flows, and reporting tools your clients actually use. Built to reduce friction and make working with you feel effortless.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Integrations &amp; APIs</h3>
+          <p class="service-card-body">
+            Custom connectors when your stack doesn't talk to itself. We bridge the gaps between systems that were never designed to work together.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       SERVICE DETAIL — RAGIC SOLUTIONS
+  ============================================= -->
+  <section id="ragic" class="section">
+    <div class="container">
+
+      <div class="services-header reveal">
+        <span class="eyebrow">[ Ragic Solutions ]</span>
+        <h2 class="section-headline">Your business runs on spreadsheets.<br />It shouldn't have to.</h2>
+        <p class="section-body" style="max-width:680px; margin-top:1rem;">
+          Most small businesses outgrow spreadsheets long before they're ready for a $50,000 ERP implementation. There's a better option. Ragic is a no-code database platform that works like a spreadsheet on the surface — but underneath it's a proper relational database. Linked records, automated workflows, mobile access, approval processes, and reporting. We build your system on top of it, train your team, and keep it running.
+        </p>
+      </div>
+
+      <!-- What it replaces strip -->
+      <div class="reveal reveal-delay-1" style="margin-bottom:3rem; padding:1.5rem 2rem; background:var(--bg-raised); border:1px solid var(--border); border-radius:12px; display:flex; gap:2.5rem; flex-wrap:wrap; align-items:center;">
+        <p style="font-size:0.8rem; font-family:var(--font-mono); color:var(--text-dim); letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap;">Replaces</p>
+        <div style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+          <span style="font-size:0.875rem; color:var(--text-muted); text-decoration:line-through; opacity:0.6;">Excel / Google Sheets</span>
+          <span style="font-size:0.875rem; color:var(--text-muted); text-decoration:line-through; opacity:0.6;">Disconnected forms and trackers</span>
+          <span style="font-size:0.875rem; color:var(--text-muted); text-decoration:line-through; opacity:0.6;">$80k+ ERP systems</span>
+          <span style="font-size:0.875rem; color:var(--text-muted); text-decoration:line-through; opacity:0.6;">Manual data re-entry between tools</span>
+        </div>
+      </div>
+
+      <!-- Template categories -->
+      <div class="reveal" style="margin-bottom:1rem;">
+        <p style="font-size:0.8rem; font-family:var(--font-mono); color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase;">What we build</p>
+      </div>
+
+      <div class="services-grid reveal reveal-delay-1">
+
+        <div class="service-card">
+          <h3 class="service-card-title">CRM &amp; Sales Pipeline</h3>
+          <p class="service-card-body">
+            Track leads, customers, deal stages, and follow-up tasks in one linked system. Linked contacts, companies, and deals — without paying $80–$150/user/month for Salesforce or HubSpot.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Inventory &amp; Purchasing</h3>
+          <p class="service-card-body">
+            Purchase orders, sales orders, stock levels, and supplier records all linked together. Know what you have, what's on order, and what you owe — in one place your whole team can access.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Job &amp; Field Service Management</h3>
+          <p class="service-card-body">
+            Built for trades and field service businesses. HVAC inspections, job scheduling, site checklists, technician assignments, and completion sign-offs — all tracked and linked to the customer record.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">HR &amp; Staff Management</h3>
+          <p class="service-card-body">
+            Employee records, onboarding checklists, leave requests, and asset assignments — managed in a proper database instead of a folder of spreadsheets and email threads.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Project &amp; Task Tracking</h3>
+          <p class="service-card-body">
+            Budgets, milestones, task assignments, and status reporting — all linked to the client or job. Built-in Gantt charts, calendar views, and automated status updates keep everyone on the same page.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Custom Operations Systems</h3>
+          <p class="service-card-body">
+            If your business has a process that doesn't fit a template, we build it from scratch. Approval workflows, automated alerts, custom reports, mobile forms — designed around how you actually work.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- How we build it -->
+      <div class="reveal reveal-delay-2" style="margin-top:3rem; margin-bottom:2.5rem;">
+        <p style="font-size:0.8rem; font-family:var(--font-mono); color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1.5rem;">How we build it</p>
+        <div class="ragic-steps">
+          <div class="ragic-step">
+            <p class="ragic-step-num">01</p>
+            <p class="ragic-step-title">Start with a template</p>
+            <p class="ragic-step-body">We start from one of Ragic's 40+ pre-built templates — CRM, inventory, job management — so you're not starting from a blank page.</p>
+          </div>
+          <div class="ragic-step">
+            <p class="ragic-step-num">02</p>
+            <p class="ragic-step-title">Customise to your business</p>
+            <p class="ragic-step-body">We reshape the template around your actual workflow — your field names, your approval steps, your reporting needs. It ends up looking and feeling like your system, not a generic tool.</p>
+          </div>
+          <div class="ragic-step">
+            <p class="ragic-step-num">03</p>
+            <p class="ragic-step-title">Train the team and hand over</p>
+            <p class="ragic-step-body">We train your team, migrate your existing data, and make sure everyone knows how to use it before we step back. Ongoing support available if you need changes down the track.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2" style="padding:1.5rem 2rem; background:var(--bg-card); border:1px solid var(--border); border-left: 3px solid var(--accent); border-radius:0 12px 12px 0; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap;">
+        <p style="font-size:0.9rem; color:var(--text-muted);">Not sure if it's the right fit? Tell us what you're tracking in spreadsheets right now — we'll tell you honestly whether Ragic solves it.</p>
+        <a href="#cta" class="btn-primary" style="white-space:nowrap;">Talk to us about Ragic</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       SERVICE DETAIL — AI ADOPTION CONSULTING
+  ============================================= -->
+  <section id="ai-adoption" class="section">
+    <div class="container">
+
+      <div class="services-header reveal">
+        <span class="eyebrow">[ AI Adoption Consulting ]</span>
+        <h2 class="section-headline">Cut through the noise.<br />Use AI where it actually moves the needle.</h2>
+        <p class="section-body" style="max-width:640px; margin-top:1rem;">
+          Most businesses know AI can help. Most don't know where to start, what to trust, or how to run it without creating more work. We diagnose where AI genuinely fits in your operation and build the shortest path to a real result.
+        </p>
+      </div>
+
+      <div class="services-grid-3 reveal reveal-delay-1">
+
+        <div class="service-card">
+          <h3 class="service-card-title">AI Readiness Assessment</h3>
+          <p class="service-card-body">
+            Where you are, where the gaps are, and what's worth pursuing versus what's hype. An honest read on your current operations and where AI can actually make a difference.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Use Case Prioritisation</h3>
+          <p class="service-card-body">
+            Rank AI opportunities by ROI, not by what's trending. We identify the two or three things that will have the biggest impact on revenue or capacity — and ignore the rest.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <h3 class="service-card-title">Implementation &amp; Training</h3>
+          <p class="service-card-body">
+            Hands-on help building and rolling out AI tools your team will actually use. Not a slide deck — a working system, trained to your business, with your people confident using it.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="reveal reveal-delay-2" style="margin-top:2.5rem; padding:1.5rem 2rem; background:var(--bg-card); border:1px solid var(--border); border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap;">
+        <p style="font-size:0.9rem; color:var(--text-muted);">We diagnose before we prescribe. If AI isn't the right fit for where your business is right now, we'll tell you.</p>
+        <a href="#cta" class="btn-primary" style="white-space:nowrap;">Let's talk</a>
+      </div>
+
     </div>
   </section>
 
