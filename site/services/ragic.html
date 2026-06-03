@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ragic Solutions — GTB Software</title>
+  <meta name="description" content="Replace your spreadsheets without the enterprise price tag. GTB Software is a certified Ragic reseller — we build, customise, and support Ragic database systems for growing businesses." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       DESIGN TOKENS
+    ============================================= */
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #111111;
+      --bg-raised: #0f0f0f;
+      --border: #1f1f1f;
+      --border-mid: #2a2a2a;
+      --text: #fafafa;
+      --text-muted: #737373;
+      --text-dim: #4a4a4a;
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.1);
+      --accent-border: rgba(16, 185, 129, 0.2);
+      --font-display: 'Satoshi', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: ui-monospace, Menlo, Monaco, 'Courier New', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .accent { color: var(--accent); }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section {
+      padding: 6rem 0;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .section-headline {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--text);
+      margin-top: 1rem;
+    }
+
+    .section-body {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-top: 1rem;
+      max-width: 640px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    #nav.scrolled {
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-color: var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .nav-logo img {
+      height: 28px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .nav-dropdown { position: relative; }
+
+    .nav-dropdown > a {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      cursor: pointer;
+    }
+
+    .nav-caret {
+      font-size: 0.65rem;
+      transition: transform 0.2s, opacity 0.2s;
+      opacity: 0.5;
+    }
+
+    .nav-dropdown:hover .nav-caret { transform: rotate(180deg); opacity: 1; }
+
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 0.75rem);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 12px;
+      padding: 0.5rem;
+      min-width: 230px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.03);
+      z-index: 200;
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+
+    .nav-dropdown-menu-inner {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-dropdown-menu a {
+      display: block;
+      padding: 0.625rem 0.875rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .nav-dropdown-menu a:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .nav-dropdown-menu a.active { color: var(--accent); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-cta:hover {
+      background: linear-gradient(135deg, #0d9668 0%, #047857 100%);
+      box-shadow: 0 0 22px rgba(16, 185, 129, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-nav.open { opacity: 1; pointer-events: all; }
+
+    .mobile-nav a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .mobile-nav a.sub {
+      font-size: 1.2rem;
+      color: var(--text-dim);
+    }
+
+    .mobile-nav a:hover { color: var(--text); }
+    .mobile-nav .nav-cta { font-size: 1rem; padding: 0.875rem 2rem; }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    .hero {
+      padding: 9rem 0 6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+      margin-bottom: 2rem;
+    }
+
+    .partner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 5.5vw, 4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      max-width: 780px;
+    }
+
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      padding: 0.8125rem 1.625rem;
+      border-radius: 10px;
+      transition: box-shadow 0.2s, background 0.2s;
+      box-shadow: 0 0 18px rgba(16, 185, 129, 0.35);
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0d9668 0%, #047857 100%);
+      box-shadow: 0 0 28px rgba(16, 185, 129, 0.55);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      padding: 0.8125rem 1.5rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-mid);
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .hero-partner-note {
+      margin-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+
+    /* =============================================
+       STATS STRIP
+    ============================================= */
+    .stats-strip {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-raised);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 2rem;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 2.75rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.625rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .stat-source {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-top: 0.375rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* =============================================
+       PROBLEM SECTION
+    ============================================= */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .problem-card {
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .problem-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--border-mid);
+    }
+
+    .problem-card.bad::before { background: rgba(239, 67, 67, 0.4); }
+
+    .problem-card-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.875rem;
+    }
+
+    .problem-card-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text);
+      margin-bottom: 0.875rem;
+      line-height: 1.25;
+    }
+
+    .problem-card-body {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .problem-card ul {
+      padding-left: 1rem;
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+
+    .problem-card li {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .solution-callout {
+      padding: 2.5rem 3rem;
+      background: var(--bg-card);
+      border: 1px solid var(--accent-border);
+      border-radius: 14px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .solution-callout::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .solution-callout-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .solution-callout-headline {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .solution-callout-body {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* =============================================
+       FEATURES SECTION
+    ============================================= */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .feature-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 0.5rem;
+    }
+
+    .feature-item-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-item-body {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* =============================================
+       DEMO CARD
+    ============================================= */
+    .demo-card {
+      margin-top: 3rem;
+      padding: 3.5rem;
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16,185,129,0.04) 100%);
+      border: 1px solid var(--accent-border);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .demo-card-text h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.375rem;
+      color: var(--text);
+      margin-bottom: 0.625rem;
+      letter-spacing: -0.015em;
+    }
+
+    .demo-card-text p {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 480px;
+    }
+
+    /* =============================================
+       USE CASES
+    ============================================= */
+    .use-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .use-case-card {
+      padding: 1.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .use-case-card:hover { border-color: var(--border-mid); }
+
+    .use-case-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .use-case-body {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* =============================================
+       HOW WE WORK
+    ============================================= */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .step {
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      position: relative;
+    }
+
+    .step-num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .step-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.625rem;
+    }
+
+    .step-body {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* =============================================
+       PRICING
+    ============================================= */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+
+    .pricing-card {
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--accent-border);
+      background: linear-gradient(160deg, var(--bg-card) 0%, rgba(16,185,129,0.05) 100%);
+    }
+
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .pricing-tier {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .pricing-price {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.75rem;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-price span {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0;
+    }
+
+    .pricing-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0.875rem 0;
+      padding-top: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.375rem;
+    }
+
+    .pricing-features li {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .pricing-features li::before {
+      content: '—';
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .pricing-gtb-callout {
+      margin-top: 2rem;
+      padding: 1.75rem 2rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border-mid);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+    }
+
+    .pricing-gtb-callout p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .pricing-gtb-callout strong {
+      color: var(--text);
+    }
+
+    /* =============================================
+       CTA SECTION
+    ============================================= */
+    .cta-section {
+      padding: 6rem 0;
+      text-align: center;
+    }
+
+    .cta-box {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .cta-headline {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .cta-body {
+      font-size: 1rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* =============================================
+       CONTACT FORM
+    ============================================= */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2rem;
+      text-align: left;
+    }
+
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      padding: 0.875rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .contact-form select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23737373' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .contact-form select option { background: #1a1a1a; }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.6;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: var(--text-dim); }
+
+    .contact-form input:focus,
+    .contact-form select:focus,
+    .contact-form textarea:focus { border-color: rgba(16, 185, 129, 0.4); }
+
+    .form-confirm {
+      display: none;
+      padding: 2.5rem 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--accent-border);
+      border-radius: 12px;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .form-confirm p { color: var(--text-muted); font-size: 1rem; }
+
+    .form-confirm strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .footer-nav a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-nav a:hover { color: var(--text); }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      align-items: flex-end;
+    }
+
+    .footer-contact a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: var(--text); }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy { font-size: 0.78rem; color: var(--text-dim); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 1024px) {
+      .pricing-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav { display: flex; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .use-cases-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: 1fr; }
+      .footer-main { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-contact { align-items: flex-start; }
+      .demo-card { flex-direction: column; }
+      .cta-box { padding: 2.5rem 1.75rem; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1.25rem; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .hero-headline { font-size: 2.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Navigation">
+    <a href="/" onclick="closeMobileNav()">Services</a>
+    <a href="/#audit" class="sub" onclick="closeMobileNav()">— Process Audit</a>
+    <a href="/#ai-agents" class="sub" onclick="closeMobileNav()">— AI Agents</a>
+    <a href="/#workflow" class="sub" onclick="closeMobileNav()">— Workflow Automation</a>
+    <a href="/#custom-software" class="sub" onclick="closeMobileNav()">— Custom Software</a>
+    <a href="/services/ragic" class="sub active" onclick="closeMobileNav()" style="color: var(--accent);">— Ragic Solutions</a>
+    <a href="/#ai-adoption" class="sub" onclick="closeMobileNav()">— AI Adoption</a>
+    <a href="/#process" onclick="closeMobileNav()">How It Works</a>
+    <a href="/#about" onclick="closeMobileNav()">About</a>
+    <a href="/insights" onclick="closeMobileNav()">Insights</a>
+    <a href="#cta" class="nav-cta" onclick="closeMobileNav()">Let's talk</a>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="GTB Software home">
+        <img src="../assets/GTB Logo Transparent.png" alt="GTB Software" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <span class="nav-logo-text">GTB Software</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li class="nav-dropdown">
+          <a href="/#services" class="active">Services <span class="nav-caret">▾</span></a>
+          <div class="nav-dropdown-menu" role="menu">
+            <div class="nav-dropdown-menu-inner">
+              <a href="/#audit" role="menuitem">Operational Process Audit</a>
+              <a href="/#ai-agents" role="menuitem">AI Agents</a>
+              <a href="/#workflow" role="menuitem">Workflow Automation</a>
+              <a href="/#custom-software" role="menuitem">Custom Software &amp; Apps</a>
+              <a href="/services/ragic" role="menuitem" class="active">Ragic Solutions</a>
+              <a href="/#ai-adoption" role="menuitem">AI Adoption Consulting</a>
+            </div>
+          </div>
+        </li>
+        <li><a href="/#process">How It Works</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/insights">Insights</a></li>
+      </ul>
+
+      <a href="#cta" class="nav-cta">Let's talk</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ============================================
+       HERO
+  ============================================= -->
+  <section class="hero">
+    <div class="container">
+      <div class="reveal">
+        <div class="hero-eyebrow">
+          <span class="eyebrow">[ Ragic Solutions ]</span>
+          <span class="partner-badge">Certified Partner</span>
+        </div>
+
+        <h1 class="hero-headline">
+          The #1 No-Code<br />
+          <span class="accent">Database</span> for<br />
+          Your Business
+        </h1>
+
+        <p class="hero-sub">
+          More powerful than Excel. More affordable than Salesforce. More maintainable than custom code. GTB Software implements, customises, and supports Ragic for growing businesses — starting from $500.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#cta" class="btn-primary">Get set up with GTB</a>
+          <a href="https://www.ragic.com/intl/en/home" target="_blank" rel="noopener" class="btn-ghost">Try Ragic free →</a>
+        </div>
+
+        <p class="hero-partner-note">GTB Software is a certified Ragic reseller and implementation partner. You pay Ragic directly for the subscription — we charge for setup, customisation, and support.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       STATS STRIP
+  ============================================= -->
+  <div class="stats-strip">
+    <div class="container">
+      <div class="stats-grid reveal">
+        <div class="stat-item">
+          <p class="stat-number">88%</p>
+          <p class="stat-label">of spreadsheets contain errors — with no way to audit them</p>
+          <p class="stat-source">Ragic research</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-number">$200K</p>
+          <p class="stat-label">average savings when companies migrate from Salesforce to Ragic</p>
+          <p class="stat-source">Ragic case study</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-number">3 days</p>
+          <p class="stat-label">to build a 3,000-store allocation system during COVID-19</p>
+          <p class="stat-source">Ragic case study</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       THE PROBLEM
+  ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ The problem ]</span>
+        <h2 class="section-headline">Three options. All of them broken.</h2>
+        <p class="section-body">Most businesses managing data have the same three choices. None of them are good enough.</p>
+      </div>
+
+      <div class="problem-grid reveal reveal-delay-1">
+
+        <div class="problem-card bad">
+          <p class="problem-card-label">Option 1</p>
+          <h3 class="problem-card-title">Spreadsheets</h3>
+          <p class="problem-card-body">Fast to start. Painful at scale.</p>
+          <ul>
+            <li>People spend up to 90% of their time working in Excel</li>
+            <li>88% of all spreadsheets contain errors, with no way to audit</li>
+            <li>Data fragmented across files, tabs, and email threads</li>
+            <li>No access controls — anyone can overwrite anything</li>
+            <li>Zero automation — every update is a manual task</li>
+          </ul>
+        </div>
+
+        <div class="problem-card bad">
+          <p class="problem-card-label">Option 2</p>
+          <h3 class="problem-card-title">Enterprise Software</h3>
+          <p class="problem-card-body">Bloated features. Hidden costs. Long implementations.</p>
+          <ul>
+            <li>Oversized packages with features you'll never use</li>
+            <li>Customisation costs exceed the original quote</li>
+            <li>6–18 month implementations before you see value</li>
+            <li>$50,000+ before it fits how you actually work</li>
+            <li>Locked in — switching costs are brutal</li>
+          </ul>
+        </div>
+
+        <div class="problem-card bad">
+          <p class="problem-card-label">Option 3</p>
+          <h3 class="problem-card-title">Custom Development</h3>
+          <p class="problem-card-body">Built for you. Then one person leaves and no-one can maintain it.</p>
+          <ul>
+            <li>Expensive to build, expensive to change</li>
+            <li>Dependent on one developer's knowledge</li>
+            <li>Every new requirement is a paid project</li>
+            <li>Technical debt compounds fast</li>
+            <li>Reliability not guaranteed</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="solution-callout reveal reveal-delay-2">
+        <p class="solution-callout-eyebrow">The middle ground</p>
+        <h3 class="solution-callout-headline">There's a better way.</h3>
+        <p class="solution-callout-body">Ragic looks like a spreadsheet, works like a proper relational database, and costs $5–$19 per user per month. No enterprise contract. No custom code. No spreadsheet chaos. GTB builds it for you, customises it to your workflow, and trains your team.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       WHAT IS RAGIC
+  ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ What Ragic does ]</span>
+        <h2 class="section-headline">A real database that your team<br />can actually use.</h2>
+        <p class="section-body">Business managers — not developers — are best positioned to build the tools their teams need. Ragic is the platform that makes that possible. Spreadsheet-like interface on the surface. Proper relational database underneath.</p>
+      </div>
+
+      <div class="features-grid reveal reveal-delay-1">
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">Linked Records</p>
+            <p class="feature-item-body">Connect customers to orders to invoices to jobs — everything linked, nothing duplicated. Like a proper database, without writing a line of SQL.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">Approval Workflows</p>
+            <p class="feature-item-body">Build multi-step approval chains into any process. Purchase orders, leave requests, job sign-offs — routed automatically, tracked completely.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">Mobile Access + Offline Sync</p>
+            <p class="feature-item-body">iOS and Android apps with offline mode. Your field team can fill in job reports without Wi-Fi — it syncs when they're back online.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">Role-Based Access Control</p>
+            <p class="feature-item-body">Define exactly who can view, edit, or delete each record. Employees see what they need. Nothing more. Full audit trail of every change.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">Automated Alerts &amp; Reminders</p>
+            <p class="feature-item-body">Email and push notifications triggered by data conditions — overdue tasks, low stock, expiring contracts. No manual chasing.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">Reporting: Gantt, Pivot, Calendar</p>
+            <p class="feature-item-body">Built-in report types that work out of the box. Gantt charts for project timelines. Pivot tables for analysis. Calendar views for scheduling.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">Excel Import/Export</p>
+            <p class="feature-item-body">Migration is painless. Import your existing spreadsheet data directly. Export to Excel or Word at any point. No lock-in.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">API + Zapier / Make / n8n</p>
+            <p class="feature-item-body">Connect Ragic to the rest of your stack. Native connectors for Zapier, Make, and n8n. Full REST API for anything else. GTB handles the integrations.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">Built-In AI Agent</p>
+            <p class="feature-item-body">Ragic's AI has full context of your actual business data — not a generic assistant. Runs 24/7. Built for sustained operations, not just demos.</p>
+          </div>
+        </div>
+
+        <div class="feature-item">
+          <div class="feature-dot"></div>
+          <div>
+            <p class="feature-item-title">40+ Pre-Built Templates</p>
+            <p class="feature-item-body">CRM, inventory, HR, project management, field service — a template for every common use case. GTB starts from the closest match and customises it to your workflow.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="demo-card reveal reveal-delay-2">
+        <div class="demo-card-text">
+          <h3>See it in action</h3>
+          <p>The best way to understand Ragic is to see it running. Their website has a full product tour — watch the intro video to see how it handles real data in a real business context.</p>
+        </div>
+        <a href="https://www.ragic.com/intl/en/home" target="_blank" rel="noopener" class="btn-primary">Watch the product tour →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       USE CASES
+  ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ What we build ]</span>
+        <h2 class="section-headline">Systems for how your<br />business actually runs.</h2>
+        <p class="section-body">We start from Ragic's pre-built templates and reshape them around your specific workflow — your field names, your approval steps, your reporting needs.</p>
+      </div>
+
+      <div class="use-cases-grid reveal reveal-delay-1">
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">CRM &amp; Sales Pipeline</h3>
+          <p class="use-case-body">Track leads, customers, deal stages, and follow-up tasks in one linked system. Linked contacts, companies, and deals — without paying $80–$150/user/month for Salesforce or HubSpot.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Inventory &amp; Purchasing</h3>
+          <p class="use-case-body">Purchase orders, sales orders, stock levels, and supplier records all linked together. Know what you have, what's on order, and what you owe — in one place your whole team can access.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Job &amp; Field Service Management</h3>
+          <p class="use-case-body">Built for trades and field service businesses. Job scheduling, site checklists, technician assignments, and completion sign-offs — all tracked and linked to the customer record.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">HR &amp; Staff Management</h3>
+          <p class="use-case-body">Employee records, onboarding checklists, leave requests, and asset assignments — managed in a proper database instead of a folder of spreadsheets and email threads.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Project &amp; Task Tracking</h3>
+          <p class="use-case-body">Budgets, milestones, task assignments, and status reporting — all linked to the client or job. Built-in Gantt charts, calendar views, and automated status updates.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Custom Operations Systems</h3>
+          <p class="use-case-body">If your business has a process that doesn't fit a standard template, we build it from scratch. Approval workflows, automated alerts, custom reports, mobile forms — designed around how you actually work.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       HOW WE WORK
+  ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ How we work ]</span>
+        <h2 class="section-headline">From spreadsheet chaos<br />to working system — fast.</h2>
+        <p class="section-body">We handle everything. You tell us what you're tracking. We build and hand over a system your team can actually use.</p>
+      </div>
+
+      <div class="steps-grid reveal reveal-delay-1">
+
+        <div class="step">
+          <p class="step-num">[ 01 ]</p>
+          <h3 class="step-title">Tell us what you're tracking</h3>
+          <p class="step-body">Walk us through your current spreadsheets, processes, and pain points. We figure out what you actually need — and whether Ragic is the right fit. If it's not, we'll tell you.</p>
+        </div>
+
+        <div class="step">
+          <p class="step-num">[ 02 ]</p>
+          <h3 class="step-title">We configure and customise</h3>
+          <p class="step-body">We start from one of Ragic's 40+ templates — the closest match to your use case — then reshape it around your actual workflow. Your field names, your approval steps, your reporting needs. Feels like it was built for you, because it was.</p>
+        </div>
+
+        <div class="step">
+          <p class="step-num">[ 03 ]</p>
+          <h3 class="step-title">We train and hand over</h3>
+          <p class="step-body">We migrate your existing data, train your team, and make sure everyone knows how to use the system before we step back. Ongoing support and customisation available if you need changes down the track.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       PRICING
+  ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ Pricing ]</span>
+        <h2 class="section-headline">Ragic subscription pricing.<br />GTB setup on top.</h2>
+        <p class="section-body">You pay Ragic directly for the subscription at the tier that fits your team. GTB charges a one-time setup fee depending on complexity — starting from $500.</p>
+      </div>
+
+      <div class="pricing-grid reveal reveal-delay-1">
+
+        <div class="pricing-card">
+          <p class="pricing-tier">Free</p>
+          <p class="pricing-price">$0<span>/user/mo</span></p>
+          <p class="pricing-desc">For teams that want to explore Ragic before committing.</p>
+          <ul class="pricing-features">
+            <li>3 custom sheets</li>
+            <li>1,000 records per sheet</li>
+            <li>Unlimited users</li>
+            <li>40+ templates</li>
+            <li>Limited Ragic AI trial</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card">
+          <p class="pricing-tier">Lite</p>
+          <p class="pricing-price">$5<span>/user/mo</span></p>
+          <p class="pricing-desc">Foundation tier for small teams ready to replace spreadsheets.</p>
+          <ul class="pricing-features">
+            <li>Unlimited records</li>
+            <li>5 custom sheets</li>
+            <li>10 GB storage</li>
+            <li>API access</li>
+            <li>Base Ragic AI usage</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card featured">
+          <p class="pricing-tier">Professional</p>
+          <p class="pricing-price">$19<span>/user/mo</span></p>
+          <p class="pricing-desc">The right tier for most growing businesses. Everything you need.</p>
+          <ul class="pricing-features">
+            <li>Unlimited records + sheets</li>
+            <li>30 GB storage</li>
+            <li>Approval workflows</li>
+            <li>Advanced reporting</li>
+            <li>4x AI usage</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card">
+          <p class="pricing-tier">Concurrent</p>
+          <p class="pricing-price">$499<span>/10 users/mo</span></p>
+          <p class="pricing-desc">For larger organisations with many users sharing the system.</p>
+          <ul class="pricing-features">
+            <li>Unlimited records + sheets</li>
+            <li>100 GB storage</li>
+            <li>Concurrent user licensing</li>
+            <li>10x AI usage</li>
+            <li>Priority support</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card">
+          <p class="pricing-tier">Enterprise</p>
+          <p class="pricing-price">$550<span>/10 users/mo</span></p>
+          <p class="pricing-desc">Dedicated infrastructure, SSO, SLAs, and full enterprise controls.</p>
+          <ul class="pricing-features">
+            <li>Managed VM</li>
+            <li>Unlimited storage</li>
+            <li>SSO + LDAP</li>
+            <li>Custom SLA</li>
+            <li>11x AI usage</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pricing-gtb-callout reveal reveal-delay-2">
+        <p>
+          <strong>GTB Software setup fee:</strong> Starting from $500 for a standard template-based system. More complex builds (custom approval workflows, integrations, data migration) are scoped after our initial conversation. You pay Ragic directly for the monthly subscription — GTB charges for setup, customisation, and ongoing support only. Annual billing with Ragic saves one month's cost per year.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       CTA
+  ============================================= -->
+  <section class="cta-section" id="cta">
+    <div class="container">
+      <div class="cta-box reveal">
+        <span class="eyebrow" style="margin-bottom: 1.25rem; display: block;">[ Get started ]</span>
+        <h2 class="cta-headline">Not sure if it's the right fit?</h2>
+        <p class="cta-body">Tell us what you're tracking in spreadsheets right now. We'll tell you honestly whether Ragic solves it — and what a build would actually look like.</p>
+
+        <form
+          id="contactForm"
+          class="contact-form"
+          action="https://formsubmit.co/bailey@gtbsoftware.com"
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="Ragic Solutions Enquiry" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+          <input type="text" name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="your@email.com" required />
+          <input type="text" name="company" placeholder="Company name" required />
+          <select name="team_size" required>
+            <option value="" disabled selected>Team size</option>
+            <option value="Just me">Just me</option>
+            <option value="2–10">2–10</option>
+            <option value="11–50">11–50</option>
+            <option value="51–150">51–150</option>
+            <option value="150+">150+</option>
+          </select>
+          <textarea name="spreadsheets" placeholder="What are you currently tracking in spreadsheets?" required></textarea>
+
+          <button type="submit" class="btn-primary" style="align-self:center; border:none; cursor:pointer; font-family:var(--font-body);">Send it</button>
+        </form>
+
+        <div class="form-confirm" id="formConfirm">
+          <strong>Got it.</strong>
+          <p>We'll be in touch. — Bailey</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       FOOTER
+  ============================================= -->
+  <footer>
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <p class="footer-tagline">
+            Efficiency is nice.<br />
+            <span class="accent">Cash is king.</span>
+          </p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/#services">Services</a>
+          <a href="/#process">How It Works</a>
+          <a href="/#about">About</a>
+          <a href="/insights">Insights</a>
+          <a href="#cta">Let's talk</a>
+        </nav>
+
+        <div class="footer-contact">
+          <a href="mailto:bailey@gtbsoftware.com">bailey@gtbsoftware.com</a>
+          <a href="https://linkedin.com/company/grab-the-bull-software" target="_blank" rel="noopener">LinkedIn →</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Grab the Bull Software. All rights reserved.</p>
+        <p class="footer-copy">gtbsoftware.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    function closeMobileNav() {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen.toString());
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    const contactForm = document.getElementById('contactForm');
+    const formConfirm = document.getElementById('formConfirm');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = new FormData(contactForm);
+        try {
+          await fetch(contactForm.action, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+        } catch (_) {}
+        contactForm.style.display = 'none';
+        formConfirm.style.display = 'block';
+      });
+    }
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) {
+          el.target.classList.add('visible');
+          revealObserver.unobserve(el.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => revealObserver.observe(el));
+  </script>
+
+</body>
+</html>

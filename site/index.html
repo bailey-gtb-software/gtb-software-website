@@ -894,39 +894,6 @@
       gap: 1.25rem;
     }
 
-    .ragic-steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    .ragic-step {
-      padding: 1.5rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-
-    .ragic-step-num {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
-
-    .ragic-step-title {
-      font-weight: 600;
-      font-size: 0.925rem;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-    }
-
-    .ragic-step-body {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
     /* =============================================
        HOW IT WORKS
     ============================================= */
@@ -1810,8 +1777,7 @@
       }
 
       .services-grid,
-      .services-grid-3,
-      .ragic-steps {
+      .services-grid-3 {
         grid-template-columns: 1fr;
       }
 
@@ -1856,7 +1822,7 @@
     <a href="#ai-agents" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— AI Agents</a>
     <a href="#workflow" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— Workflow Automation</a>
     <a href="#custom-software" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— Custom Software</a>
-    <a href="#ragic" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— Ragic Solutions</a>
+    <a href="/services/ragic" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— Ragic Solutions</a>
     <a href="#ai-adoption" onclick="closeMobileNav()" style="font-size:1.1rem; color: var(--text-dim);">— AI Adoption</a>
     <a href="#process" onclick="closeMobileNav()">How It Works</a>
     <a href="#about" onclick="closeMobileNav()">About</a>
@@ -1883,7 +1849,7 @@
               <a href="#ai-agents" role="menuitem">AI Agents</a>
               <a href="#workflow" role="menuitem">Workflow Automation</a>
               <a href="#custom-software" role="menuitem">Custom Software &amp; Apps</a>
-              <a href="#ragic" role="menuitem">Ragic Solutions</a>
+              <a href="/services/ragic" role="menuitem">Ragic Solutions</a>
               <a href="#ai-adoption" role="menuitem">AI Adoption Consulting</a>
             </div>
           </div>
@@ -2049,7 +2015,7 @@
 
         <div class="service-card">
           <span class="service-badge">Partner</span>
-          <h3 class="service-card-title"><a href="#ragic" style="color:inherit;">Ragic Solutions</a></h3>
+          <h3 class="service-card-title"><a href="/services/ragic" style="color:inherit;">Ragic Solutions</a></h3>
           <p class="service-card-body">
             Replace your spreadsheets without the enterprise price tag. We build custom databases, CRMs, and ops systems on Ragic — and sell it as a certified partner starting at $5/user/month.
           </p>
@@ -2248,114 +2214,6 @@
           </p>
         </div>
 
-      </div>
-
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ============================================
-       SERVICE DETAIL — RAGIC SOLUTIONS
-  ============================================= -->
-  <section id="ragic" class="section">
-    <div class="container">
-
-      <div class="services-header reveal">
-        <span class="eyebrow">[ Ragic Solutions ]</span>
-        <h2 class="section-headline">Your business runs on spreadsheets.<br />It shouldn't have to.</h2>
-        <p class="section-body" style="max-width:680px; margin-top:1rem;">
-          Most small businesses outgrow spreadsheets long before they're ready for a $50,000 ERP implementation. There's a better option. Ragic is a no-code database platform that works like a spreadsheet on the surface — but underneath it's a proper relational database. Linked records, automated workflows, mobile access, approval processes, and reporting. We build your system on top of it, train your team, and keep it running.
-        </p>
-      </div>
-
-      <!-- What it replaces strip -->
-      <div class="reveal reveal-delay-1" style="margin-bottom:3rem; padding:1.5rem 2rem; background:var(--bg-raised); border:1px solid var(--border); border-radius:12px; display:flex; gap:2.5rem; flex-wrap:wrap; align-items:center;">
-        <p style="font-size:0.8rem; font-family:var(--font-mono); color:var(--text-dim); letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap;">Replaces</p>
-        <div style="display:flex; gap:1.5rem; flex-wrap:wrap;">
-          <span style="font-size:0.875rem; color:var(--text-muted); text-decoration:line-through; opacity:0.6;">Excel / Google Sheets</span>
-          <span style="font-size:0.875rem; color:var(--text-muted); text-decoration:line-through; opacity:0.6;">Disconnected forms and trackers</span>
-          <span style="font-size:0.875rem; color:var(--text-muted); text-decoration:line-through; opacity:0.6;">$80k+ ERP systems</span>
-          <span style="font-size:0.875rem; color:var(--text-muted); text-decoration:line-through; opacity:0.6;">Manual data re-entry between tools</span>
-        </div>
-      </div>
-
-      <!-- Template categories -->
-      <div class="reveal" style="margin-bottom:1rem;">
-        <p style="font-size:0.8rem; font-family:var(--font-mono); color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase;">What we build</p>
-      </div>
-
-      <div class="services-grid reveal reveal-delay-1">
-
-        <div class="service-card">
-          <h3 class="service-card-title">CRM &amp; Sales Pipeline</h3>
-          <p class="service-card-body">
-            Track leads, customers, deal stages, and follow-up tasks in one linked system. Linked contacts, companies, and deals — without paying $80–$150/user/month for Salesforce or HubSpot.
-          </p>
-        </div>
-
-        <div class="service-card">
-          <h3 class="service-card-title">Inventory &amp; Purchasing</h3>
-          <p class="service-card-body">
-            Purchase orders, sales orders, stock levels, and supplier records all linked together. Know what you have, what's on order, and what you owe — in one place your whole team can access.
-          </p>
-        </div>
-
-        <div class="service-card">
-          <h3 class="service-card-title">Job &amp; Field Service Management</h3>
-          <p class="service-card-body">
-            Built for trades and field service businesses. HVAC inspections, job scheduling, site checklists, technician assignments, and completion sign-offs — all tracked and linked to the customer record.
-          </p>
-        </div>
-
-        <div class="service-card">
-          <h3 class="service-card-title">HR &amp; Staff Management</h3>
-          <p class="service-card-body">
-            Employee records, onboarding checklists, leave requests, and asset assignments — managed in a proper database instead of a folder of spreadsheets and email threads.
-          </p>
-        </div>
-
-        <div class="service-card">
-          <h3 class="service-card-title">Project &amp; Task Tracking</h3>
-          <p class="service-card-body">
-            Budgets, milestones, task assignments, and status reporting — all linked to the client or job. Built-in Gantt charts, calendar views, and automated status updates keep everyone on the same page.
-          </p>
-        </div>
-
-        <div class="service-card">
-          <h3 class="service-card-title">Custom Operations Systems</h3>
-          <p class="service-card-body">
-            If your business has a process that doesn't fit a template, we build it from scratch. Approval workflows, automated alerts, custom reports, mobile forms — designed around how you actually work.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- How we build it -->
-      <div class="reveal reveal-delay-2" style="margin-top:3rem; margin-bottom:2.5rem;">
-        <p style="font-size:0.8rem; font-family:var(--font-mono); color:var(--text-dim); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:1.5rem;">How we build it</p>
-        <div class="ragic-steps">
-          <div class="ragic-step">
-            <p class="ragic-step-num">01</p>
-            <p class="ragic-step-title">Start with a template</p>
-            <p class="ragic-step-body">We start from one of Ragic's 40+ pre-built templates — CRM, inventory, job management — so you're not starting from a blank page.</p>
-          </div>
-          <div class="ragic-step">
-            <p class="ragic-step-num">02</p>
-            <p class="ragic-step-title">Customise to your business</p>
-            <p class="ragic-step-body">We reshape the template around your actual workflow — your field names, your approval steps, your reporting needs. It ends up looking and feeling like your system, not a generic tool.</p>
-          </div>
-          <div class="ragic-step">
-            <p class="ragic-step-num">03</p>
-            <p class="ragic-step-title">Train the team and hand over</p>
-            <p class="ragic-step-body">We train your team, migrate your existing data, and make sure everyone knows how to use it before we step back. Ongoing support available if you need changes down the track.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal reveal-delay-2" style="padding:1.5rem 2rem; background:var(--bg-card); border:1px solid var(--border); border-left: 3px solid var(--accent); border-radius:0 12px 12px 0; display:flex; align-items:center; justify-content:space-between; gap:2rem; flex-wrap:wrap;">
-        <p style="font-size:0.9rem; color:var(--text-muted);">Not sure if it's the right fit? Tell us what you're tracking in spreadsheets right now — we'll tell you honestly whether Ragic solves it.</p>
-        <a href="#cta" class="btn-primary" style="white-space:nowrap;">Talk to us about Ragic</a>
       </div>
 
     </div>
