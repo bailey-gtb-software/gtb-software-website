@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ragic Solutions — GTB Software</title>
-  <meta name="description" content="Replace your spreadsheets without the enterprise price tag. GTB Software is a certified Ragic reseller — we build, customise, and support Ragic database systems for growing businesses." />
+  <title>Regulatory AI Assistants — GTB Software</title>
+  <meta name="description" content="Every organisation has a document their people should know but don't. GTB builds AI assistants trained on your exact rules, regulations, or compliance documents — answers in seconds, not 40 minutes of hunting through a PDF." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://api.fontshare.com" />
@@ -59,9 +59,7 @@
       padding: 0 2rem;
     }
 
-    .section {
-      padding: 6rem 0;
-    }
+    .section { padding: 6rem 0; }
 
     .section-divider {
       height: 1px;
@@ -417,9 +415,7 @@
       text-align: center;
     }
 
-    .stat-item {
-      padding: 2rem;
-    }
+    .stat-item { padding: 2rem; }
 
     .stat-number {
       font-family: var(--font-display);
@@ -498,20 +494,6 @@
       line-height: 1.65;
     }
 
-    .problem-card ul {
-      padding-left: 1rem;
-      margin-top: 0.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.375rem;
-    }
-
-    .problem-card li {
-      font-size: 0.8125rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
-
     .solution-callout {
       padding: 2.5rem 3rem;
       background: var(--bg-card);
@@ -558,87 +540,163 @@
     }
 
     /* =============================================
-       FEATURES SECTION
+       HOW IT WORKS
     ============================================= */
-    .features-grid {
+    .how-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
       margin-top: 3rem;
     }
 
-    .feature-item {
+    .how-item {
       display: flex;
       align-items: flex-start;
       gap: 1rem;
-      padding: 1.25rem 1.5rem;
+      padding: 1.5rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
     }
 
-    .feature-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
+    .how-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
       flex-shrink: 0;
-      margin-top: 0.5rem;
+      margin-top: 0.2rem;
+      white-space: nowrap;
     }
 
-    .feature-item-title {
+    .how-item-title {
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.9375rem;
       color: var(--text);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.375rem;
     }
 
-    .feature-item-body {
+    .how-item-body {
       font-size: 0.8125rem;
       color: var(--text-muted);
-      line-height: 1.55;
+      line-height: 1.65;
     }
 
     /* =============================================
-       DEMO CARD
+       CASE STUDY
     ============================================= */
-    .demo-card {
+    .case-study {
       margin-top: 3rem;
-      padding: 3.5rem;
-      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16,185,129,0.04) 100%);
+      padding: 3rem;
+      background: var(--bg-card);
       border: 1px solid var(--accent-border);
       border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
+      position: relative;
+      overflow: hidden;
     }
 
-    .demo-card-text h3 {
+    .case-study::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .case-study-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .case-study-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .case-study-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+
+    .case-study-section-title {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 1.375rem;
+      font-size: 1rem;
       color: var(--text);
-      margin-bottom: 0.625rem;
-      letter-spacing: -0.015em;
+      margin-bottom: 0.75rem;
     }
 
-    .demo-card-text p {
-      font-size: 0.9375rem;
+    .case-study-body {
+      font-size: 0.875rem;
       color: var(--text-muted);
-      line-height: 1.6;
-      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .case-study-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .case-study-stat {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .case-study-stat-num {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--accent);
+      line-height: 1;
+      flex-shrink: 0;
+      min-width: 4rem;
+    }
+
+    .case-study-stat-label {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding-top: 0.125rem;
     }
 
     /* =============================================
        USE CASES
     ============================================= */
+    .use-case-group {
+      margin-top: 2.5rem;
+    }
+
+    .use-case-group + .use-case-group {
+      margin-top: 2rem;
+    }
+
+    .use-case-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
     .use-cases-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
-      margin-top: 3rem;
     }
 
     .use-case-card {
@@ -656,7 +714,7 @@
       font-weight: 700;
       font-size: 0.9375rem;
       color: var(--text);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       letter-spacing: -0.01em;
     }
 
@@ -664,7 +722,122 @@
       font-size: 0.8125rem;
       color: var(--text-muted);
       line-height: 1.65;
+      margin-bottom: 0.75rem;
     }
+
+    .use-case-audience {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+
+    /* =============================================
+       PRICING
+    ============================================= */
+    .pricing-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .pricing-block {
+      padding: 2rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pricing-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--border-mid);
+    }
+
+    .pricing-block.featured::before {
+      background: var(--accent);
+    }
+
+    .pricing-block-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing-block-price {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 2rem;
+      color: var(--text);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .pricing-block-price span {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0;
+    }
+
+    .pricing-block-desc {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 1rem 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-block-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    .pricing-block-features li {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .pricing-block-features li::before {
+      content: '—';
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    .pricing-callout {
+      margin-top: 1.5rem;
+      padding: 1.75rem 2rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border-mid);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+    }
+
+    .pricing-callout p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .pricing-callout strong { color: var(--text); }
 
     /* =============================================
        HOW WE WORK
@@ -681,7 +854,6 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 14px;
-      position: relative;
     }
 
     .step-num {
@@ -704,125 +876,6 @@
       font-size: 0.8125rem;
       color: var(--text-muted);
       line-height: 1.65;
-    }
-
-    /* =============================================
-       PRICING
-    ============================================= */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 1rem;
-      margin-top: 3rem;
-      align-items: stretch;
-    }
-
-    .pricing-card {
-      padding: 1.5rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .pricing-card.featured {
-      border-color: var(--accent-border);
-      background: linear-gradient(160deg, var(--bg-card) 0%, rgba(16,185,129,0.05) 100%);
-      padding-top: 2.75rem;
-    }
-
-    .pricing-card.featured::before {
-      content: 'Most Popular';
-      position: absolute;
-      top: -1px; left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent);
-      color: #fff;
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.75rem;
-      border-radius: 0 0 8px 8px;
-    }
-
-    .pricing-tier {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-      margin-top: 0.5rem;
-    }
-
-    .pricing-price {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 1.75rem;
-      color: var(--text);
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin-bottom: 0.25rem;
-    }
-
-    .pricing-price span {
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      letter-spacing: 0;
-    }
-
-    .pricing-desc {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin: 0.875rem 0;
-      padding-top: 0.875rem;
-      border-top: 1px solid var(--border);
-      flex: 1;
-    }
-
-    .pricing-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.375rem;
-    }
-
-    .pricing-features li {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-
-    .pricing-features li::before {
-      content: '—';
-      color: var(--text-dim);
-      flex-shrink: 0;
-    }
-
-    .pricing-gtb-callout {
-      margin-top: 2rem;
-      padding: 1.75rem 2rem;
-      background: var(--bg-raised);
-      border: 1px solid var(--border-mid);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 12px 12px 0;
-    }
-
-    .pricing-gtb-callout p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    .pricing-gtb-callout strong {
-      color: var(--text);
     }
 
     /* =============================================
@@ -868,14 +921,6 @@
       margin-bottom: 2rem;
     }
 
-    .cta-actions {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
     /* =============================================
        CONTACT FORM
     ============================================= */
@@ -888,7 +933,6 @@
     }
 
     .contact-form input,
-    .contact-form select,
     .contact-form textarea {
       width: 100%;
       background: var(--bg-card);
@@ -903,19 +947,9 @@
       -webkit-appearance: none;
     }
 
-    .contact-form select {
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23737373' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      padding-right: 2.5rem;
-    }
-
-    .contact-form select option { background: #1a1a1a; }
-
     .contact-form textarea {
       resize: vertical;
-      min-height: 120px;
+      min-height: 110px;
       line-height: 1.6;
     }
 
@@ -923,7 +957,6 @@
     .contact-form textarea::placeholder { color: var(--text-dim); }
 
     .contact-form input:focus,
-    .contact-form select:focus,
     .contact-form textarea:focus { border-color: rgba(16, 185, 129, 0.4); }
 
     .form-confirm {
@@ -1014,30 +1047,27 @@
     /* =============================================
        RESPONSIVE
     ============================================= */
-    @media (max-width: 1024px) {
-      .pricing-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
     @media (max-width: 768px) {
       .nav-links { display: none; }
       .nav-cta { display: none; }
       .hamburger { display: flex; }
       .mobile-nav { display: flex; }
       .problem-grid { grid-template-columns: 1fr; }
-      .features-grid { grid-template-columns: 1fr; }
+      .how-grid { grid-template-columns: 1fr; }
+      .case-study-grid { grid-template-columns: 1fr; gap: 2rem; }
       .use-cases-grid { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-2col { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr; }
       .footer-main { grid-template-columns: 1fr; gap: 2rem; }
       .footer-contact { align-items: flex-start; }
-      .demo-card { flex-direction: column; }
       .cta-box { padding: 2.5rem 1.75rem; }
+      .case-study { padding: 2rem; }
+      .solution-callout { padding: 2rem 1.5rem; }
     }
 
     @media (max-width: 480px) {
       .container { padding: 0 1.25rem; }
-      .pricing-grid { grid-template-columns: 1fr; }
       .hero-headline { font-size: 2.25rem; }
     }
   </style>
@@ -1051,8 +1081,8 @@
     <a href="/#ai-agents" class="sub" onclick="closeMobileNav()">— AI Agents</a>
     <a href="/#workflow" class="sub" onclick="closeMobileNav()">— Workflow Automation</a>
     <a href="/#custom-software" class="sub" onclick="closeMobileNav()">— Custom Software</a>
-    <a href="/services/ragic" class="sub active" onclick="closeMobileNav()" style="color: var(--accent);">— Ragic Solutions</a>
-    <a href="/services/regulatory-ai" class="sub" onclick="closeMobileNav()">— Regulatory AI Assistants</a>
+    <a href="/services/ragic" class="sub" onclick="closeMobileNav()">— Ragic Solutions</a>
+    <a href="/services/regulatory-ai" class="sub active" onclick="closeMobileNav()" style="color: var(--accent);">— Regulatory AI Assistants</a>
     <a href="/#ai-adoption" class="sub" onclick="closeMobileNav()">— AI Adoption</a>
     <a href="/#process" onclick="closeMobileNav()">How It Works</a>
     <a href="/#about" onclick="closeMobileNav()">About</a>
@@ -1077,8 +1107,8 @@
               <a href="/#ai-agents" role="menuitem">AI Agents</a>
               <a href="/#workflow" role="menuitem">Workflow Automation</a>
               <a href="/#custom-software" role="menuitem">Custom Software &amp; Apps</a>
-              <a href="/services/ragic" role="menuitem" class="active">Ragic Solutions</a>
-              <a href="/services/regulatory-ai" role="menuitem">Regulatory AI Assistants</a>
+              <a href="/services/ragic" role="menuitem">Ragic Solutions</a>
+              <a href="/services/regulatory-ai" role="menuitem" class="active">Regulatory AI Assistants</a>
               <a href="/#ai-adoption" role="menuitem">AI Adoption Consulting</a>
             </div>
           </div>
@@ -1105,26 +1135,26 @@
     <div class="container">
       <div class="reveal">
         <div class="hero-eyebrow">
-          <span class="eyebrow">[ Ragic Solutions ]</span>
-          <span class="partner-badge">Certified Partner</span>
+          <span class="eyebrow">[ Regulatory AI Assistants ]</span>
+          <span class="partner-badge">Case Study: Cricket Tasmania</span>
         </div>
 
         <h1 class="hero-headline">
-          The #1 No-Code<br />
-          <span class="accent">Database</span> for<br />
-          Your Business
+          Your rulebook.<br />
+          <span class="accent">Instant answers.</span><br />
+          Every time.
         </h1>
 
         <p class="hero-sub">
-          More powerful than Excel. More affordable than Salesforce. More maintainable than custom code. GTB Software implements, customises, and supports Ragic for growing businesses — starting from $500.
+          Every organisation has a document their people should know but don't. We build AI assistants trained on your exact rules, regulations, or compliance documents — so your team gets answers in seconds, with the exact clause cited.
         </p>
 
         <div class="hero-actions">
-          <a href="#cta" class="btn-primary">Get set up with GTB</a>
-          <a href="https://www.ragic.com/intl/en/home" target="_blank" rel="noopener" class="btn-ghost">Try Ragic free →</a>
+          <a href="#cta" class="btn-primary">Talk to us about your rulebook</a>
+          <a href="#case-study" class="btn-ghost">See it in action →</a>
         </div>
 
-        <p class="hero-partner-note">GTB Software is a certified Ragic reseller and implementation partner. You pay Ragic directly for the subscription — we charge for setup, customisation, and support.</p>
+        <p class="hero-partner-note">Built for Cricket Tasmania. Deployable for any association, regulator, or organisation with a reference document their people constantly need to look up.</p>
       </div>
     </div>
   </section>
@@ -1136,19 +1166,19 @@
     <div class="container">
       <div class="stats-grid reveal">
         <div class="stat-item">
-          <p class="stat-number">88%</p>
-          <p class="stat-label">of spreadsheets contain errors — with no way to audit them</p>
-          <p class="stat-source">Ragic research</p>
+          <p class="stat-number">75 hrs</p>
+          <p class="stat-label">per season Cricket Tasmania spent answering by-law queries manually. Now zero.</p>
+          <p class="stat-source">Cricket Tasmania case study</p>
         </div>
         <div class="stat-item">
-          <p class="stat-number">$200K</p>
-          <p class="stat-label">average savings when companies migrate from Salesforce to Ragic</p>
-          <p class="stat-source">Ragic case study</p>
+          <p class="stat-number">400+</p>
+          <p class="stat-label">pages — the average length of the regulatory documents organisations expect staff to know cold</p>
+          <p class="stat-source">typical rulebook length</p>
         </div>
         <div class="stat-item">
-          <p class="stat-number">3 days</p>
-          <p class="stat-label">to build a 3,000-store allocation system during COVID-19</p>
-          <p class="stat-source">Ragic case study</p>
+          <p class="stat-number">100%</p>
+          <p class="stat-label">of queries logged — every question becomes data on where the rulebook needs strengthening</p>
+          <p class="stat-source">built-in analytics</p>
         </div>
       </div>
     </div>
@@ -1164,57 +1194,36 @@
 
       <div class="reveal">
         <span class="eyebrow">[ The problem ]</span>
-        <h2 class="section-headline">Three options. All of them broken.</h2>
-        <p class="section-body">Most businesses managing data have the same three choices. None of them are good enough.</p>
+        <h2 class="section-headline">The document exists.<br />No one can find the answer.</h2>
+        <p class="section-body">Every organisation with a rulebook, compliance code, or policy manual runs into the same three problems.</p>
       </div>
 
       <div class="problem-grid reveal reveal-delay-1">
 
         <div class="problem-card bad">
-          <p class="problem-card-label">Option 1</p>
-          <h3 class="problem-card-title">Spreadsheets</h3>
-          <p class="problem-card-body">Fast to start. Painful at scale.</p>
-          <ul>
-            <li>People spend up to 90% of their time working in Excel</li>
-            <li>88% of all spreadsheets contain errors, with no way to audit</li>
-            <li>Data fragmented across files, tabs, and email threads</li>
-            <li>No access controls — anyone can overwrite anything</li>
-            <li>Zero automation — every update is a manual task</li>
-          </ul>
+          <p class="problem-card-label">Problem 1</p>
+          <h3 class="problem-card-title">The PDF is 400 pages</h3>
+          <p class="problem-card-body">Staff reference the document constantly but searching a PDF is slow and error-prone. Two people look up the same rule and walk away with different answers. Nobody has time to read it end to end.</p>
         </div>
 
         <div class="problem-card bad">
-          <p class="problem-card-label">Option 2</p>
-          <h3 class="problem-card-title">Enterprise Software</h3>
-          <p class="problem-card-body">Bloated features. Hidden costs. Long implementations.</p>
-          <ul>
-            <li>Oversized packages with features you'll never use</li>
-            <li>Customisation costs exceed the original quote</li>
-            <li>6–18 month implementations before you see value</li>
-            <li>$50,000+ before it fits how you actually work</li>
-            <li>Locked in — switching costs are brutal</li>
-          </ul>
+          <p class="problem-card-label">Problem 2</p>
+          <h3 class="problem-card-title">Institutional knowledge leaves with people</h3>
+          <p class="problem-card-body">The senior umpire, compliance officer, or certifier who "just knows" the rules isn't always available. When they leave, that knowledge walks out the door — and the organisation is back to square one.</p>
         </div>
 
         <div class="problem-card bad">
-          <p class="problem-card-label">Option 3</p>
-          <h3 class="problem-card-title">Custom Development</h3>
-          <p class="problem-card-body">Built for you. Then one person leaves and no-one can maintain it.</p>
-          <ul>
-            <li>Expensive to build, expensive to change</li>
-            <li>Dependent on one developer's knowledge</li>
-            <li>Every new requirement is a paid project</li>
-            <li>Technical debt compounds fast</li>
-            <li>Reliability not guaranteed</li>
-          </ul>
+          <p class="problem-card-label">Problem 3</p>
+          <h3 class="problem-card-title">Inconsistent rulings, no audit trail</h3>
+          <p class="problem-card-body">Without a single authoritative source, decisions vary by person, by day, and by who got asked. Disputes escalate. Liability accumulates. Nobody can point to where the decision came from.</p>
         </div>
 
       </div>
 
       <div class="solution-callout reveal reveal-delay-2">
-        <p class="solution-callout-eyebrow">The middle ground</p>
-        <h3 class="solution-callout-headline">There's a better way.</h3>
-        <p class="solution-callout-body">Ragic looks like a spreadsheet, works like a proper relational database, and costs $5–$19 per user per month. No enterprise contract. No custom code. No spreadsheet chaos. GTB builds it for you, customises it to your workflow, and trains your team.</p>
+        <p class="solution-callout-eyebrow">The fix</p>
+        <h3 class="solution-callout-headline">One assistant. Your document.<br />Every question answered with the exact rule cited.</h3>
+        <p class="solution-callout-body">The AI only answers from your content — no hallucinations outside the corpus. Every answer includes the exact clause. Every question is logged. The assistant gets smarter about your document over time.</p>
       </div>
 
     </div>
@@ -1223,107 +1232,104 @@
   <div class="section-divider"></div>
 
   <!-- ============================================
-       WHAT IS RAGIC
+       HOW IT WORKS
   ============================================= -->
   <section class="section">
     <div class="container">
 
       <div class="reveal">
-        <span class="eyebrow">[ What Ragic does ]</span>
-        <h2 class="section-headline">A real database that your team<br />can actually use.</h2>
-        <p class="section-body">Business managers — not developers — are best positioned to build the tools their teams need. Ragic is the platform that makes that possible. Spreadsheet-like interface on the surface. Proper relational database underneath.</p>
+        <span class="eyebrow">[ How it works ]</span>
+        <h2 class="section-headline">Built on your document.<br />Trained on your exact rules.</h2>
+        <p class="section-body">The assistant doesn't connect to the internet or use generic AI knowledge. It works exclusively from the document you provide.</p>
       </div>
 
-      <div class="features-grid reveal reveal-delay-1">
+      <div class="how-grid reveal reveal-delay-1">
 
-        <div class="feature-item">
-          <div class="feature-dot"></div>
+        <div class="how-item">
+          <span class="how-num">[ 01 ]</span>
           <div>
-            <p class="feature-item-title">Linked Records</p>
-            <p class="feature-item-body">Connect customers to orders to invoices to jobs — everything linked, nothing duplicated. Like a proper database, without writing a line of SQL.</p>
+            <p class="how-item-title">We ingest your document</p>
+            <p class="how-item-body">PDF, Word doc, or a set of related documents — bylaws, supplementary conditions, appendices. We structure the content, embed it for semantic search, and build the retrieval layer. The AI only answers from your corpus.</p>
           </div>
         </div>
 
-        <div class="feature-item">
-          <div class="feature-dot"></div>
+        <div class="how-item">
+          <span class="how-num">[ 02 ]</span>
           <div>
-            <p class="feature-item-title">Approval Workflows</p>
-            <p class="feature-item-body">Build multi-step approval chains into any process. Purchase orders, leave requests, job sign-offs — routed automatically, tracked completely.</p>
+            <p class="how-item-title">Natural language Q&amp;A with citations</p>
+            <p class="how-item-body">Ask a question in plain English. Get the answer plus the exact rule, clause, or section it came from. If the answer isn't in the document, it says so — no making things up.</p>
           </div>
         </div>
 
-        <div class="feature-item">
-          <div class="feature-dot"></div>
+        <div class="how-item">
+          <span class="how-num">[ 03 ]</span>
           <div>
-            <p class="feature-item-title">Mobile Access + Offline Sync</p>
-            <p class="feature-item-body">iOS and Android apps with offline mode. Your field team can fill in job reports without Wi-Fi — it syncs when they're back online.</p>
+            <p class="how-item-title">The assistant generates insight</p>
+            <p class="how-item-body">Every question is logged. Over time you see which rules get looked up most, where answers are unclear, and where the document needs stronger guidance. The assistant helps you improve the rulebook itself — not just answer questions from it.</p>
           </div>
         </div>
 
-        <div class="feature-item">
-          <div class="feature-dot"></div>
+        <div class="how-item">
+          <span class="how-num">[ 04 ]</span>
           <div>
-            <p class="feature-item-title">Role-Based Access Control</p>
-            <p class="feature-item-body">Define exactly who can view, edit, or delete each record. Employees see what they need. Nothing more. Full audit trail of every change.</p>
-          </div>
-        </div>
-
-        <div class="feature-item">
-          <div class="feature-dot"></div>
-          <div>
-            <p class="feature-item-title">Automated Alerts &amp; Reminders</p>
-            <p class="feature-item-body">Email and push notifications triggered by data conditions — overdue tasks, low stock, expiring contracts. No manual chasing.</p>
-          </div>
-        </div>
-
-        <div class="feature-item">
-          <div class="feature-dot"></div>
-          <div>
-            <p class="feature-item-title">Reporting: Gantt, Pivot, Calendar</p>
-            <p class="feature-item-body">Built-in report types that work out of the box. Gantt charts for project timelines. Pivot tables for analysis. Calendar views for scheduling.</p>
-          </div>
-        </div>
-
-        <div class="feature-item">
-          <div class="feature-dot"></div>
-          <div>
-            <p class="feature-item-title">Excel Import/Export</p>
-            <p class="feature-item-body">Migration is painless. Import your existing spreadsheet data directly. Export to Excel or Word at any point. No lock-in.</p>
-          </div>
-        </div>
-
-        <div class="feature-item">
-          <div class="feature-dot"></div>
-          <div>
-            <p class="feature-item-title">API + Zapier / Make / n8n</p>
-            <p class="feature-item-body">Connect Ragic to the rest of your stack. Native connectors for Zapier, Make, and n8n. Full REST API for anything else. GTB handles the integrations.</p>
-          </div>
-        </div>
-
-        <div class="feature-item">
-          <div class="feature-dot"></div>
-          <div>
-            <p class="feature-item-title">Built-In AI Agent</p>
-            <p class="feature-item-body">Ragic's AI has full context of your actual business data — not a generic assistant. Runs 24/7. Built for sustained operations, not just demos.</p>
-          </div>
-        </div>
-
-        <div class="feature-item">
-          <div class="feature-dot"></div>
-          <div>
-            <p class="feature-item-title">40+ Pre-Built Templates</p>
-            <p class="feature-item-body">CRM, inventory, HR, project management, field service — a template for every common use case. GTB starts from the closest match and customises it to your workflow.</p>
+            <p class="how-item-title">Public or private — your call</p>
+            <p class="how-item-body">Sports associations and code references can be publicly accessible. Confidential documents — AFSL compliance manuals, HR policy, internal ops — run on private closed instances. Access-controlled, not publicly indexed, not findable on search.</p>
           </div>
         </div>
 
       </div>
 
-      <div class="demo-card reveal reveal-delay-2">
-        <div class="demo-card-text">
-          <h3>See it in action</h3>
-          <p>The best way to understand Ragic is to see it running. Their website has a full product tour — watch the intro video to see how it handles real data in a real business context.</p>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       CASE STUDY
+  ============================================= -->
+  <section class="section" id="case-study">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ Case study ]</span>
+        <h2 class="section-headline">Built for Cricket Tasmania.<br />507 clubs. One source of truth.</h2>
+        <p class="section-body">Cricket Tasmania was spending 75 staff hours per season answering by-law queries — inconsistently, with no audit trail, and no way to build institutional memory. Here's what we built.</p>
+      </div>
+
+      <div class="case-study reveal reveal-delay-1">
+        <p class="case-study-eyebrow">[ Cricket Tasmania — Laws of Cricket AI Assistant ]</p>
+
+        <div class="case-study-grid">
+          <div>
+            <p class="case-study-label">The problem</p>
+            <p class="case-study-body">Cricket Tasmania runs 507 senior teams and 8,750 registered players across 150+ clubs. Every season, CT staff fielded 150+ by-law queries — each taking an average of 30 minutes to research and respond. Rulings were inconsistent across clubs. There was no precedent library, no audit trail, and no way for umpires or club admins to get reliable answers outside business hours.</p>
+
+            <p style="margin-top: 1.25rem;" class="case-study-label">The build</p>
+            <p class="case-study-body">A mobile-first AI assistant trained on three layers of cricket law: ICC Laws of Cricket, Cricket Australia playing conditions, and CT's own by-laws and local conditions. Hybrid search — semantic vector retrieval plus full-text matching — fused to surface the most relevant rules. Every answer cites the exact clause. Umpires log in via phone OTP. When a question needs a formal ruling, they escalate through the app — CT admins receive the full context, draft a ruling, and it's published as a precedent for all future queries.</p>
+          </div>
+
+          <div>
+            <p class="case-study-label">The outcome</p>
+            <div class="case-study-stats">
+              <div class="case-study-stat">
+                <span class="case-study-stat-num">75 hrs</span>
+                <span class="case-study-stat-label">of staff time freed per season — returned to competition development, high performance, and CTPL programs</span>
+              </div>
+              <div class="case-study-stat">
+                <span class="case-study-stat-num">507</span>
+                <span class="case-study-stat-label">clubs now getting consistent answers from the same single source of truth — no more variation by who gets asked</span>
+              </div>
+              <div class="case-study-stat">
+                <span class="case-study-stat-num">24/7</span>
+                <span class="case-study-stat-label">availability — umpires get answers on match day, evenings, weekends, whenever they need them</span>
+              </div>
+              <div class="case-study-stat">
+                <span class="case-study-stat-num">∞</span>
+                <span class="case-study-stat-label">precedent library — every ruling is captured and becomes a searchable resource for future queries</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <a href="https://www.ragic.com/intl/en/home" target="_blank" rel="noopener" class="btn-primary">Watch the product tour →</a>
       </div>
 
     </div>
@@ -1338,80 +1344,74 @@
     <div class="container">
 
       <div class="reveal">
-        <span class="eyebrow">[ What we build ]</span>
-        <h2 class="section-headline">Systems for how your<br />business actually runs.</h2>
-        <p class="section-body">We start from Ragic's pre-built templates and reshape them around your specific workflow — your field names, your approval steps, your reporting needs.</p>
+        <span class="eyebrow">[ Use cases ]</span>
+        <h2 class="section-headline">Built for any organisation<br />with a document people need to know.</h2>
+        <p class="section-body">If your people are constantly looking things up — and getting different answers — an AI assistant trained on your exact document is the fix.</p>
       </div>
 
-      <div class="use-cases-grid reveal reveal-delay-1">
+      <div class="reveal reveal-delay-1">
 
-        <div class="use-case-card">
-          <h3 class="use-case-title">CRM &amp; Sales Pipeline</h3>
-          <p class="use-case-body">Track leads, customers, deal stages, and follow-up tasks in one linked system. Linked contacts, companies, and deals — without paying $80–$150/user/month for Salesforce or HubSpot.</p>
+        <div class="use-case-group">
+          <p class="use-case-group-label">Sports &amp; governing bodies</p>
+          <div class="use-cases-grid">
+            <div class="use-case-card">
+              <h3 class="use-case-title">Cricket Associations</h3>
+              <p class="use-case-body">State, district, and junior competitions. ICC Laws, playing conditions, and local by-laws in one assistant. Proven with Cricket Tasmania.</p>
+              <p class="use-case-audience">Users: umpires, scorers, coaches, club administrators</p>
+            </div>
+            <div class="use-case-card">
+              <h3 class="use-case-title">AFL, NRL &amp; Rugby Union</h3>
+              <p class="use-case-body">Laws of Australian Football, NRL rules, World Rugby Laws — notoriously complex, constantly referenced. Referee education and real-time match-day lookup.</p>
+              <p class="use-case-audience">Users: referees, coaches, club officials</p>
+            </div>
+            <div class="use-case-card">
+              <h3 class="use-case-title">Baseball, Netball &amp; Sailing</h3>
+              <p class="use-case-body">Junior leagues, club competitions, and national bodies — especially high value where parent-coaches are officiating without deep rule knowledge.</p>
+              <p class="use-case-audience">Users: umpires, parent-coaches, club secretaries</p>
+            </div>
+          </div>
         </div>
 
-        <div class="use-case-card">
-          <h3 class="use-case-title">Inventory &amp; Purchasing</h3>
-          <p class="use-case-body">Purchase orders, sales orders, stock levels, and supplier records all linked together. Know what you have, what's on order, and what you owe — in one place your whole team can access.</p>
+        <div class="use-case-group">
+          <p class="use-case-group-label">Regulations &amp; compliance</p>
+          <div class="use-cases-grid">
+            <div class="use-case-card">
+              <h3 class="use-case-title">National Construction Code (NCC/BCA)</h3>
+              <p class="use-case-body">Thousands of pages across volumes. Private certifiers and architects reference it constantly — one wrong call is a liability event. Private instance only.</p>
+              <p class="use-case-audience">Users: building certifiers, architects, building designers</p>
+            </div>
+            <div class="use-case-card">
+              <h3 class="use-case-title">NDIS Practice Standards</h3>
+              <p class="use-case-body">20,000+ registered providers navigating the Quality &amp; Safeguards framework. Dense, frequently updated, and high-stakes to get wrong. Private instance.</p>
+              <p class="use-case-audience">Users: support coordinators, registered providers, plan managers</p>
+            </div>
+            <div class="use-case-card">
+              <h3 class="use-case-title">WHS &amp; Safe Work Codes</h3>
+              <p class="use-case-body">Safe Work Australia codes of practice and state-based WHS regulations. Built for the safety manager who needs an answer before a toolbox talk, not three days later.</p>
+              <p class="use-case-audience">Users: WHS managers, supervisors, safety consultants</p>
+            </div>
+          </div>
         </div>
 
-        <div class="use-case-card">
-          <h3 class="use-case-title">Job &amp; Field Service Management</h3>
-          <p class="use-case-body">Built for trades and field service businesses. Job scheduling, site checklists, technician assignments, and completion sign-offs — all tracked and linked to the customer record.</p>
-        </div>
-
-        <div class="use-case-card">
-          <h3 class="use-case-title">HR &amp; Staff Management</h3>
-          <p class="use-case-body">Employee records, onboarding checklists, leave requests, and asset assignments — managed in a proper database instead of a folder of spreadsheets and email threads.</p>
-        </div>
-
-        <div class="use-case-card">
-          <h3 class="use-case-title">Project &amp; Task Tracking</h3>
-          <p class="use-case-body">Budgets, milestones, task assignments, and status reporting — all linked to the client or job. Built-in Gantt charts, calendar views, and automated status updates.</p>
-        </div>
-
-        <div class="use-case-card">
-          <h3 class="use-case-title">Custom Operations Systems</h3>
-          <p class="use-case-body">If your business has a process that doesn't fit a standard template, we build it from scratch. Approval workflows, automated alerts, custom reports, mobile forms — designed around how you actually work.</p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ============================================
-       HOW WE WORK
-  ============================================= -->
-  <section class="section">
-    <div class="container">
-
-      <div class="reveal">
-        <span class="eyebrow">[ How we work ]</span>
-        <h2 class="section-headline">From spreadsheet chaos<br />to working system — fast.</h2>
-        <p class="section-body">We handle everything. You tell us what you're tracking. We build and hand over a system your team can actually use.</p>
-      </div>
-
-      <div class="steps-grid reveal reveal-delay-1">
-
-        <div class="step">
-          <p class="step-num">[ 01 ]</p>
-          <h3 class="step-title">Tell us what you're tracking</h3>
-          <p class="step-body">Walk us through your current spreadsheets, processes, and pain points. We figure out what you actually need — and whether Ragic is the right fit. If it's not, we'll tell you.</p>
-        </div>
-
-        <div class="step">
-          <p class="step-num">[ 02 ]</p>
-          <h3 class="step-title">We configure and customise</h3>
-          <p class="step-body">We start from one of Ragic's 40+ templates — the closest match to your use case — then reshape it around your actual workflow. Your field names, your approval steps, your reporting needs. Feels like it was built for you, because it was.</p>
-        </div>
-
-        <div class="step">
-          <p class="step-num">[ 03 ]</p>
-          <h3 class="step-title">We train and hand over</h3>
-          <p class="step-body">We migrate your existing data, train your team, and make sure everyone knows how to use the system before we step back. Ongoing support and customisation available if you need changes down the track.</p>
+        <div class="use-case-group">
+          <p class="use-case-group-label">Business &amp; internal operations</p>
+          <div class="use-cases-grid">
+            <div class="use-case-card">
+              <h3 class="use-case-title">AFSL Compliance Manuals</h3>
+              <p class="use-case-body">Dealer groups and licensees have dense internal compliance manuals that advisers and paraplanners reference constantly. ASIC enforcement risk makes accuracy critical. Private instance.</p>
+              <p class="use-case-audience">Users: compliance officers, financial advisers, paraplanners</p>
+            </div>
+            <div class="use-case-card">
+              <h3 class="use-case-title">HR Policy &amp; EBA Documents</h3>
+              <p class="use-case-body">Leave entitlements, disciplinary procedures, enterprise agreements — managers and employees dispute the same rules repeatedly. One assistant that answers from the actual policy, not someone's memory of it.</p>
+              <p class="use-case-audience">Users: managers, HR business partners, employees</p>
+            </div>
+            <div class="use-case-card">
+              <h3 class="use-case-title">Franchise &amp; Strata Agreements</h3>
+              <p class="use-case-body">Franchise disclosure documents and strata scheme bylaws are rarely read in full but referenced constantly in disputes. An assistant that knows exactly what the agreement says.</p>
+              <p class="use-case-audience">Users: franchisees, strata managers, property owners</p>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -1429,83 +1429,84 @@
 
       <div class="reveal">
         <span class="eyebrow">[ Pricing ]</span>
-        <h2 class="section-headline">Ragic subscription pricing.<br />GTB setup on top.</h2>
-        <p class="section-body">You pay Ragic directly for the subscription at the tier that fits your team. GTB charges a one-time setup fee depending on complexity — starting from $500.</p>
+        <h2 class="section-headline">A one-time build.<br />A low monthly to keep it running.</h2>
+        <p class="section-body">The build fee covers everything to get the assistant live. Monthly covers hosting, document updates as rules change, and ongoing support.</p>
       </div>
 
-      <div class="pricing-grid reveal reveal-delay-1">
+      <div class="pricing-2col reveal reveal-delay-1">
 
-        <div class="pricing-card">
-          <p class="pricing-tier">Free</p>
-          <p class="pricing-price">$0<span>/user/mo</span></p>
-          <p class="pricing-desc">For teams that want to explore Ragic before committing.</p>
-          <ul class="pricing-features">
-            <li>3 custom sheets</li>
-            <li>1,000 records per sheet</li>
-            <li>Unlimited users</li>
-            <li>40+ templates</li>
-            <li>Limited Ragic AI trial</li>
+        <div class="pricing-block featured">
+          <p class="pricing-block-label">[ The Build ]</p>
+          <p class="pricing-block-price">From $2,000<span> one-time</span></p>
+          <p class="pricing-block-desc">Everything needed to get the assistant live and accurate on your document.</p>
+          <ul class="pricing-block-features">
+            <li>Document ingestion, structuring, and embedding</li>
+            <li>AI assistant build and accuracy tuning</li>
+            <li>Citation and retrieval quality testing against real queries</li>
+            <li>Admin back-office for escalations and document updates</li>
+            <li>Deployment on your domain or as an embed</li>
+            <li>Team training and handover</li>
           </ul>
         </div>
 
-        <div class="pricing-card">
-          <p class="pricing-tier">Lite</p>
-          <p class="pricing-price">$5<span>/user/mo</span></p>
-          <p class="pricing-desc">Foundation tier for small teams ready to replace spreadsheets.</p>
-          <ul class="pricing-features">
-            <li>Unlimited records</li>
-            <li>5 custom sheets</li>
-            <li>10 GB storage</li>
-            <li>API access</li>
-            <li>Base Ragic AI usage</li>
-          </ul>
-        </div>
-
-        <div class="pricing-card featured">
-          <p class="pricing-tier">Professional</p>
-          <p class="pricing-price">$19<span>/user/mo</span></p>
-          <p class="pricing-desc">The right tier for most growing businesses. Everything you need.</p>
-          <ul class="pricing-features">
-            <li>Unlimited records + sheets</li>
-            <li>30 GB storage</li>
-            <li>Approval workflows</li>
-            <li>Advanced reporting</li>
-            <li>4x AI usage</li>
-          </ul>
-        </div>
-
-        <div class="pricing-card">
-          <p class="pricing-tier">Concurrent</p>
-          <p class="pricing-price">$499<span>/10 users/mo</span></p>
-          <p class="pricing-desc">For larger organisations with many users sharing the system.</p>
-          <ul class="pricing-features">
-            <li>Unlimited records + sheets</li>
-            <li>100 GB storage</li>
-            <li>Concurrent user licensing</li>
-            <li>10x AI usage</li>
-            <li>Priority support</li>
-          </ul>
-        </div>
-
-        <div class="pricing-card">
-          <p class="pricing-tier">Enterprise</p>
-          <p class="pricing-price">$550<span>/10 users/mo</span></p>
-          <p class="pricing-desc">Dedicated infrastructure, SSO, SLAs, and full enterprise controls.</p>
-          <ul class="pricing-features">
-            <li>Managed VM</li>
-            <li>Unlimited storage</li>
-            <li>SSO + LDAP</li>
-            <li>Custom SLA</li>
-            <li>11x AI usage</li>
+        <div class="pricing-block">
+          <p class="pricing-block-label">[ Hosting &amp; Support ]</p>
+          <p class="pricing-block-price">From $300<span>/month</span></p>
+          <p class="pricing-block-desc">Keeps the assistant running, accurate, and up to date as your document changes.</p>
+          <ul class="pricing-block-features">
+            <li>Managed hosting and uptime monitoring</li>
+            <li>Annual document update ingestion (rule changes, new conditions)</li>
+            <li>Usage analytics — see what's being asked and where the gaps are</li>
+            <li>Ongoing support and retrieval tuning</li>
+            <li>Access control management for private instances</li>
           </ul>
         </div>
 
       </div>
 
-      <div class="pricing-gtb-callout reveal reveal-delay-2">
+      <div class="pricing-callout reveal reveal-delay-2">
         <p>
-          <strong>GTB Software setup fee:</strong> Starting from $500 for a standard template-based system. More complex builds (custom approval workflows, integrations, data migration) are scoped after our initial conversation. You pay Ragic directly for the monthly subscription — GTB charges for setup, customisation, and ongoing support only. Annual billing with Ragic saves one month's cost per year.
+          <strong>Pricing scales with complexity.</strong> A single clean PDF is straightforward. Multiple layered documents with cross-references, or a private instance with SSO and strict access controls, costs more. Tell us what you're working with and we'll give you a number within 24 hours — no guesswork.
         </p>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       HOW WE WORK
+  ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ How we work ]</span>
+        <h2 class="section-headline">From PDF to working assistant<br />— faster than you'd expect.</h2>
+        <p class="section-body">We handle everything. You send us the document and tell us how it's used. We build, tune, and hand it over.</p>
+      </div>
+
+      <div class="steps-grid reveal reveal-delay-1">
+
+        <div class="step">
+          <p class="step-num">[ 01 ]</p>
+          <h3 class="step-title">Send us your document</h3>
+          <p class="step-body">PDF, Word doc, or a set of policy files. We review the structure and tell you exactly what the assistant can and can't answer — before we start building. If it's not the right fit, we'll tell you that too.</p>
+        </div>
+
+        <div class="step">
+          <p class="step-num">[ 02 ]</p>
+          <h3 class="step-title">We build and tune it</h3>
+          <p class="step-body">Document ingestion, retrieval architecture, prompt engineering, and accuracy testing against real questions your team actually asks. We don't hand over the assistant until the citation quality meets the bar.</p>
+        </div>
+
+        <div class="step">
+          <p class="step-num">[ 03 ]</p>
+          <h3 class="step-title">We deploy and you own it</h3>
+          <p class="step-body">You get an admin back-office to update documents as rules change, see usage analytics, and manage access. We handle hosting. When the rulebook is updated each season, we re-ingest it — usually within 48 hours.</p>
+        </div>
+
       </div>
 
     </div>
@@ -1520,8 +1521,8 @@
     <div class="container">
       <div class="cta-box reveal">
         <span class="eyebrow" style="margin-bottom: 1.25rem; display: block;">[ Get started ]</span>
-        <h2 class="cta-headline">Not sure if it's the right fit?</h2>
-        <p class="cta-body">Tell us what you're tracking in spreadsheets right now. We'll tell you honestly whether Ragic solves it — and what a build would actually look like.</p>
+        <h2 class="cta-headline">What document are your people<br />constantly looking up?</h2>
+        <p class="cta-body">Tell us what you're working with. We'll tell you whether an AI assistant is the right fit — and what a build would actually look like.</p>
 
         <form
           id="contactForm"
@@ -1529,22 +1530,15 @@
           action="https://formsubmit.co/bailey@gtbsoftware.com"
           method="POST"
         >
-          <input type="hidden" name="_subject" value="Ragic Solutions Enquiry" />
+          <input type="hidden" name="_subject" value="Regulatory AI Assistant Enquiry" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 
           <input type="text" name="name" placeholder="Your name" required />
           <input type="email" name="email" placeholder="your@email.com" required />
-          <input type="text" name="company" placeholder="Company name" required />
-          <select name="team_size" required>
-            <option value="" disabled selected>Team size</option>
-            <option value="Just me">Just me</option>
-            <option value="2–10">2–10</option>
-            <option value="11–50">11–50</option>
-            <option value="51–150">51–150</option>
-            <option value="150+">150+</option>
-          </select>
-          <textarea name="spreadsheets" placeholder="What are you currently tracking in spreadsheets?" required></textarea>
+          <input type="text" name="organisation" placeholder="Organisation name" required />
+          <textarea name="document" placeholder="What document or rulebook are you working with?" required></textarea>
+          <textarea name="end_users" placeholder="Who are the end users? (e.g. umpires, compliance officers, staff)" style="min-height: 80px;"></textarea>
 
           <button type="submit" class="btn-primary" style="align-self:center; border:none; cursor:pointer; font-family:var(--font-body);">Send it</button>
         </form>
