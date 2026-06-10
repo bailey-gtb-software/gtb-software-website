@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laws of Cricket AI Assistant — Cricket Tasmania — GTB Software</title>
+  <meta name="description" content="How we're building a regulatory AI assistant for Cricket Tasmania — verbatim document ingestion, layered rule hierarchy, and cited answers scoped to grade and format." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       CSS CUSTOM PROPERTIES
+    ============================================= */
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #111111;
+      --bg-raised: #0f0f0f;
+      --border: #1f1f1f;
+      --border-mid: #2a2a2a;
+      --text: #fafafa;
+      --text-muted: #737373;
+      --text-dim: #4a4a4a;
+      --accent: #10b981;
+      --accent-dim: rgba(16, 185, 129, 0.1);
+      --accent-border: rgba(16, 185, 129, 0.2);
+      --font-display: 'Satoshi', -apple-system, sans-serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: ui-monospace, Menlo, Monaco, 'Courier New', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .accent {
+      color: var(--accent);
+      text-shadow: 0 0 24px rgba(16, 185, 129, 0.45), 0 0 48px rgba(16, 185, 129, 0.2);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 0;
+      transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    #nav.scrolled {
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-color: var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+    }
+
+    .nav-logo img {
+      height: 28px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+
+    .nav-logo-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--text); }
+
+    .nav-cta {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 0.625rem 1.25rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-cta:hover {
+      background: linear-gradient(135deg, #0d9668 0%, #047857 100%);
+      box-shadow: 0 0 22px rgba(16, 185, 129, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-nav.open { opacity: 1; pointer-events: all; }
+
+    .mobile-nav a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .mobile-nav a:hover { color: var(--text); }
+    .mobile-nav .nav-cta { font-size: 1rem; padding: 0.875rem 2rem; }
+
+    /* =============================================
+       POST HEADER
+    ============================================= */
+    .post-header {
+      padding: 9rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .post-header-inner {
+      max-width: 760px;
+    }
+
+    .post-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      margin-bottom: 2rem;
+      transition: color 0.2s, gap 0.2s;
+    }
+
+    .post-back:hover {
+      color: var(--accent);
+      gap: 0.5rem;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      padding: 0.25rem 0.625rem;
+      border-radius: 100px;
+    }
+
+    .post-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.75rem, 4vw, 2.75rem);
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    .post-meta {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    /* =============================================
+       POST BODY
+    ============================================= */
+    .post-body {
+      padding: 5rem 0 7rem;
+    }
+
+    .post-content {
+      max-width: 760px;
+    }
+
+    .post-content p {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .post-content h2 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--text);
+      letter-spacing: -0.015em;
+      line-height: 1.25;
+      margin: 3rem 0 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .post-content h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin: 2rem 0 0.875rem;
+    }
+
+    .post-content ul,
+    .post-content ol {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content li {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-content li strong {
+      color: var(--text);
+    }
+
+    .post-content blockquote {
+      border-left: 3px solid var(--accent);
+      margin: 2rem 0;
+      padding: 1rem 1.5rem;
+      background: var(--accent-dim);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .post-content blockquote p {
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 0;
+    }
+
+    .post-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 3rem 0;
+    }
+
+    /* Stats inline */
+    .post-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .post-stat {
+      padding: 1.25rem 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .post-stat-number {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.75rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.375rem;
+    }
+
+    .post-stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Status badge */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 8px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* CTA at end of post */
+    .post-cta {
+      margin-top: 4rem;
+      padding: 2.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-mid);
+      border-radius: 16px;
+    }
+
+    .post-cta p {
+      color: var(--text-muted) !important;
+      margin-bottom: 1.25rem !important;
+    }
+
+    .post-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 1rem;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.3);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, gap 0.2s;
+    }
+
+    .post-cta a:hover {
+      border-color: var(--accent);
+      gap: 0.75rem;
+    }
+
+    /* Tools in this build */
+    .post-tools {
+      margin: 3rem 0;
+      padding: 2rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .post-tools-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+    }
+
+    .post-tools-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .post-tools-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+
+    .post-tools-item a {
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.9375rem;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.25);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+      white-space: nowrap;
+    }
+
+    .post-tools-item a:hover { border-color: var(--accent); }
+
+    .post-tools-item span {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-bottom: 3rem;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .footer-nav a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-nav a:hover { color: var(--text); }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+      align-items: flex-end;
+    }
+
+    .footer-contact a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: var(--text); }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-copy { font-size: 0.78rem; color: var(--text-dim); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .mobile-nav { display: flex; }
+      .footer-main { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-contact { align-items: flex-start; }
+      .post-stats { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-label="Navigation">
+    <a href="/">Services</a>
+    <a href="/#process">How It Works</a>
+    <a href="/#about">About</a>
+    <a href="/insights" class="active">Insights</a>
+    <a href="/#cta" class="nav-cta">Let's talk</a>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo" aria-label="GTB Software home">
+        <img src="../assets/GTB Logo Transparent.png" alt="GTB Software" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <span class="nav-logo-text">GTB Software</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#process">How It Works</a></li>
+        <li><a href="/#about">About</a></li>
+        <li><a href="/insights" class="active">Insights</a></li>
+      </ul>
+
+      <a href="/#cta" class="nav-cta">Let's talk</a>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Post Header -->
+  <header class="post-header">
+    <div class="container">
+      <div class="post-header-inner reveal">
+        <a href="/insights" class="post-back">← Insights</a>
+
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          In development — signed engagement, June 2026 build
+        </div>
+
+        <div class="post-tags">
+          <span class="post-tag">Regulatory AI</span>
+          <span class="post-tag">Case Study</span>
+          <span class="post-tag">Rules Q&amp;A</span>
+        </div>
+        <h1 class="post-title">Laws of Cricket AI Assistant — Cricket Tasmania</h1>
+        <p class="post-meta">June 2026 &nbsp;·&nbsp; 5 min read &nbsp;·&nbsp; Grab The Bull Software</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Post Body -->
+  <article class="post-body">
+    <div class="container">
+      <div class="post-content">
+
+        <p>Cricket Tasmania manages 507 senior teams and 8,750 registered players across 150+ clubs. Most of the people running those clubs are volunteers — time-poor, doing multiple jobs, and regularly fielding questions about rules they don't fully know.</p>
+
+        <p>The MCC Laws of Cricket run to hundreds of clauses. CT's own playing conditions and by-laws sit on top of that — overriding specific laws for CT competitions. When a volunteer gets a rules question wrong, it leads to incorrect rulings, disputes on the field, and hours chasing callbacks for an answer that should have taken seconds.</p>
+
+        <div class="post-stats">
+          <div class="post-stat">
+            <p class="post-stat-number">507</p>
+            <p class="post-stat-label">senior teams across 150+ clubs</p>
+          </div>
+          <div class="post-stat">
+            <p class="post-stat-number">8,750</p>
+            <p class="post-stat-label">registered players</p>
+          </div>
+          <div class="post-stat">
+            <p class="post-stat-number">~75 hrs</p>
+            <p class="post-stat-label">admin time saved per season</p>
+          </div>
+        </div>
+
+        <p>The engagement is signed. We're building it now.</p>
+
+        <h2>The pattern that makes this hard</h2>
+
+        <p>Cricket rules aren't flat. There are three layers:</p>
+
+        <ol>
+          <li><strong>MCC Laws of Cricket</strong> — the global laws that govern the sport. Every competition starts here.</li>
+          <li><strong>CT Playing Conditions</strong> — Cricket Tasmania's competition-specific rules, which override the MCC Laws on specific points.</li>
+          <li><strong>CT By-laws</strong> — CT's administrative rules, which override everything beneath them on club and association matters.</li>
+        </ol>
+
+        <p>Most AI tools don't model this. They ingest all the documents together and retrieve based on similarity — which means the local exception and the global default both surface as candidates, and the tool picks one without knowing which governs.</p>
+
+        <p>The result: confident answers to the wrong question.</p>
+
+        <h2>What we're building — and why it's different</h2>
+
+        <p>Six things in the order they matter.</p>
+
+        <h3>1. Verbatim ingestion, not fine-tuning</h3>
+
+        <p>The AI isn't trained on cricket. We extract CT's actual documents — the MCC Laws PDF, the CT playing conditions, and CT's by-laws — word-for-word into a structured corpus. Every clause, table, and figure preserved exactly. That verbatim corpus is the source of truth. There's no separate "model knowledge" we're trusting.</p>
+
+        <h3>2. Cited answers, every time</h3>
+
+        <p>This is the core safety property. The model can use its general cricket knowledge to understand a question — but the ruling must come from a retrieved clause. If the corpus doesn't cover it, the assistant says so rather than inventing an answer. Every answer carries the verbatim quote and the exact law or clause reference.</p>
+
+        <blockquote>
+          <p>"A substitute shall not bat, bowl, keep wicket or act as captain but may field as a substitute for any fielder..." — CT Playing Conditions, Section 2.4 | MCC Law 24.1</p>
+        </blockquote>
+
+        <h3>3. The override hierarchy — clause by clause</h3>
+
+        <p>This is the part that doesn't exist in off-the-shelf tools. Every clause in the corpus is tagged with which layer it belongs to and which competitions it applies to. When a question comes in, the system knows that CT's local by-law beats the global Law on that specific point — and answers with the local rule, while being able to show what the global default was.</p>
+
+        <p>This is what makes it a <em>regulatory</em> AI product, not just a search box. Any regulated body has layered, overriding rule sets. We respect that hierarchy. Most tools flatten it.</p>
+
+        <h3>4. Answers scoped to context</h3>
+
+        <p>A rule can differ by grade and format — first-grade Two-Day is not the same as third-grade T20. Every clause is tagged with where it applies. The assistant establishes the context first (competition, grade, format), then retrieves only the clauses that apply to that asker's situation. Not a generic "it depends" — a specific answer to a specific question.</p>
+
+        <h3>5. It behaves like an administrator</h3>
+
+        <p>Before answering, the assistant works out whether the question is a playing condition or a club/admin matter, and confirms grade and format — asking a clarifying question if anything is missing, exactly as a CT administrator would. It only answers once it's confident it has the right context.</p>
+
+        <h3>6. A real product, not a demo</h3>
+
+        <p>Mobile-first PWA with passwordless login (phone or email one-time codes). An admin back-office for CT staff to update documents, triage referrals, and publish official rulings. Usage logging that surfaces which rules get asked most — which tells CT which by-laws are unclear or contentious. Multi-tenant and sport-agnostic: a new association means swapping the corpus, not rebuilding the engine.</p>
+
+        <h2>Why it generalises</h2>
+
+        <p>The Cricket Tasmania build is proof of concept for a broader pattern: <strong>large rules corpus + many people who need to interpret it + cost when they get it wrong.</strong></p>
+
+        <p>That pattern shows up in sports governing bodies (every state association has MCC Laws + local conditions), trade licensing bodies (national standard + state variations), and professional associations (CPD rules, eligibility conditions, jurisdiction differences).</p>
+
+        <p>The engine doesn't know it's about cricket. It knows it has three layers of documents, a precedence order, and a set of applicability tags. Swap the documents, keep the engine.</p>
+
+        <div class="post-tools">
+          <p class="post-tools-label">Tools in this build</p>
+          <div class="post-tools-list">
+            <div class="post-tools-item">
+              <a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a>
+              <span>PostgreSQL database, authentication (phone OTP + email), and file storage — hosted in Sydney for CT data residency.</span>
+            </div>
+            <div class="post-tools-item">
+              <a href="https://www.anthropic.com" target="_blank" rel="noopener">Claude (Anthropic)</a>
+              <span>Haiku-class model for answer generation — grounded responses with clause citations, constrained to the corpus.</span>
+            </div>
+            <div class="post-tools-item">
+              <a href="https://nuxt.com" target="_blank" rel="noopener">Nuxt 3</a>
+              <span>PWA framework — mobile-first, installable without an app store, offline-capable for on-field use.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-divider"></div>
+
+        <div class="post-cta">
+          <p>Have a rulebook with this kind of complexity — layered, overriding, context-dependent? That's exactly the pattern we're solving. If you're a governing body, licensing authority, or professional association with a rules corpus that people get wrong, we'd like to talk.</p>
+          <a href="/services/regulatory-ai.html">See the full offer →</a>
+        </div>
+
+      </div>
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-main">
+        <div>
+          <p class="footer-tagline">
+            Efficiency is nice.<br />
+            <span class="accent">Cash is king.</span>
+          </p>
+        </div>
+
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <a href="/#services">Services</a>
+          <a href="/#process">How It Works</a>
+          <a href="/#about">About</a>
+          <a href="/insights">Insights</a>
+          <a href="/#cta">Let's talk</a>
+        </nav>
+
+        <div class="footer-contact">
+          <a href="mailto:bailey@gtbsoftware.com">bailey@gtbsoftware.com</a>
+          <a href="https://linkedin.com/company/grab-the-bull-software" target="_blank" rel="noopener">LinkedIn →</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Grab the Bull Software. All rights reserved.</p>
+        <p class="footer-copy">gtbsoftware.com</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen.toString());
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+  </script>
+
+</body>
+</html>

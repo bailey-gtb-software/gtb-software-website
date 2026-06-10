@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Regulatory AI Assistants — GTB Software</title>
-  <meta name="description" content="Every organisation has a document their people should know but don't. GTB builds AI assistants trained on your exact rules, regulations, or compliance documents — answers in seconds, not 40 minutes of hunting through a PDF." />
+  <title>Regulatory AI — Your Rules, in the Right Order — GTB Software</title>
+  <meta name="description" content="We turn your organisation's layered rulebook into an assistant that gives cited, context-specific answers in seconds — respecting which local rule overrides which national one." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://api.fontshare.com" />
@@ -59,7 +59,9 @@
       padding: 0 2rem;
     }
 
-    .section { padding: 6rem 0; }
+    .section {
+      padding: 6rem 0;
+    }
 
     .section-divider {
       height: 1px;
@@ -310,21 +312,6 @@
       margin-bottom: 2rem;
     }
 
-    .partner-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.375rem;
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-dim);
-      border: 1px solid var(--accent-border);
-      padding: 0.3rem 0.75rem;
-      border-radius: 100px;
-    }
-
     .hero-headline {
       font-family: var(--font-display);
       font-weight: 800;
@@ -391,14 +378,6 @@
       background: rgba(255,255,255,0.03);
     }
 
-    .hero-partner-note {
-      margin-top: 2rem;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      color: var(--text-dim);
-    }
-
     /* =============================================
        STATS STRIP
     ============================================= */
@@ -415,7 +394,9 @@
       text-align: center;
     }
 
-    .stat-item { padding: 2rem; }
+    .stat-item {
+      padding: 2rem;
+    }
 
     .stat-number {
       font-family: var(--font-display);
@@ -465,10 +446,8 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: var(--border-mid);
+      background: rgba(239, 67, 67, 0.4);
     }
-
-    .problem-card.bad::before { background: rgba(239, 67, 67, 0.4); }
 
     .problem-card-label {
       font-family: var(--font-mono);
@@ -534,68 +513,25 @@
     .solution-callout-body {
       font-size: 1rem;
       color: var(--text-muted);
-      max-width: 600px;
+      max-width: 680px;
       margin: 0 auto;
       line-height: 1.7;
     }
 
     /* =============================================
-       HOW IT WORKS
+       HIERARCHY SECTION (CENTREPIECE)
     ============================================= */
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      margin-top: 3rem;
-    }
-
-    .how-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      padding: 1.5rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-
-    .how-num {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      flex-shrink: 0;
-      margin-top: 0.2rem;
-      white-space: nowrap;
-    }
-
-    .how-item-title {
-      font-weight: 600;
-      font-size: 0.9375rem;
-      color: var(--text);
-      margin-bottom: 0.375rem;
-    }
-
-    .how-item-body {
-      font-size: 0.8125rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    /* =============================================
-       CASE STUDY
-    ============================================= */
-    .case-study {
-      margin-top: 3rem;
+    .hierarchy-block {
       padding: 3rem;
       background: var(--bg-card);
-      border: 1px solid var(--accent-border);
+      border: 1px solid var(--border-mid);
       border-radius: 16px;
       position: relative;
       overflow: hidden;
+      margin-top: 3rem;
     }
 
-    .case-study::before {
+    .hierarchy-block::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
@@ -603,244 +539,74 @@
       background: linear-gradient(90deg, transparent, var(--accent), transparent);
     }
 
-    .case-study-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
+    .hierarchy-block-body {
+      font-size: 1.0625rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 700px;
+      margin-top: 1.25rem;
     }
 
-    .case-study-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
+    .hierarchy-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 2.5rem;
+      max-width: 480px;
     }
 
-    .case-study-label {
+    .hierarchy-layer {
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--border-mid);
+      position: relative;
+    }
+
+    .hierarchy-layer:first-child {
+      border-radius: 10px 10px 0 0;
+      background: rgba(16, 185, 129, 0.05);
+      border-color: var(--accent-border);
+    }
+
+    .hierarchy-layer:nth-child(2) {
+      background: rgba(16, 185, 129, 0.035);
+      border-top: none;
+    }
+
+    .hierarchy-layer:last-child {
+      border-radius: 0 0 10px 10px;
+      background: var(--bg-raised);
+      border-top: none;
+    }
+
+    .hierarchy-layer-label {
       font-family: var(--font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 0.75rem;
-    }
-
-    .case-study-section-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--text);
-      margin-bottom: 0.75rem;
-    }
-
-    .case-study-body {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    .case-study-stats {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-top: 1.5rem;
-    }
-
-    .case-study-stat {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .case-study-stat-num {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.5rem;
       color: var(--accent);
-      line-height: 1;
-      flex-shrink: 0;
-      min-width: 4rem;
-    }
-
-    .case-study-stat-label {
-      font-size: 0.8125rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      padding-top: 0.125rem;
-    }
-
-    /* =============================================
-       USE CASES
-    ============================================= */
-    .use-case-group {
-      margin-top: 2.5rem;
-    }
-
-    .use-case-group + .use-case-group {
-      margin-top: 2rem;
-    }
-
-    .use-case-group-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .use-cases-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-
-    .use-case-card {
-      padding: 1.75rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      transition: border-color 0.2s;
-    }
-
-    .use-case-card:hover { border-color: var(--border-mid); }
-
-    .use-case-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 0.9375rem;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.01em;
-    }
-
-    .use-case-body {
-      font-size: 0.8125rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-      margin-bottom: 0.75rem;
-    }
-
-    .use-case-audience {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.08em;
-      color: var(--text-dim);
-    }
-
-    /* =============================================
-       PRICING
-    ============================================= */
-    .pricing-2col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-
-    .pricing-block {
-      padding: 2rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .pricing-block::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--border-mid);
-    }
-
-    .pricing-block.featured::before {
-      background: var(--accent);
-    }
-
-    .pricing-block-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 0.75rem;
-    }
-
-    .pricing-block-price {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 2rem;
-      color: var(--text);
-      letter-spacing: -0.03em;
-      line-height: 1;
       margin-bottom: 0.25rem;
     }
 
-    .pricing-block-price span {
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      letter-spacing: 0;
+    .hierarchy-layer-title {
+      font-weight: 600;
+      font-size: 0.9375rem;
+      color: var(--text);
     }
 
-    .pricing-block-desc {
+    .hierarchy-layer-sub {
       font-size: 0.8125rem;
       color: var(--text-muted);
-      line-height: 1.6;
-      margin: 1rem 0;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
+      margin-top: 0.25rem;
     }
 
-    .pricing-block-features {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      flex: 1;
+    .hierarchy-arrow {
+      width: 1px;
+      height: 0;
+      display: none;
     }
-
-    .pricing-block-features li {
-      font-size: 0.8125rem;
-      color: var(--text-muted);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-    }
-
-    .pricing-block-features li::before {
-      content: '—';
-      color: var(--text-dim);
-      flex-shrink: 0;
-    }
-
-    .pricing-callout {
-      margin-top: 1.5rem;
-      padding: 1.75rem 2rem;
-      background: var(--bg-raised);
-      border: 1px solid var(--border-mid);
-      border-left: 3px solid var(--accent);
-      border-radius: 0 12px 12px 0;
-    }
-
-    .pricing-callout p {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    .pricing-callout strong { color: var(--text); }
 
     /* =============================================
-       HOW WE WORK
+       FEATURES (METHODOLOGY)
     ============================================= */
     .steps-grid {
       display: grid;
@@ -854,6 +620,7 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 14px;
+      position: relative;
     }
 
     .step-num {
@@ -876,6 +643,121 @@
       font-size: 0.8125rem;
       color: var(--text-muted);
       line-height: 1.65;
+    }
+
+    /* =============================================
+       USE CASES
+    ============================================= */
+    .use-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .use-case-card {
+      padding: 1.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .use-case-card:hover { border-color: var(--border-mid); }
+
+    .use-case-title {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9375rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .use-case-body {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .use-case-example {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      margin-top: 1rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* =============================================
+       CASE STUDY CALLOUT
+    ============================================= */
+    .case-study-callout {
+      margin-top: 3rem;
+      padding: 3rem;
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16,185,129,0.04) 100%);
+      border: 1px solid var(--accent-border);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .case-study-callout::before {
+      content: '';
+      display: none;
+    }
+
+    .case-study-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .case-study-callout h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.015em;
+    }
+
+    .case-study-callout p {
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 520px;
+    }
+
+    .case-study-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .case-study-stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-study-stat-number {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .case-study-stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
     }
 
     /* =============================================
@@ -933,6 +815,7 @@
     }
 
     .contact-form input,
+    .contact-form select,
     .contact-form textarea {
       width: 100%;
       background: var(--bg-card);
@@ -949,7 +832,7 @@
 
     .contact-form textarea {
       resize: vertical;
-      min-height: 110px;
+      min-height: 120px;
       line-height: 1.6;
     }
 
@@ -1053,17 +936,14 @@
       .hamburger { display: flex; }
       .mobile-nav { display: flex; }
       .problem-grid { grid-template-columns: 1fr; }
-      .how-grid { grid-template-columns: 1fr; }
-      .case-study-grid { grid-template-columns: 1fr; gap: 2rem; }
       .use-cases-grid { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
-      .pricing-2col { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr; }
       .footer-main { grid-template-columns: 1fr; gap: 2rem; }
       .footer-contact { align-items: flex-start; }
+      .case-study-callout { flex-direction: column; }
       .cta-box { padding: 2.5rem 1.75rem; }
-      .case-study { padding: 2rem; }
-      .solution-callout { padding: 2rem 1.5rem; }
+      .hierarchy-block { padding: 2rem 1.5rem; }
     }
 
     @media (max-width: 480px) {
@@ -1082,8 +962,8 @@
     <a href="/#workflow" class="sub" onclick="closeMobileNav()">— Workflow Automation</a>
     <a href="/#custom-software" class="sub" onclick="closeMobileNav()">— Custom Software</a>
     <a href="/services/ragic" class="sub" onclick="closeMobileNav()">— Ragic Solutions</a>
-    <a href="/services/regulatory-ai" class="sub active" onclick="closeMobileNav()" style="color: var(--accent);">— Regulatory AI Assistants</a>
     <a href="/#ai-adoption" class="sub" onclick="closeMobileNav()">— AI Adoption</a>
+    <a href="/services/regulatory-ai" class="sub active" onclick="closeMobileNav()" style="color: var(--accent);">— Regulatory AI</a>
     <a href="/#process" onclick="closeMobileNav()">How It Works</a>
     <a href="/#about" onclick="closeMobileNav()">About</a>
     <a href="/insights" onclick="closeMobileNav()">Insights</a>
@@ -1108,8 +988,8 @@
               <a href="/#workflow" role="menuitem">Workflow Automation</a>
               <a href="/#custom-software" role="menuitem">Custom Software &amp; Apps</a>
               <a href="/services/ragic" role="menuitem">Ragic Solutions</a>
-              <a href="/services/regulatory-ai" role="menuitem" class="active">Regulatory AI Assistants</a>
               <a href="/#ai-adoption" role="menuitem">AI Adoption Consulting</a>
+              <a href="/services/regulatory-ai" role="menuitem" class="active">Regulatory AI</a>
             </div>
           </div>
         </li>
@@ -1135,26 +1015,22 @@
     <div class="container">
       <div class="reveal">
         <div class="hero-eyebrow">
-          <span class="eyebrow">[ Regulatory AI Assistants ]</span>
-          <span class="partner-badge">Case Study: Cricket Tasmania</span>
+          <span class="eyebrow">[ Regulatory AI ]</span>
         </div>
 
         <h1 class="hero-headline">
-          Your rulebook.<br />
-          <span class="accent">Instant answers.</span><br />
-          Every time.
+          Your rules,<br />
+          in the <span class="accent">right order.</span>
         </h1>
 
         <p class="hero-sub">
-          Every organisation has a document their people should know but don't. We build AI assistants trained on your exact rules, regulations, or compliance documents — so your team gets answers in seconds, with the exact clause cited.
+          We turn your organisation's own layered rulebook into an assistant that gives cited, context-specific answers in seconds — respecting which local rule overrides which national one — and never answers beyond what's actually written.
         </p>
 
         <div class="hero-actions">
-          <a href="#cta" class="btn-primary">Talk to us about your rulebook</a>
-          <a href="#case-study" class="btn-ghost">See it in action →</a>
+          <a href="#case-study" class="btn-primary">See the Cricket Tasmania build</a>
+          <a href="#cta" class="btn-ghost">Let's talk →</a>
         </div>
-
-        <p class="hero-partner-note">Built for Cricket Tasmania. Deployable for any association, regulator, or organisation with a reference document their people constantly need to look up.</p>
       </div>
     </div>
   </section>
@@ -1166,19 +1042,19 @@
     <div class="container">
       <div class="stats-grid reveal">
         <div class="stat-item">
-          <p class="stat-number">30 min</p>
-          <p class="stat-label">to manually research and answer a single regulatory query — assuming you even find the right section. The assistant answers in seconds, with the exact clause cited.</p>
-          <p class="stat-source">Cricket Tasmania case study</p>
+          <p class="stat-number">507</p>
+          <p class="stat-label">senior teams relying on consistent, correct rules administration</p>
+          <p class="stat-source">Cricket Tasmania</p>
         </div>
         <div class="stat-item">
-          <p class="stat-number">$750K</p>
-          <p class="stat-label">maximum fine for a single NDIS non-compliance incident. Getting the answer wrong isn't inefficient — it's expensive.</p>
-          <p class="stat-source">NDIS Commission</p>
+          <p class="stat-number">~75 hrs</p>
+          <p class="stat-label">of admin time estimated per season — answering rules questions volunteers can now look up themselves</p>
+          <p class="stat-source">Cricket Tasmania engagement</p>
         </div>
         <div class="stat-item">
-          <p class="stat-number">100%</p>
-          <p class="stat-label">of queries logged — every question asked is data on where your document is unclear, what's being misunderstood, and what needs stronger guidance.</p>
-          <p class="stat-source">built-in analytics</p>
+          <p class="stat-number">3 layers</p>
+          <p class="stat-label">of rules in a single sport: global laws, state conditions, and club by-laws — all resolved correctly, every time</p>
+          <p class="stat-source">MCC Laws → CT playing conditions → CT by-laws</p>
         </div>
       </div>
     </div>
@@ -1194,36 +1070,36 @@
 
       <div class="reveal">
         <span class="eyebrow">[ The problem ]</span>
-        <h2 class="section-headline">The document exists.<br />No one can find the answer.</h2>
-        <p class="section-body">Every organisation with a rulebook, compliance code, or policy manual runs into the same three problems.</p>
+        <h2 class="section-headline">Most AI tools flatten layered rules into mush.</h2>
+        <p class="section-body">Regulated bodies live with layered rules: a national standard, a state variation, a local exception, each overriding the one beneath it. Flatten them and you get confident, wrong answers.</p>
       </div>
 
       <div class="problem-grid reveal reveal-delay-1">
 
-        <div class="problem-card bad">
+        <div class="problem-card">
           <p class="problem-card-label">Problem 1</p>
-          <h3 class="problem-card-title">The PDF is 400 pages</h3>
-          <p class="problem-card-body">Staff reference the document constantly but searching a PDF is slow and error-prone. Two people look up the same rule and walk away with different answers. Nobody has time to read it end to end.</p>
+          <h3 class="problem-card-title">The hierarchy gets ignored</h3>
+          <p class="problem-card-body">Generic AI tools treat all rules as equal. Local exceptions and national defaults get mixed together. The answer might be technically correct for some context — just not yours.</p>
         </div>
 
-        <div class="problem-card bad">
+        <div class="problem-card">
           <p class="problem-card-label">Problem 2</p>
-          <h3 class="problem-card-title">Institutional knowledge leaves with people</h3>
-          <p class="problem-card-body">The senior umpire, compliance officer, or certifier who "just knows" the rules isn't always available. When they leave, that knowledge walks out the door — and the organisation is back to square one.</p>
+          <h3 class="problem-card-title">Answers aren't cited</h3>
+          <p class="problem-card-body">You can't verify what you can't trace. When there's no clause reference attached to an answer, there's no way to know if the ruling is right — or where it came from.</p>
         </div>
 
-        <div class="problem-card bad">
+        <div class="problem-card">
           <p class="problem-card-label">Problem 3</p>
-          <h3 class="problem-card-title">Inconsistent rulings, no audit trail</h3>
-          <p class="problem-card-body">Without a single authoritative source, decisions vary by person, by day, and by who got asked. Disputes escalate. Liability accumulates. Nobody can point to where the decision came from.</p>
+          <h3 class="problem-card-title">Context-blind answers</h3>
+          <p class="problem-card-body">The same question can have different answers depending on grade, format, or jurisdiction. A tool that doesn't know which context it's answering for is guessing — and won't tell you it is.</p>
         </div>
 
       </div>
 
       <div class="solution-callout reveal reveal-delay-2">
-        <p class="solution-callout-eyebrow">The fix</p>
-        <h3 class="solution-callout-headline">One assistant. Your document.<br />Every question answered with the exact rule cited.</h3>
-        <p class="solution-callout-body">The AI only answers from your content — no hallucinations outside the corpus. Every answer includes the exact clause. Every question is logged. The assistant gets smarter about your document over time.</p>
+        <p class="solution-callout-eyebrow">The difference</p>
+        <h3 class="solution-callout-headline">We model the hierarchy, clause by clause.</h3>
+        <p class="solution-callout-body">The answer you get is the rule that actually governs your situation — not the closest match in a flattened corpus. And you can see exactly what it overrode to get there.</p>
       </div>
 
     </div>
@@ -1232,281 +1108,158 @@
   <div class="section-divider"></div>
 
   <!-- ============================================
-       HOW IT WORKS
+       THE DIFFERENTIATOR (CENTREPIECE)
+  ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ What makes it different ]</span>
+        <h2 class="section-headline">Most rulebooks aren't flat — and most AI tools pretend they are.</h2>
+      </div>
+
+      <div class="hierarchy-block reveal reveal-delay-1">
+        <p class="section-body" style="max-width: none;">
+          Regulated bodies live with layered rules: a national standard, a state variation, a local exception, each overriding the one beneath it. Flatten them and you get confident, wrong answers. We model the precedence clause by clause, so the assistant always answers with the rule that actually governs <em>your</em> situation — and can show you the default it overrode.
+        </p>
+        <p class="section-body" style="margin-top: 1.25rem; max-width: none;">
+          For Cricket Tasmania that meant three layers — the global MCC Laws of Cricket, and CT's own playing conditions and by-laws on top — resolved automatically on every question.
+        </p>
+
+        <div class="hierarchy-stack">
+          <div class="hierarchy-layer">
+            <p class="hierarchy-layer-label">Layer 3 — Wins</p>
+            <p class="hierarchy-layer-title">CT By-laws</p>
+            <p class="hierarchy-layer-sub">Local club and association rules — override everything below</p>
+          </div>
+          <div class="hierarchy-layer">
+            <p class="hierarchy-layer-label">Layer 2</p>
+            <p class="hierarchy-layer-title">CT Playing Conditions</p>
+            <p class="hierarchy-layer-sub">State competition conditions — override global defaults</p>
+          </div>
+          <div class="hierarchy-layer">
+            <p class="hierarchy-layer-label">Layer 1 — Baseline</p>
+            <p class="hierarchy-layer-title">MCC Laws of Cricket</p>
+            <p class="hierarchy-layer-sub">Global laws — apply where no state or local rule overrides</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       METHODOLOGY
   ============================================= -->
   <section class="section">
     <div class="container">
 
       <div class="reveal">
         <span class="eyebrow">[ How it works ]</span>
-        <h2 class="section-headline">Built on your document.<br />Trained on your exact rules.</h2>
-        <p class="section-body">The assistant doesn't connect to the internet or use generic AI knowledge. It works exclusively from the document you provide.</p>
-      </div>
-
-      <div class="how-grid reveal reveal-delay-1">
-
-        <div class="how-item">
-          <span class="how-num">[ 01 ]</span>
-          <div>
-            <p class="how-item-title">We ingest your document</p>
-            <p class="how-item-body">PDF, Word doc, or a set of related documents — bylaws, supplementary conditions, appendices. We structure the content, embed it for semantic search, and build the retrieval layer. The AI only answers from your corpus.</p>
-          </div>
-        </div>
-
-        <div class="how-item">
-          <span class="how-num">[ 02 ]</span>
-          <div>
-            <p class="how-item-title">Natural language Q&amp;A with citations</p>
-            <p class="how-item-body">Ask a question in plain English. Get the answer plus the exact rule, clause, or section it came from. If the answer isn't in the document, it says so — no making things up.</p>
-          </div>
-        </div>
-
-        <div class="how-item">
-          <span class="how-num">[ 03 ]</span>
-          <div>
-            <p class="how-item-title">The assistant generates insight</p>
-            <p class="how-item-body">Every question is logged. Over time you see which rules get looked up most, where answers are unclear, and where the document needs stronger guidance. The assistant helps you improve the rulebook itself — not just answer questions from it.</p>
-          </div>
-        </div>
-
-        <div class="how-item">
-          <span class="how-num">[ 04 ]</span>
-          <div>
-            <p class="how-item-title">Public or private — your call</p>
-            <p class="how-item-body">Sports associations and code references can be publicly accessible. Confidential documents — AFSL compliance manuals, HR policy, internal ops — run on private closed instances. Access-controlled, not publicly indexed, not findable on search.</p>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ============================================
-       CASE STUDY
-  ============================================= -->
-  <section class="section" id="case-study">
-    <div class="container">
-
-      <div class="reveal">
-        <span class="eyebrow">[ Case study ]</span>
-        <h2 class="section-headline">Built for Cricket Tasmania.<br />507 clubs. One source of truth.</h2>
-        <p class="section-body">Cricket Tasmania was spending 75 staff hours per season answering by-law queries — inconsistently, with no audit trail, and no way to build institutional memory. Here's what we built.</p>
-      </div>
-
-      <div class="case-study reveal reveal-delay-1">
-        <p class="case-study-eyebrow">[ Cricket Tasmania — Laws of Cricket AI Assistant ]</p>
-
-        <div class="case-study-grid">
-          <div>
-            <p class="case-study-label">The problem</p>
-            <p class="case-study-body">Cricket Tasmania runs 507 senior teams and 8,750 registered players across 150+ clubs. Every season, CT staff fielded 150+ by-law queries — each taking an average of 30 minutes to research and respond. Rulings were inconsistent across clubs. There was no precedent library, no audit trail, and no way for umpires or club admins to get reliable answers outside business hours.</p>
-
-            <p style="margin-top: 1.25rem;" class="case-study-label">The build</p>
-            <p class="case-study-body">A mobile-first AI assistant trained on three layers of cricket law: ICC Laws of Cricket, Cricket Australia playing conditions, and CT's own by-laws and local conditions. Hybrid search — semantic vector retrieval plus full-text matching — fused to surface the most relevant rules. Every answer cites the exact clause. Umpires log in via phone OTP. When a question needs a formal ruling, they escalate through the app — CT admins receive the full context, draft a ruling, and it's published as a precedent for all future queries.</p>
-          </div>
-
-          <div>
-            <p class="case-study-label">The outcome</p>
-            <div class="case-study-stats">
-              <div class="case-study-stat">
-                <span class="case-study-stat-num">75 hrs</span>
-                <span class="case-study-stat-label">of staff time freed per season — returned to competition development, high performance, and CTPL programs</span>
-              </div>
-              <div class="case-study-stat">
-                <span class="case-study-stat-num">507</span>
-                <span class="case-study-stat-label">clubs now getting consistent answers from the same single source of truth — no more variation by who gets asked</span>
-              </div>
-              <div class="case-study-stat">
-                <span class="case-study-stat-num">24/7</span>
-                <span class="case-study-stat-label">availability — umpires get answers on match day, evenings, weekends, whenever they need them</span>
-              </div>
-              <div class="case-study-stat">
-                <span class="case-study-stat-num">∞</span>
-                <span class="case-study-stat-label">precedent library — every ruling is captured and becomes a searchable resource for future queries</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ============================================
-       USE CASES
-  ============================================= -->
-  <section class="section">
-    <div class="container">
-
-      <div class="reveal">
-        <span class="eyebrow">[ Use cases ]</span>
-        <h2 class="section-headline">Built for any organisation<br />with a document people need to know.</h2>
-        <p class="section-body">If your people are constantly looking things up — and getting different answers — an AI assistant trained on your exact document is the fix.</p>
-      </div>
-
-      <div class="reveal reveal-delay-1">
-
-        <div class="use-case-group">
-          <p class="use-case-group-label">Sports &amp; governing bodies</p>
-          <div class="use-cases-grid">
-            <div class="use-case-card">
-              <h3 class="use-case-title">Cricket Associations</h3>
-              <p class="use-case-body">State, district, and junior competitions. ICC Laws, playing conditions, and local by-laws in one assistant. Proven with Cricket Tasmania.</p>
-              <p class="use-case-audience">Users: umpires, scorers, coaches, club administrators</p>
-            </div>
-            <div class="use-case-card">
-              <h3 class="use-case-title">AFL, NRL &amp; Rugby Union</h3>
-              <p class="use-case-body">Laws of Australian Football, NRL rules, World Rugby Laws — notoriously complex, constantly referenced. Referee education and real-time match-day lookup.</p>
-              <p class="use-case-audience">Users: referees, coaches, club officials</p>
-            </div>
-            <div class="use-case-card">
-              <h3 class="use-case-title">Baseball, Netball &amp; Sailing</h3>
-              <p class="use-case-body">Junior leagues, club competitions, and national bodies — especially high value where parent-coaches are officiating without deep rule knowledge.</p>
-              <p class="use-case-audience">Users: umpires, parent-coaches, club secretaries</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="use-case-group">
-          <p class="use-case-group-label">Regulations &amp; compliance</p>
-          <div class="use-cases-grid">
-            <div class="use-case-card">
-              <h3 class="use-case-title">National Construction Code (NCC/BCA)</h3>
-              <p class="use-case-body">Thousands of pages across volumes. Private certifiers and architects reference it constantly — one wrong call is a liability event. Private instance only.</p>
-              <p class="use-case-audience">Users: building certifiers, architects, building designers</p>
-            </div>
-            <div class="use-case-card">
-              <h3 class="use-case-title">NDIS Practice Standards</h3>
-              <p class="use-case-body">20,000+ registered providers navigating the Quality &amp; Safeguards framework. Dense, frequently updated, and high-stakes to get wrong. Private instance.</p>
-              <p class="use-case-audience">Users: support coordinators, registered providers, plan managers</p>
-            </div>
-            <div class="use-case-card">
-              <h3 class="use-case-title">WHS &amp; Safe Work Codes</h3>
-              <p class="use-case-body">Safe Work Australia codes of practice and state-based WHS regulations. Built for the safety manager who needs an answer before a toolbox talk, not three days later.</p>
-              <p class="use-case-audience">Users: WHS managers, supervisors, safety consultants</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="use-case-group">
-          <p class="use-case-group-label">Business &amp; internal operations</p>
-          <div class="use-cases-grid">
-            <div class="use-case-card">
-              <h3 class="use-case-title">AFSL Compliance Manuals</h3>
-              <p class="use-case-body">Dealer groups and licensees have dense internal compliance manuals that advisers and paraplanners reference constantly. ASIC enforcement risk makes accuracy critical. Private instance.</p>
-              <p class="use-case-audience">Users: compliance officers, financial advisers, paraplanners</p>
-            </div>
-            <div class="use-case-card">
-              <h3 class="use-case-title">HR Policy &amp; EBA Documents</h3>
-              <p class="use-case-body">Leave entitlements, disciplinary procedures, enterprise agreements — managers and employees dispute the same rules repeatedly. One assistant that answers from the actual policy, not someone's memory of it.</p>
-              <p class="use-case-audience">Users: managers, HR business partners, employees</p>
-            </div>
-            <div class="use-case-card">
-              <h3 class="use-case-title">Franchise &amp; Strata Agreements</h3>
-              <p class="use-case-body">Franchise disclosure documents and strata scheme bylaws are rarely read in full but referenced constantly in disputes. An assistant that knows exactly what the agreement says.</p>
-              <p class="use-case-audience">Users: franchisees, strata managers, property owners</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ============================================
-       PRICING
-  ============================================= -->
-  <section class="section">
-    <div class="container">
-
-      <div class="reveal">
-        <span class="eyebrow">[ Pricing ]</span>
-        <h2 class="section-headline">A one-time build.<br />A low monthly to keep it running.</h2>
-        <p class="section-body">The build fee covers everything to get the assistant live. Monthly covers hosting, document updates as rules change, and ongoing support.</p>
-      </div>
-
-      <div class="pricing-2col reveal reveal-delay-1">
-
-        <div class="pricing-block featured">
-          <p class="pricing-block-label">[ The Build ]</p>
-          <p class="pricing-block-price">From $2,000<span> one-time</span></p>
-          <p class="pricing-block-desc">Everything needed to get the assistant live and accurate on your document.</p>
-          <ul class="pricing-block-features">
-            <li>Document ingestion, structuring, and embedding</li>
-            <li>AI assistant build and accuracy tuning</li>
-            <li>Citation and retrieval quality testing against real queries</li>
-            <li>Admin back-office for escalations and document updates</li>
-            <li>Deployment on your domain or as an embed</li>
-            <li>Team training and handover</li>
-          </ul>
-        </div>
-
-        <div class="pricing-block">
-          <p class="pricing-block-label">[ Hosting &amp; Support ]</p>
-          <p class="pricing-block-price">From $300<span>/month</span></p>
-          <p class="pricing-block-desc">Keeps the assistant running, accurate, and up to date as your document changes.</p>
-          <ul class="pricing-block-features">
-            <li>Managed hosting and uptime monitoring</li>
-            <li>Annual document update ingestion (rule changes, new conditions)</li>
-            <li>Usage analytics — see what's being asked and where the gaps are</li>
-            <li>Ongoing support and retrieval tuning</li>
-            <li>Access control management for private instances</li>
-          </ul>
-        </div>
-
-      </div>
-
-      <div class="pricing-callout reveal reveal-delay-2">
-        <p>
-          <strong>Pricing scales with complexity.</strong> A single clean PDF is straightforward. Multiple layered documents with cross-references, or a private instance with SSO and strict access controls, costs more. Tell us what you're working with and we'll give you a number within 24 hours — no guesswork.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ============================================
-       HOW WE WORK
-  ============================================= -->
-  <section class="section">
-    <div class="container">
-
-      <div class="reveal">
-        <span class="eyebrow">[ How we work ]</span>
-        <h2 class="section-headline">From PDF to working assistant<br />— faster than you'd expect.</h2>
-        <p class="section-body">We handle everything. You send us the document and tell us how it's used. We build, tune, and hand it over.</p>
+        <h2 class="section-headline">Three things that make the answers trustworthy.</h2>
       </div>
 
       <div class="steps-grid reveal reveal-delay-1">
 
         <div class="step">
           <p class="step-num">[ 01 ]</p>
-          <h3 class="step-title">Send us your document</h3>
-          <p class="step-body">PDF, Word doc, or a set of policy files. We review the structure and tell you exactly what the assistant can and can't answer — before we start building. If it's not the right fit, we'll tell you that too.</p>
+          <h3 class="step-title">Verbatim document ingestion</h3>
+          <p class="step-body">We extract your rulebook word-for-word into a structured, citeable corpus — every clause, table, and figure preserved exactly. This becomes the single source of truth the assistant is allowed to answer from. The AI isn't trained on the rules — it reads your actual documents.</p>
         </div>
 
         <div class="step">
           <p class="step-num">[ 02 ]</p>
-          <h3 class="step-title">We build and tune it</h3>
-          <p class="step-body">Document ingestion, retrieval architecture, prompt engineering, and accuracy testing against real questions your team actually asks. We don't hand over the assistant until the citation quality meets the bar.</p>
+          <h3 class="step-title">Context-aware retrieval that respects the rule hierarchy</h3>
+          <p class="step-body">When a question comes in, the assistant pulls only the clauses that apply to that situation — and where a local rule overrides a national one, the local rule wins. The answer is grounded in those exact clauses and cited back to them.</p>
         </div>
 
         <div class="step">
           <p class="step-num">[ 03 ]</p>
-          <h3 class="step-title">We deploy and you own it</h3>
-          <p class="step-body">You get an admin back-office to update documents as rules change, see usage analytics, and manage access. We handle hosting. When the rulebook is updated each season, we re-ingest it — usually within 48 hours.</p>
+          <h3 class="step-title">Answers scoped to the asker's context</h3>
+          <p class="step-body">Rules differ by grade, format, and jurisdiction. Before answering, the assistant confirms the relevant context — asking a clarifying question if needed, exactly as an experienced administrator would. It only answers once it's confident it has the right scope.</p>
         </div>
 
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       WHO THIS IS FOR
+  ============================================= -->
+  <section class="section">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ Who it's for ]</span>
+        <h2 class="section-headline">The pattern: large rules corpus, many people who need to interpret it, cost when they get it wrong.</h2>
+        <p class="section-body">If that describes your organisation, there's a product here.</p>
+      </div>
+
+      <div class="use-cases-grid reveal reveal-delay-1">
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Sports Governing Bodies</h3>
+          <p class="use-case-body">Clubs, umpires, and players need fast, correct answers about playing conditions and competition rules. State and national variations stack on top of global laws — and the answer changes based on which competition is being played.</p>
+          <p class="use-case-example">eg. MCC Laws → state playing conditions → club by-laws</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Licensing &amp; Regulatory Bodies</h3>
+          <p class="use-case-body">Licensed professionals need to know which standard applies in their jurisdiction — federal, state, or local. Wrong answers mean compliance failures, fines, or liability. The hierarchy matters enormously.</p>
+          <p class="use-case-example">eg. national standard → state variation → local exception</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Professional Associations</h3>
+          <p class="use-case-body">CPD requirements, registration rules, and eligibility conditions vary by member category, year, and jurisdiction. A cited, context-specific answer is more useful than a search box — and far more reliable than a generalist AI.</p>
+          <p class="use-case-example">eg. national body rules → chapter conditions → member category</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ============================================
+       CASE STUDY CALLOUT
+  ============================================= -->
+  <section class="section" id="case-study">
+    <div class="container">
+
+      <div class="reveal">
+        <span class="eyebrow">[ Proof of concept ]</span>
+        <h2 class="section-headline">In development: Cricket Tasmania.</h2>
+        <p class="section-body">The first live deployment of this engine. A signed engagement — currently being built.</p>
+      </div>
+
+      <div class="case-study-callout reveal reveal-delay-1">
+        <div>
+          <p class="case-study-label">Active build</p>
+          <h3>Laws of Cricket AI Assistant</h3>
+          <p>Cricket Tasmania manages 507 senior teams and 8,750 registered players across 150+ clubs. Time-poor volunteers were fielding constant rules questions they didn't always know the answers to — pulling from the MCC Laws of Cricket, CT's playing conditions, and CT's own by-laws simultaneously. We're building an assistant that resolves that hierarchy on every question, cites the exact clause, and delivers a context-specific answer in seconds.</p>
+          <div class="case-study-stats">
+            <div class="case-study-stat">
+              <span class="case-study-stat-number">507</span>
+              <span class="case-study-stat-label">senior teams</span>
+            </div>
+            <div class="case-study-stat">
+              <span class="case-study-stat-number">8,750</span>
+              <span class="case-study-stat-label">registered players</span>
+            </div>
+            <div class="case-study-stat">
+              <span class="case-study-stat-number">~75 hrs</span>
+              <span class="case-study-stat-label">admin saved / season</span>
+            </div>
+          </div>
+        </div>
+        <a href="/insights/cricket-tasmania-regulatory-ai.html" class="btn-ghost" style="flex-shrink:0;">Read the build log →</a>
       </div>
 
     </div>
@@ -1521,8 +1274,8 @@
     <div class="container">
       <div class="cta-box reveal">
         <span class="eyebrow" style="margin-bottom: 1.25rem; display: block;">[ Get started ]</span>
-        <h2 class="cta-headline">What document are your people<br />constantly looking up?</h2>
-        <p class="cta-body">Tell us what you're working with. We'll tell you whether an AI assistant is the right fit — and what a build would actually look like.</p>
+        <h2 class="cta-headline">Have a rulebook that needs an assistant?</h2>
+        <p class="cta-body">Tell us about your corpus — the documents, the layers, and the people who need to interpret them. We'll tell you honestly whether this is the right fit and what a build would look like.</p>
 
         <form
           id="contactForm"
@@ -1530,15 +1283,14 @@
           action="https://formsubmit.co/bailey@gtbsoftware.com"
           method="POST"
         >
-          <input type="hidden" name="_subject" value="Regulatory AI Assistant Enquiry" />
+          <input type="hidden" name="_subject" value="Regulatory AI Enquiry" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 
           <input type="text" name="name" placeholder="Your name" required />
           <input type="email" name="email" placeholder="your@email.com" required />
           <input type="text" name="organisation" placeholder="Organisation name" required />
-          <textarea name="document" placeholder="What document or rulebook are you working with?" required></textarea>
-          <textarea name="end_users" placeholder="Who are the end users? (e.g. umpires, compliance officers, staff)" style="min-height: 80px;"></textarea>
+          <textarea name="rulebook" placeholder="Describe your rulebook — what documents, how many layers, who needs to interpret them?" required></textarea>
 
           <button type="submit" class="btn-primary" style="align-self:center; border:none; cursor:pointer; font-family:var(--font-body);">Send it</button>
         </form>
