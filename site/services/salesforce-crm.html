@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Regulatory AI — Your Rules, in the Right Order — GTB Software</title>
-  <meta name="description" content="We turn your organisation's layered rulebook into an assistant that gives cited, context-specific answers in seconds — respecting which local rule overrides which national one." />
+  <title>Salesforce CRM Apps — Custom Apps Built on Live Salesforce Data — GTB Software</title>
+  <meta name="description" content="We build custom apps that read and write live Salesforce data — dashboards, pipeline views, account health trackers, and internal tools built for how your team actually works." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://api.fontshare.com" />
@@ -519,98 +519,46 @@
     }
 
     /* =============================================
-       HIERARCHY SECTION (CENTREPIECE)
+       USE CASES
     ============================================= */
-    .hierarchy-block {
-      padding: 3rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border-mid);
-      border-radius: 16px;
-      position: relative;
-      overflow: hidden;
+    .use-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
       margin-top: 3rem;
     }
 
-    .hierarchy-block::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    .use-case-card {
+      padding: 1.75rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      transition: border-color 0.2s;
     }
 
-    .hierarchy-block-body {
-      font-size: 1.0625rem;
-      color: var(--text-muted);
-      line-height: 1.8;
-      max-width: 700px;
-      margin-top: 1.25rem;
-    }
+    .use-case-card:hover { border-color: var(--border-mid); }
 
-    .hierarchy-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 2.5rem;
-      max-width: 480px;
-    }
-
-    .hierarchy-layer {
-      padding: 1rem 1.5rem;
-      border: 1px solid var(--border-mid);
-      position: relative;
-    }
-
-    .hierarchy-layer:first-child {
-      border-radius: 10px 10px 0 0;
-      background: rgba(16, 185, 129, 0.05);
-      border-color: var(--accent-border);
-    }
-
-    .hierarchy-layer:nth-child(2) {
-      background: rgba(16, 185, 129, 0.035);
-      border-top: none;
-    }
-
-    .hierarchy-layer:last-child {
-      border-radius: 0 0 10px 10px;
-      background: var(--bg-raised);
-      border-top: none;
-    }
-
-    .hierarchy-layer-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.25rem;
-    }
-
-    .hierarchy-layer-title {
-      font-weight: 600;
+    .use-case-title {
+      font-family: var(--font-display);
+      font-weight: 700;
       font-size: 0.9375rem;
       color: var(--text);
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
     }
 
-    .hierarchy-layer-sub {
+    .use-case-body {
       font-size: 0.8125rem;
       color: var(--text-muted);
-      margin-top: 0.25rem;
-    }
-
-    .hierarchy-arrow {
-      width: 1px;
-      height: 0;
-      display: none;
+      line-height: 1.65;
     }
 
     /* =============================================
-       FEATURES (METHODOLOGY)
+       STEPS (HOW IT WORKS)
     ============================================= */
     .steps-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 1.25rem;
       margin-top: 3rem;
     }
@@ -646,118 +594,34 @@
     }
 
     /* =============================================
-       USE CASES
+       WHO IT'S FOR
     ============================================= */
-    .use-cases-grid {
+    .audience-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
       margin-top: 3rem;
     }
 
-    .use-case-card {
-      padding: 1.75rem;
+    .audience-card {
+      padding: 2rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 14px;
-      transition: border-color 0.2s;
     }
 
-    .use-case-card:hover { border-color: var(--border-mid); }
-
-    .use-case-title {
+    .audience-title {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 0.9375rem;
+      font-size: 1rem;
       color: var(--text);
       margin-bottom: 0.75rem;
-      letter-spacing: -0.01em;
     }
 
-    .use-case-body {
-      font-size: 0.8125rem;
+    .audience-body {
+      font-size: 0.875rem;
       color: var(--text-muted);
       line-height: 1.65;
-    }
-
-    .use-case-example {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      margin-top: 1rem;
-      letter-spacing: 0.04em;
-    }
-
-    /* =============================================
-       CASE STUDY CALLOUT
-    ============================================= */
-    .case-study-callout {
-      margin-top: 3rem;
-      padding: 3rem;
-      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(16,185,129,0.04) 100%);
-      border: 1px solid var(--accent-border);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .case-study-callout::before {
-      content: '';
-      display: none;
-    }
-
-    .case-study-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
-
-    .case-study-callout h3 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: var(--text);
-      margin-bottom: 0.75rem;
-      letter-spacing: -0.015em;
-    }
-
-    .case-study-callout p {
-      font-size: 0.9375rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-      max-width: 520px;
-    }
-
-    .case-study-stats {
-      display: flex;
-      gap: 2rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .case-study-stat {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .case-study-stat-number {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: var(--accent);
-      line-height: 1;
-    }
-
-    .case-study-stat-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 0.25rem;
     }
 
     /* =============================================
@@ -815,7 +679,6 @@
     }
 
     .contact-form input,
-    .contact-form select,
     .contact-form textarea {
       width: 100%;
       background: var(--bg-card);
@@ -937,18 +800,18 @@
       .mobile-nav { display: flex; }
       .problem-grid { grid-template-columns: 1fr; }
       .use-cases-grid { grid-template-columns: 1fr; }
-      .steps-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .audience-grid { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: 1fr; }
       .footer-main { grid-template-columns: 1fr; gap: 2rem; }
       .footer-contact { align-items: flex-start; }
-      .case-study-callout { flex-direction: column; }
       .cta-box { padding: 2.5rem 1.75rem; }
-      .hierarchy-block { padding: 2rem 1.5rem; }
     }
 
     @media (max-width: 480px) {
       .container { padding: 0 1.25rem; }
       .hero-headline { font-size: 2.25rem; }
+      .steps-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -963,8 +826,8 @@
     <a href="/#custom-software" class="sub" onclick="closeMobileNav()">— Custom Software</a>
     <a href="/services/ragic" class="sub" onclick="closeMobileNav()">— Ragic Solutions</a>
     <a href="/#ai-adoption" class="sub" onclick="closeMobileNav()">— AI Adoption</a>
-    <a href="/services/regulatory-ai" class="sub active" onclick="closeMobileNav()" style="color: var(--accent);">— Regulatory AI</a>
-    <a href="/services/salesforce-crm" class="sub" onclick="closeMobileNav()">— Salesforce CRM Apps</a>
+    <a href="/services/regulatory-ai" class="sub" onclick="closeMobileNav()">— Regulatory AI</a>
+    <a href="/services/salesforce-crm" class="sub active" onclick="closeMobileNav()" style="color: var(--accent);">— Salesforce CRM Apps</a>
     <a href="/#process" onclick="closeMobileNav()">How It Works</a>
     <a href="/#about" onclick="closeMobileNav()">About</a>
     <a href="/insights" onclick="closeMobileNav()">Insights</a>
@@ -990,8 +853,8 @@
               <a href="/#custom-software" role="menuitem">Custom Software &amp; Apps</a>
               <a href="/services/ragic" role="menuitem">Ragic Solutions</a>
               <a href="/#ai-adoption" role="menuitem">AI Adoption Consulting</a>
-              <a href="/services/regulatory-ai" role="menuitem" class="active">Regulatory AI</a>
-              <a href="/services/salesforce-crm" role="menuitem">Salesforce CRM Apps</a>
+              <a href="/services/regulatory-ai" role="menuitem">Regulatory AI</a>
+              <a href="/services/salesforce-crm" role="menuitem" class="active">Salesforce CRM Apps</a>
             </div>
           </div>
         </li>
@@ -1017,43 +880,46 @@
     <div class="container">
       <div class="reveal">
         <div class="hero-eyebrow">
-          <span class="eyebrow">[ Regulatory AI ]</span>
+          <span class="eyebrow">[ Salesforce CRM Apps ]</span>
         </div>
 
         <h1 class="hero-headline">
-          Your rules,<br />
-          in the <span class="accent">right order.</span>
+          Your Salesforce data.<br />
+          Apps your team <span class="accent">actually uses.</span>
         </h1>
 
         <p class="hero-sub">
-          We turn your organisation's own layered rulebook into an assistant that gives cited, context-specific answers in seconds — respecting which local rule overrides which national one — and never answers beyond what's actually written.
+          Salesforce holds everything — and surfaces it poorly. We build custom apps that connect directly to your live CRM data: dashboards, pipeline views, account trackers, and internal tools built around how your team actually works, not how Salesforce was configured years ago.
         </p>
 
         <div class="hero-actions">
-          <a href="#case-study" class="btn-primary">See it in action →</a>
-          <a href="#cta" class="btn-ghost">Let's talk →</a>
+          <a href="#cta" class="btn-primary">Talk to us →</a>
+          <a href="/insights/lovable-salesforce-crm-apps.html" class="btn-ghost">Read the build log →</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============================================
-       STATS STRIP
+       STATS STRIP — GTB LOVABLE CREDENTIALS
   ============================================= -->
   <div class="stats-strip">
     <div class="container">
       <div class="stats-grid reveal">
         <div class="stat-item">
-          <p class="stat-number">3 layers</p>
-          <p class="stat-label">The hierarchy most regulated bodies live with: national rules, state variations, local exceptions — each overriding the one beneath</p>
+          <p class="stat-number">1.2M</p>
+          <p class="stat-label">lines of code shipped on Lovable</p>
+          <p class="stat-source">Top 1% globally</p>
         </div>
         <div class="stat-item">
-          <p class="stat-number">One wrong call</p>
-          <p class="stat-label">Triggers a protest, a dispute, a compliance failure. The cost isn't the admin time. It's the fallout.</p>
+          <p class="stat-number">1,866</p>
+          <p class="stat-label">messages sent to Lovable</p>
+          <p class="stat-source">Top 5% of builders worldwide</p>
         </div>
         <div class="stat-item">
-          <p class="stat-number">&lt; 30 sec</p>
-          <p class="stat-label">Cited, context-specific answer — including the exact clause and what it overrode</p>
+          <p class="stat-number">Top 5%</p>
+          <p class="stat-label">US creators by traffic on Lovable</p>
+          <p class="stat-source">Verified June 2026</p>
         </div>
       </div>
     </div>
@@ -1069,36 +935,36 @@
 
       <div class="reveal">
         <span class="eyebrow">[ The problem ]</span>
-        <h2 class="section-headline">Most AI tools flatten layered rules into mush.</h2>
-        <p class="section-body">Regulated bodies live with layered rules: a national standard, a state variation, a local exception, each overriding the one beneath it. Flatten them and you get confident, wrong answers.</p>
+        <h2 class="section-headline">The data is in Salesforce. The insight isn't.</h2>
+        <p class="section-body">Most Salesforce teams are one layer of spreadsheet exports away from seeing what's actually happening in their pipeline. The CRM is the system of record — but it's rarely the tool people want to use.</p>
       </div>
 
       <div class="problem-grid reveal reveal-delay-1">
 
         <div class="problem-card">
           <p class="problem-card-label">Problem 1</p>
-          <h3 class="problem-card-title">The hierarchy gets ignored</h3>
-          <p class="problem-card-body">Generic AI tools treat all rules as equal. Local exceptions and national defaults get mixed together. The answer might be technically correct for some context — just not yours.</p>
+          <h3 class="problem-card-title">Salesforce surfaces it wrong</h3>
+          <p class="problem-card-body">Standard Salesforce dashboards are built around Salesforce's data model, not your workflow. Reps live in spreadsheet exports because the native UI doesn't show what they need, the way they need it.</p>
         </div>
 
         <div class="problem-card">
           <p class="problem-card-label">Problem 2</p>
-          <h3 class="problem-card-title">Answers aren't cited</h3>
-          <p class="problem-card-body">You can't verify what you can't trace. When there's no clause reference attached to an answer, there's no way to know if the ruling is right — or where it came from.</p>
+          <h3 class="problem-card-title">Custom views need a dev sprint</h3>
+          <p class="problem-card-body">Getting something purpose-built inside Salesforce historically means a Salesforce developer, months of scoping, and a bill that doesn't match the value. Most teams skip it and live with the workaround.</p>
         </div>
 
         <div class="problem-card">
           <p class="problem-card-label">Problem 3</p>
-          <h3 class="problem-card-title">Context-blind answers</h3>
-          <p class="problem-card-body">The same question can have different answers depending on grade, format, or jurisdiction. A tool that doesn't know which context it's answering for is guessing — and won't tell you it is.</p>
+          <h3 class="problem-card-title">The workarounds compound</h3>
+          <p class="problem-card-body">Manual exports, copy-pasted pipeline updates, offline tracking sheets. Every workaround adds lag between what's in Salesforce and what management is seeing. Decisions get made on stale data.</p>
         </div>
 
       </div>
 
       <div class="solution-callout reveal reveal-delay-2">
-        <p class="solution-callout-eyebrow">The difference</p>
-        <h3 class="solution-callout-headline">We model the hierarchy, clause by clause.</h3>
-        <p class="solution-callout-body">The answer you get is the rule that actually governs your situation — not the closest match in a flattened corpus. And you can see exactly what it overrode to get there.</p>
+        <p class="solution-callout-eyebrow">The fix</p>
+        <h3 class="solution-callout-headline">A custom app that reads and writes live CRM data. Built in days.</h3>
+        <p class="solution-callout-body">Lovable's Salesforce connector lets us query and update Accounts, Contacts, Leads, Cases, and Opportunities in real time. We build the interface around how your team works — not around how Salesforce was configured.</p>
       </div>
 
     </div>
@@ -1107,39 +973,49 @@
   <div class="section-divider"></div>
 
   <!-- ============================================
-       THE DIFFERENTIATOR (CENTREPIECE)
+       WHAT WE BUILD
   ============================================= -->
   <section class="section">
     <div class="container">
 
       <div class="reveal">
-        <span class="eyebrow">[ What makes it different ]</span>
-        <h2 class="section-headline">Most rulebooks aren't flat — and most AI tools pretend they are.</h2>
+        <span class="eyebrow">[ What we build ]</span>
+        <h2 class="section-headline">Six types of apps. All connected to your live CRM.</h2>
+        <p class="section-body">Each one is purpose-built for your Salesforce data model and your team's workflow. No generic templates.</p>
       </div>
 
-      <div class="hierarchy-block reveal reveal-delay-1">
-        <p class="section-body" style="max-width: none;">
-          Regulated bodies live with layered rules: a national standard, a state variation, a local exception, each overriding the one beneath it. Flatten them and you get confident, wrong answers. We model the precedence clause by clause, so the assistant always answers with the rule that actually governs <em>your</em> situation — and can show you the default it overrode.
-        </p>
+      <div class="use-cases-grid reveal reveal-delay-1">
 
-        <div class="hierarchy-stack">
-          <div class="hierarchy-layer">
-            <p class="hierarchy-layer-label">Layer 3 — Wins</p>
-            <p class="hierarchy-layer-title">Local Rules</p>
-            <p class="hierarchy-layer-sub">By-laws, chapter rules, local exceptions — override everything below</p>
-          </div>
-          <div class="hierarchy-layer">
-            <p class="hierarchy-layer-label">Layer 2</p>
-            <p class="hierarchy-layer-title">State / Chapter Layer</p>
-            <p class="hierarchy-layer-sub">Regional conditions — override national defaults</p>
-          </div>
-          <div class="hierarchy-layer">
-            <p class="hierarchy-layer-label">Layer 1 — Baseline</p>
-            <p class="hierarchy-layer-title">National Standard</p>
-            <p class="hierarchy-layer-sub">Apply where no state or local rule overrides</p>
-          </div>
+        <div class="use-case-card">
+          <h3 class="use-case-title">Pipeline Dashboards</h3>
+          <p class="use-case-body">Real-time views on Opportunity stage, deal value, and close probability — without logging into Salesforce. Updated live from your org. Built for the way your team reads a pipeline, not the way Salesforce built their UI.</p>
         </div>
-        <p style="margin-top: 1.25rem; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); letter-spacing: 0.05em;">In the Cricket Tasmania build: MCC Laws → CT Playing Conditions → CT By-laws</p>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Account Health Trackers</h3>
+          <p class="use-case-body">Surface the signals that matter per account: open cases, activity gaps, ARR at risk, last contact date. One screen per account instead of navigating across five Salesforce objects to piece it together manually.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Lead Management Tools</h3>
+          <p class="use-case-body">Capture, qualify, and route leads with logic your Salesforce workflows can't handle natively. Automatic assignment, priority scoring, and handoff tracking — all writing back to Salesforce in real time.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Support Case Views</h3>
+          <p class="use-case-body">Ops and support teams see what matters without navigating Salesforce object trees. Filtered by priority, team, SLA status. Designed for the people who action cases, not the admin who configured them.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Internal Sales Apps</h3>
+          <p class="use-case-body">Rep-facing tools built around how your team actually sells. Quick-update interfaces, meeting prep views, and deal status pages that take 5 seconds instead of 3 Salesforce screens. Less friction means better CRM adoption.</p>
+        </div>
+
+        <div class="use-case-card">
+          <h3 class="use-case-title">Reporting &amp; Analytics</h3>
+          <p class="use-case-body">Custom rollups and visualisations that pull live CRM data without a BI tool subscription. Leaderboards, forecasts, conversion metrics — built for your specific data model and updated in real time.</p>
+        </div>
+
       </div>
 
     </div>
@@ -1148,34 +1024,40 @@
   <div class="section-divider"></div>
 
   <!-- ============================================
-       METHODOLOGY
+       HOW IT WORKS
   ============================================= -->
   <section class="section">
     <div class="container">
 
       <div class="reveal">
         <span class="eyebrow">[ How it works ]</span>
-        <h2 class="section-headline">Three things that make the answers trustworthy.</h2>
+        <h2 class="section-headline">Scoped, connected, and shipped in days — not months.</h2>
       </div>
 
       <div class="steps-grid reveal reveal-delay-1">
 
         <div class="step">
           <p class="step-num">[ 01 ]</p>
-          <h3 class="step-title">Verbatim document ingestion</h3>
-          <p class="step-body">We extract your rulebook word-for-word into a structured, citeable corpus — every clause, table, and figure preserved exactly. This becomes the single source of truth the assistant is allowed to answer from. The AI isn't trained on the rules — it reads your actual documents.</p>
+          <h3 class="step-title">Scope</h3>
+          <p class="step-body">We map which Salesforce objects matter, what data the app needs to read and write, and what the team's current workaround looks like. That defines the build.</p>
         </div>
 
         <div class="step">
           <p class="step-num">[ 02 ]</p>
-          <h3 class="step-title">Context-aware retrieval that respects the rule hierarchy</h3>
-          <p class="step-body">When a question comes in, the assistant pulls only the clauses that apply to that situation — and where a local rule overrides a national one, the local rule wins. The answer is grounded in those exact clauses and cited back to them.</p>
+          <h3 class="step-title">Connect</h3>
+          <p class="step-body">Your workspace admin configures the Salesforce connector with org credentials. Works with production orgs, Developer Edition, and sandbox environments. No third-party data layer.</p>
         </div>
 
         <div class="step">
           <p class="step-num">[ 03 ]</p>
-          <h3 class="step-title">Answers scoped to the asker's context</h3>
-          <p class="step-body">Rules differ by grade, format, and jurisdiction. Before answering, the assistant confirms the relevant context — asking a clarifying question if needed, exactly as an experienced administrator would. It only answers once it's confident it has the right scope.</p>
+          <h3 class="step-title">Build</h3>
+          <p class="step-body">We ship the app with live Salesforce data reads and writes. Typical turnaround is days, not months. You're looking at real data from your own org in the first review session.</p>
+        </div>
+
+        <div class="step">
+          <p class="step-num">[ 04 ]</p>
+          <h3 class="step-title">Iterate</h3>
+          <p class="step-body">As your process evolves, the app evolves with it. No re-implementation. No Salesforce developer needed. Changes go in fast.</p>
         </div>
 
       </div>
@@ -1186,77 +1068,33 @@
   <div class="section-divider"></div>
 
   <!-- ============================================
-       WHO THIS IS FOR
+       WHO IT'S FOR
   ============================================= -->
   <section class="section">
     <div class="container">
 
       <div class="reveal">
         <span class="eyebrow">[ Who it's for ]</span>
-        <h2 class="section-headline">The pattern: large rules corpus, many people who need to interpret it, cost when they get it wrong.</h2>
-        <p class="section-body">If that describes your organisation, there's a product here.</p>
+        <h2 class="section-headline">Teams already in Salesforce who've outgrown what Salesforce shows them.</h2>
       </div>
 
-      <div class="use-cases-grid reveal reveal-delay-1">
+      <div class="audience-grid reveal reveal-delay-1">
 
-        <div class="use-case-card">
-          <h3 class="use-case-title">Sports Governing Bodies</h3>
-          <p class="use-case-body">Volunteers, officials, and administrators are fielding rules questions they don't always know the answer to. When they get it wrong, it's a protest, a replayed game, or a dispute that takes weeks to resolve. State and national rule layers make it worse — the right answer depends on which competition and which grade.</p>
-          <p class="use-case-example">eg. MCC Laws → state playing conditions → local by-laws</p>
+        <div class="audience-card">
+          <h3 class="audience-title">Sales &amp; RevOps Teams</h3>
+          <p class="audience-body">Pipeline lives in Salesforce. Reporting lives in a spreadsheet someone exports every Monday. There's a gap between the data and the decisions — and it compounds every week. A purpose-built pipeline view closes it.</p>
         </div>
 
-        <div class="use-case-card">
-          <h3 class="use-case-title">Licensing &amp; Regulatory Bodies</h3>
-          <p class="use-case-body">When a licensed professional applies the wrong standard for their jurisdiction, the downstream cost is real — fines, liability, re-certification, or voided work. Federal, state, and local rules stack on top of each other, and the answer isn't always obvious. Most tools ignore the hierarchy entirely.</p>
-          <p class="use-case-example">eg. federal standard → state code → local variation</p>
+        <div class="audience-card">
+          <h3 class="audience-title">Customer Success &amp; Support</h3>
+          <p class="audience-body">Account health data is spread across Salesforce objects that take too many clicks to navigate. CS teams want one screen per account. Support teams want a case queue that shows priority, not Salesforce's default sort.</p>
         </div>
 
-        <div class="use-case-card">
-          <h3 class="use-case-title">Professional Associations</h3>
-          <p class="use-case-body">Members call the office because they can't find the answer in the rulebook — or worse, they find the wrong one. CPD requirements, eligibility rules, and registration conditions vary by member category, year, and chapter. Staff answer the same questions hundreds of times a year.</p>
-          <p class="use-case-example">eg. national rules → chapter conditions → member category</p>
+        <div class="audience-card">
+          <h3 class="audience-title">Ops &amp; Leadership</h3>
+          <p class="audience-body">You need live CRM data in a format that doesn't require Salesforce training to read. Forecasts, leaderboards, conversion rates — built around your business metrics, not Salesforce's default report types.</p>
         </div>
 
-      </div>
-
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- ============================================
-       CASE STUDY CALLOUT
-  ============================================= -->
-  <section class="section" id="case-study">
-    <div class="container">
-
-      <div class="reveal">
-        <span class="eyebrow">[ Proof of concept ]</span>
-        <h2 class="section-headline">In development: Cricket Tasmania.</h2>
-        <p class="section-body">The first live deployment of this engine. A signed engagement — currently being built.</p>
-      </div>
-
-      <div class="case-study-callout reveal reveal-delay-1">
-        <div>
-          <p class="case-study-label">Active build</p>
-          <h3>Laws of Cricket AI Assistant</h3>
-          <p>Cricket Tasmania manages 507 senior teams and 8,750 registered players across 150+ clubs. Time-poor volunteers were fielding constant rules questions they didn't always know the answers to — pulling from the MCC Laws of Cricket, CT's playing conditions, and CT's own by-laws simultaneously. We're building an assistant that resolves that hierarchy on every question, cites the exact clause, and delivers a context-specific answer in seconds.</p>
-          <div class="case-study-stats">
-            <div class="case-study-stat">
-              <span class="case-study-stat-number">507</span>
-              <span class="case-study-stat-label">senior teams</span>
-            </div>
-            <div class="case-study-stat">
-              <span class="case-study-stat-number">8,750</span>
-              <span class="case-study-stat-label">registered players</span>
-            </div>
-            <div class="case-study-stat">
-              <span class="case-study-stat-number">3 layers</span>
-              <span class="case-study-stat-label">MCC Laws → CT playing conditions → CT by-laws — resolved clause-by-clause</span>
-            </div>
-          </div>
-        </div>
-        <a href="/insights/cricket-tasmania-regulatory-ai.html" class="btn-ghost" style="flex-shrink:0;">Read the build log →</a>
       </div>
 
     </div>
@@ -1271,8 +1109,8 @@
     <div class="container">
       <div class="cta-box reveal">
         <span class="eyebrow" style="margin-bottom: 1.25rem; display: block;">[ Get started ]</span>
-        <h2 class="cta-headline">Have a rulebook that needs an assistant?</h2>
-        <p class="cta-body">Tell us about your corpus — the documents, the layers, and the people who need to interpret them. We'll tell you honestly whether this is the right fit and what a build would look like.</p>
+        <h2 class="cta-headline">Tell us what your team works around in Salesforce.</h2>
+        <p class="cta-body">The workaround is usually the spec. Tell us what it is, which objects it involves, and what the team actually needs to see — and we'll tell you what a build looks like.</p>
 
         <form
           id="contactForm"
@@ -1280,14 +1118,14 @@
           action="https://formsubmit.co/bailey@gtbsoftware.com"
           method="POST"
         >
-          <input type="hidden" name="_subject" value="Regulatory AI Enquiry" />
+          <input type="hidden" name="_subject" value="Salesforce CRM Apps Enquiry" />
           <input type="hidden" name="_captcha" value="false" />
           <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
 
           <input type="text" name="name" placeholder="Your name" required />
           <input type="email" name="email" placeholder="your@email.com" required />
-          <input type="text" name="organisation" placeholder="Organisation name" required />
-          <textarea name="rulebook" placeholder="Describe your rulebook — what documents, how many layers, who needs to interpret them?" required></textarea>
+          <input type="text" name="company" placeholder="Company name" required />
+          <textarea name="use_case" placeholder="What does your team work around in Salesforce? Which objects matter most?" required></textarea>
 
           <button type="submit" class="btn-primary" style="align-self:center; border:none; cursor:pointer; font-family:var(--font-body);">Send it</button>
         </form>

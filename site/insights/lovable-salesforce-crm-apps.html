@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Laws of Cricket AI Assistant — Cricket Tasmania — GTB Software</title>
-  <meta name="description" content="How we're building a regulatory AI assistant for Cricket Tasmania — verbatim document ingestion, layered rule hierarchy, and cited answers scoped to grade and format." />
+  <title>We Connected Lovable to Salesforce. Here's What That Actually Unlocks. — GTB Software</title>
+  <meta name="description" content="Lovable just shipped a native Salesforce connector. We tested it. Here's what it does, what we built, and what this means for Salesforce teams who've been living with workarounds." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://api.fontshare.com" />
@@ -359,64 +359,6 @@
       margin: 3rem 0;
     }
 
-    /* Stats inline */
-    .post-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin: 2rem 0;
-    }
-
-    .post-stat {
-      padding: 1.25rem 1.5rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      text-align: center;
-    }
-
-    .post-stat-number {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.75rem;
-      color: var(--accent);
-      line-height: 1;
-      margin-bottom: 0.375rem;
-    }
-
-    .post-stat-label {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    /* Status badge */
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.625rem 1rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border-mid);
-      border-radius: 8px;
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--accent);
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
     /* CTA at end of post */
     .post-cta {
       margin-top: 4rem;
@@ -488,7 +430,9 @@
       white-space: nowrap;
     }
 
-    .post-tools-item a:hover { border-color: var(--accent); }
+    .post-tools-item a:hover {
+      border-color: var(--accent);
+    }
 
     .post-tools-item span {
       color: var(--text-muted);
@@ -569,7 +513,6 @@
       .mobile-nav { display: flex; }
       .footer-main { grid-template-columns: 1fr; gap: 2rem; }
       .footer-contact { align-items: flex-start; }
-      .post-stats { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 480px) {
@@ -618,18 +561,12 @@
     <div class="container">
       <div class="post-header-inner reveal">
         <a href="/insights" class="post-back">← Insights</a>
-
-        <div class="status-badge">
-          <span class="status-dot"></span>
-          In development — signed engagement, June 2026 build
-        </div>
-
         <div class="post-tags">
-          <span class="post-tag">Regulatory AI</span>
-          <span class="post-tag">Case Study</span>
-          <span class="post-tag">Rules Q&amp;A</span>
+          <span class="post-tag">Build Log</span>
+          <span class="post-tag">Salesforce</span>
+          <span class="post-tag">Lovable</span>
         </div>
-        <h1 class="post-title">Laws of Cricket AI Assistant — Cricket Tasmania</h1>
+        <h1 class="post-title">We Connected Lovable to Salesforce. Here's What That Actually Unlocks.</h1>
         <p class="post-meta">June 2026 &nbsp;·&nbsp; 5 min read &nbsp;·&nbsp; Grab The Bull Software</p>
       </div>
     </div>
@@ -640,97 +577,80 @@
     <div class="container">
       <div class="post-content">
 
-        <p>Cricket Tasmania manages 507 senior teams and 8,750 registered players across 150+ clubs. Most of the people running those clubs are volunteers — time-poor, doing multiple jobs, and regularly fielding questions about rules they don't fully know.</p>
+        <p>There's a specific frustration that shows up in almost every Salesforce org we've talked to. The data is all there. It's being updated, it's reasonably clean, the team is actually using the CRM. But getting it out into something useful — a view that fits how the team works, a dashboard that surfaces what actually matters — requires either a Salesforce developer, a BI tool license, or a spreadsheet someone exports every Monday.</p>
 
-        <p>The MCC Laws of Cricket run to hundreds of clauses. CT's own playing conditions and by-laws sit on top of that — overriding specific laws for CT competitions. When a volunteer gets a rules question wrong, it leads to incorrect rulings, disputes on the field, and hours chasing callbacks for an answer that should have taken seconds.</p>
+        <p>None of those are fast. None of them stay current. And for a lot of teams, the workaround becomes the system.</p>
 
-        <div class="post-stats">
-          <div class="post-stat">
-            <p class="post-stat-number">507</p>
-            <p class="post-stat-label">senior teams across 150+ clubs</p>
-          </div>
-          <div class="post-stat">
-            <p class="post-stat-number">8,750</p>
-            <p class="post-stat-label">registered players</p>
-          </div>
-          <div class="post-stat">
-            <p class="post-stat-number">~75 hrs</p>
-            <p class="post-stat-label">admin time saved per season</p>
-          </div>
-        </div>
+        <p>That's the gap Lovable's new Salesforce connector closes.</p>
 
-        <p>The engagement is signed. We're building it now.</p>
+        <h2>What Lovable Just Shipped</h2>
 
-        <h2>The pattern that makes this hard</h2>
+        <p>On June 1, 2026, Lovable released a native Salesforce app connector. It's not an API wrapper or a Zapier-style sync — it's a direct connection to your Salesforce org that lets apps query and write CRM records in real time.</p>
 
-        <p>Cricket rules aren't flat. There are three layers:</p>
+        <p>The connector supports the objects that matter most:</p>
 
-        <ol>
-          <li><strong>MCC Laws of Cricket</strong> — the global laws that govern the sport. Every competition starts here.</li>
-          <li><strong>CT Playing Conditions</strong> — Cricket Tasmania's competition-specific rules, which override the MCC Laws on specific points.</li>
-          <li><strong>CT By-laws</strong> — CT's administrative rules, which override everything beneath them on club and association matters.</li>
-        </ol>
+        <ul>
+          <li><strong>Accounts</strong> — full account records, relationships, and activity history</li>
+          <li><strong>Contacts</strong> — with filtering, search, and write-back</li>
+          <li><strong>Leads</strong> — including status, source, and assignment</li>
+          <li><strong>Opportunities</strong> — stage, value, close date, probability</li>
+          <li><strong>Cases</strong> — for support and ops teams tracking customer issues</li>
+          <li>Additional standard objects — configurable per build</li>
+        </ul>
 
-        <p>Most AI tools don't model this. They ingest all the documents together and retrieve based on similarity — which means the local exception and the global default both surface as candidates, and the tool picks one without knowing which governs.</p>
+        <p>It works with production orgs, Developer Edition, and sandbox environments. Setup is handled by a workspace admin through Connectors in the Lovable interface. No code changes required in Salesforce.</p>
 
-        <p>The result: confident answers to the wrong question.</p>
+        <h2>What We Built to Test It</h2>
 
-        <h2>What we're building — and why it's different</h2>
+        <p>We put together a pipeline dashboard and an account health tracker — two of the most common internal tools Salesforce teams tell us they want but don't have.</p>
 
-        <p>Six things in the order they matter.</p>
+        <p><strong>The pipeline dashboard</strong> pulls live Opportunity data: stage breakdown, total pipeline value, close probability by rep, and deals that haven't moved in 14 days. It's the view most sales managers want to see every morning without logging into Salesforce and reconfiguring a report.</p>
 
-        <h3>1. Verbatim ingestion, not fine-tuning</h3>
+        <p><strong>The account health tracker</strong> pulls data across three objects per account — the Account itself, open Cases, and recent Activity history — and surfaces them on one screen. No navigating between Salesforce objects. You can see at a glance which accounts have open issues, which haven't had contact in 30+ days, and which are flagged for renewal risk.</p>
 
-        <p>The AI isn't trained on cricket. We extract CT's actual documents — the MCC Laws PDF, the CT playing conditions, and CT's by-laws — word-for-word into a structured corpus. Every clause, table, and figure preserved exactly. That verbatim corpus is the source of truth. There's no separate "model knowledge" we're trusting.</p>
+        <p>Both apps write back to Salesforce. You can update an Opportunity stage or log a note directly from the app — it goes straight into the CRM. No copy-paste, no separate update.</p>
 
-        <h3>2. Cited answers, every time</h3>
+        <p>Build time for both: about two days, including the connector setup and a round of revisions.</p>
 
-        <p>This is the core safety property. The model can use its general cricket knowledge to understand a question — but the ruling must come from a retrieved clause. If the corpus doesn't cover it, the assistant says so rather than inventing an answer. Every answer carries the verbatim quote and the exact law or clause reference.</p>
+        <h2>The Part That Actually Changes Something</h2>
+
+        <p>The speed isn't the main point, though it is genuinely fast. What changes is the cost equation on custom internal tooling.</p>
+
+        <p>Before this, building something purpose-built on Salesforce data had a few options: hire a Salesforce developer (expensive, slow, hard to change later), pay for a BI platform (Tableau, Power BI — another license, another system to manage), or live with the workaround. None of those are good options for a 30-person sales team or a CS org that just needs one view to be better.</p>
+
+        <p>A direct Lovable-to-Salesforce connection changes that. The app is scoped to the specific workflow, built around the actual objects your team uses, and can be updated without touching your Salesforce configuration. You change the filter criteria or add a field — it takes an hour, not a sprint.</p>
+
+        <h2>Who This Is Actually For</h2>
+
+        <p>Not every Salesforce team needs this. If Salesforce's native dashboards and reports are working for you, there's nothing to fix.</p>
+
+        <p>The teams this matters to are the ones who've built the workaround. You know who you are: the weekly export, the sheet someone maintains alongside the CRM, the rep-facing view that never got built because it "wasn't worth a dev sprint." That's the signal. If the workaround exists, there's a gap — and the gap is now cheap to close.</p>
 
         <blockquote>
-          <p>"A substitute shall not bat, bowl, keep wicket or act as captain but may field as a substitute for any fielder..." — CT Playing Conditions, Section 2.4 | MCC Law 24.1</p>
+          <p>The workaround is usually the spec. If your team has one, that's what we build from.</p>
         </blockquote>
 
-        <h3>3. The override hierarchy — clause by clause</h3>
+        <p>Specifically, we've seen this pattern most with sales and RevOps teams who want pipeline visibility without Salesforce training, CS teams who need one-screen account health rather than navigating five objects, and ops teams who need live CRM data in a format leadership can actually read.</p>
 
-        <p>This is the part that doesn't exist in off-the-shelf tools. Every clause in the corpus is tagged with which layer it belongs to and which competitions it applies to. When a question comes in, the system knows that CT's local by-law beats the global Law on that specific point — and answers with the local rule, while being able to show what the global default was.</p>
+        <h2>What This Means for GTB's Salesforce CRM Apps Service</h2>
 
-        <p>This is what makes it a <em>regulatory</em> AI product, not just a search box. Any regulated body has layered, overriding rule sets. We respect that hierarchy. Most tools flatten it.</p>
+        <p>We've formalised this as a service. The scope is straightforward: you tell us which Salesforce objects matter and what your team's current workaround looks like. We scope the build, connect to your org, and ship something your team will actually use. Typical turnaround is days.</p>
 
-        <h3>4. Answers scoped to context</h3>
+        <p>The connector is available on Lovable's paid plans. If you're already using Lovable or have an existing GTB relationship, setup is fast. If you're starting from scratch, we'll walk through the workspace configuration as part of the engagement.</p>
 
-        <p>A rule can differ by grade and format — first-grade Two-Day is not the same as third-grade T20. Every clause is tagged with where it applies. The assistant establishes the context first (competition, grade, format), then retrieves only the clauses that apply to that asker's situation. Not a generic "it depends" — a specific answer to a specific question.</p>
-
-        <h3>5. It behaves like an administrator</h3>
-
-        <p>Before answering, the assistant works out whether the question is a playing condition or a club/admin matter, and confirms grade and format — asking a clarifying question if anything is missing, exactly as a CT administrator would. It only answers once it's confident it has the right context.</p>
-
-        <h3>6. A real product, not a demo</h3>
-
-        <p>Mobile-first PWA with passwordless login (phone or email one-time codes). An admin back-office for CT staff to update documents, triage referrals, and publish official rulings. Usage logging that surfaces which rules get asked most — which tells CT which by-laws are unclear or contentious. Multi-tenant and sport-agnostic: a new association means swapping the corpus, not rebuilding the engine.</p>
-
-        <h2>Why it generalises</h2>
-
-        <p>The Cricket Tasmania build is proof of concept for a broader pattern: <strong>large rules corpus + many people who need to interpret it + cost when they get it wrong.</strong></p>
-
-        <p>That pattern shows up in sports governing bodies (every state association has MCC Laws + local conditions), trade licensing bodies (national standard + state variations), and professional associations (CPD rules, eligibility conditions, jurisdiction differences).</p>
-
-        <p>The engine doesn't know it's about cricket. It knows it has three layers of documents, a precedence order, and a set of applicability tags. Swap the documents, keep the engine.</p>
+        <p>If you're a Salesforce team with a workaround you've been living with for too long, that's worth a conversation.</p>
 
         <div class="post-tools">
           <p class="post-tools-label">Tools in this build</p>
           <div class="post-tools-list">
             <div class="post-tools-item">
-              <a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a>
-              <span>PostgreSQL database, authentication (phone OTP + email), and file storage — hosted in Sydney for CT data residency.</span>
+              <!-- Replace href with Lovable affiliate link once registered -->
+              <a href="https://lovable.dev" target="_blank" rel="noopener">Lovable</a>
+              <span>App builder with native Salesforce connector. Used to build the pipeline dashboard and account health tracker directly against live Salesforce data.</span>
             </div>
             <div class="post-tools-item">
-              <a href="https://www.anthropic.com" target="_blank" rel="noopener">Claude (Anthropic)</a>
-              <span>Claude Sonnet for answer generation — grounded responses with clause citations, constrained to the corpus.</span>
-            </div>
-            <div class="post-tools-item">
-              <a href="https://nuxt.com" target="_blank" rel="noopener">Nuxt 3</a>
-              <span>PWA framework — mobile-first and installable without an app store. Requires an internet connection to answer questions.</span>
+              <a href="https://salesforce.com" target="_blank" rel="noopener">Salesforce</a>
+              <span>CRM data source. The connector reads and writes Accounts, Contacts, Leads, Opportunities, and Cases via the standard Salesforce API.</span>
             </div>
           </div>
         </div>
@@ -738,8 +658,8 @@
         <div class="post-divider"></div>
 
         <div class="post-cta">
-          <p>Have a rulebook with this kind of complexity — layered, overriding, context-dependent? That's exactly the pattern we're solving. If you're a governing body, licensing authority, or professional association with a rules corpus that people get wrong, we'd like to talk.</p>
-          <a href="/services/regulatory-ai.html">See the full offer →</a>
+          <p>If your team has a Salesforce workaround you've been living with, that's the spec. Tell us what it is and we'll tell you what a build looks like.</p>
+          <a href="/services/salesforce-crm">See the service →</a>
         </div>
 
       </div>
